@@ -1,21 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   readline.c                                         :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/23 17:43:13 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/03/23 21:09:17 by danbarbo         ###   ########.fr       */
+/*   Created: 2024/03/23 21:17:07 by danbarbo          #+#    #+#             */
+/*   Updated: 2024/03/23 22:00:49 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <readline/readline.h>
-#include <readline/history.h>
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <signal.h>
+#include "minishell.h"
 
 void	signal_handler(int sig)
 {
@@ -33,24 +28,20 @@ void	signal_handler(int sig)
 
 int main(void)
 {
-	char *line;
+	char	*line;
+	char	**split_line;
 
 	signal(SIGINT, signal_handler);
 	signal(SIGCONT, signal_handler);
 	signal(SIGQUIT, SIG_IGN);
-	// signal(SIGQUIT, SIG_DFL);		// Quando for executar um comando
 
-	line = readline("Escreva algo: ");
+	line = readline("minishell$");
+	split_line = ft_split(line, ' ');
 
-	while (line)
-	{
-		if (*line)
-			add_history(line);
-		printf("%s\n", line);
-		free(line);
-		line = readline("Escreva algo: ");
-	}
+	// exec_commands(split_line);
 
+	free(line);
+	ft_free_split(split_line);
 	rl_clear_history();
 
 	return (0);
