@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [ -z "$1" ]
+then
+  echo "Forneça um parâmetro."
+  exit 1
+fi
+
+cc -g3 -I tests/$1 -I lib/libft/include tests/$1/*.c lib/libft/libft.a -lreadline

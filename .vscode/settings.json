@@ -1,6 +1,7 @@
 {
 	"C_Cpp.default.compilerPath": "/usr/bin/gcc",
 	"files.associations": {
-		"minishell.h": "c"
+		"minishell.h": "c",
+		"fcntl.h": "c"
 	}
 }

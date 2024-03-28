@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 21:17:07 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/03/23 22:00:49 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/03/25 17:56:16 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,10 @@
 
 void	signal_handler(int sig)
 {
-	if (sig == SIGINT || sig == SIGCONT)
+	if (sig == SIGINT)
 	{
-		if (sig == SIGINT)
-		{
-			printf("\n");
-			rl_replace_line("", 0);
-		}
+		printf("\n");
+		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
 	}
@@ -32,10 +29,10 @@ int main(void)
 	char	**split_line;
 
 	signal(SIGINT, signal_handler);
-	signal(SIGCONT, signal_handler);
+	signal(SIGTSTP, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 
-	line = readline("minishell$");
+	line = readline("minishell$ ");
 	split_line = ft_split(line, ' ');
 
 	// exec_commands(split_line);
