@@ -6,13 +6,13 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 13:23:49 by danbarbo          #+#    #+#             */
-/*   Updated: 2023/10/28 22:20:59 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/03/30 19:28:27 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_isspace(char c)
+int	ft_isspace(char c)
 {
 	return (c == ' '
 		|| c == '\f'

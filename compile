@@ -6,4 +6,4 @@ then
   exit 1
 fi
 
-cc -g3 -I tests/$1 -I lib/libft/include tests/$1/*.c lib/libft/libft.a -lreadline
+cc -g3 -I tests/$1 -I include -I lib/libft/include tests/$1/*.c lib/libft/libft.a -lreadline
