@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 15:37:10 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/03/30 22:01:55 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/03/31 23:24:58 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ void	print_tokens(t_token_list *token_list)
 		else if (aux->token.type == AND)
 			printf("\t%2d - %-22s = %s\n", i, "AND", aux->token.content);
 		else if (aux->token.type == OPEN_PARENTHESIS)
-			printf("\t%2d - %22s = %s\n", i, "OPEN_PARENTHESIS", aux->token.content);
+			printf("\t%2d - %-22s = %s\n", i, "OPEN_PARENTHESIS", aux->token.content);
 		else if (aux->token.type == CLOSE_PARENTHESIS)
-			printf("\t%2d - %22s = %s\n", i, "CLOSE_PARENTHESIS", aux->token.content);
+			printf("\t%2d - %-22s = %s\n", i, "CLOSE_PARENTHESIS", aux->token.content);
 		else
 			printf("\t%2d - TOKEN NÃO RECONHECIDO = %s\n", i, aux->token.content);
 		i++;
@@ -50,32 +50,21 @@ void	print_tokens(t_token_list *token_list)
 
 }
 
-int	main(int argc, char *argv[])
+t_token_list	*get_token_list(char *str)
 {
-	int		i;
-	int		state;
-	int		token_type;
-	int		str_length;
-	int		lexeme_length;
-	char	*str;
-	char	*lexeme;
-
+	int				i;
+	int				state;
+	int				token_type;
+	int				str_length;
+	int				lexeme_length;
+	char			*lexeme;
 	t_token_list	*token_list;
-
-	if (argc < 2)
-	{
-		fprintf(stderr, "Forneça um parâmetro.");
-		return (1);
-	}
 
 	i = 0;
 	state = 1;
 	lexeme_length = 0;
-	str = argv[1];
 	str_length = ft_strlen(str);
-
 	token_list = NULL;
-
 	while (i <= str_length)		// Aqui o '\0' tem que ser considerado também
 	{
 		state = get_next_state(state, str[i]);
@@ -103,6 +92,20 @@ int	main(int argc, char *argv[])
 		}
 		i++;
 	}
+	return (token_list);
+}
+
+int	main(int argc, char *argv[])
+{
+	t_token_list	*token_list;
+
+	if (argc < 2)
+	{
+		fprintf(stderr, "Forneça um parâmetro.");
+		return (1);
+	}
+
+	token_list = get_token_list(argv[1]);
 
 	if (token_list == NULL)
 		printf("Erro!");
