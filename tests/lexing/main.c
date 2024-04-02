@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 15:37:10 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/03/31 23:24:58 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/04/01 23:53:10 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,15 +97,11 @@ t_token_list	*get_token_list(char *str)
 
 int	main(int argc, char *argv[])
 {
+	char			*line;
 	t_token_list	*token_list;
 
-	if (argc < 2)
-	{
-		fprintf(stderr, "Forneça um parâmetro.");
-		return (1);
-	}
-
-	token_list = get_token_list(argv[1]);
+	line = readline("minishell$: ");
+	token_list = get_token_list(line);
 
 	if (token_list == NULL)
 		printf("Erro!");
