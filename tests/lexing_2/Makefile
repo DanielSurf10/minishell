@@ -6,23 +6,25 @@
 #    By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/23 21:20:35 by danbarbo          #+#    #+#              #
-#    Updated: 2024/04/02 21:02:28 by danbarbo         ###   ########.fr        #
+#    Updated: 2024/04/02 21:02:39 by danbarbo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		:= lexing_1.a
+NAME		:= lexing_2.a
 # CFLAGS		:= -Wextra -Wall -Werror -g3
 CFLAGS		:= -g3
 
 LIBFT_DIR	:= ../../lib/libft
 LIBFT		:= ${LIBFT_DIR}/libft.a
-LIBS		:= ${LIBFT} -lreadline
+
+LIBS		:= ${LIBFT} ${LEX_1} -lreadline
 
 HEADERS		:= -I ../include \
 				-I ../../include \
 				-I ${LIBFT_DIR}/include
 
-SRCS		:= get_token_list.c state.c state_change_1.c state_change_2.c token_list.c utils.c
+SRCS		:= ../lexing_1/get_token_list.c ../lexing_1/state.c ../lexing_1/state_change_1.c ../lexing_1/state_change_2.c ../lexing_1/token_list.c ../lexing_1/utils.c \
+				a.c
 OBJS		:= ${SRCS:%.c=obj/%.o}
 
 all: ${NAME}
