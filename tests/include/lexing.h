@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexing.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 15:36:39 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/04/02 20:53:25 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/04/04 16:38:21 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,12 @@ int				get_state_80(char character);
 int				get_state_81(char character);
 int				get_state_82(char character);
 
-// Lexing 2
-
-
-
 // Utils
 
 int				is_metacharacter(char character);
+
+// Lexing 2
+
+
 
 #endif
