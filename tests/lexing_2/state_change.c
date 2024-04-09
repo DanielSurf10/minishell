@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 22:48:14 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/04/08 23:53:12 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/04/09 18:06:29 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ int	exp_get_state_1(t_token_list *node)
 {
 	int	state;
 
-	if (node->token.type == OPEN_PARENTHESIS)
+	if (node == NULL)
+		state = 1;
+	else if (node->token.type == OPEN_PARENTHESIS)
 		state = 20;
 	else if (node->token.type == CLOSE_PARENTHESIS)
 		state = 30;
