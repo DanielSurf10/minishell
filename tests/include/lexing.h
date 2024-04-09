@@ -3,21 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   lexing.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 15:36:39 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/04/04 16:38:21 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/04/08 23:51:34 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXING_H
 # define LEXING_H
 
-// Includes
+//****************************************************************************//
+//                                  Includes                                  //
+//****************************************************************************//
 
 # include "minishell.h"
 
-// Enums
+//****************************************************************************//
+//                                   Enums                                    //
+//****************************************************************************//
 
 enum e_token
 {
@@ -34,8 +38,13 @@ enum e_token
 	EXPRESSION
 };
 
-// Structs
-// Token
+//****************************************************************************//
+//                                  Structs                                   //
+//****************************************************************************//
+
+//****************************************************************************//
+//                                   Token                                    //
+//****************************************************************************//
 
 typedef struct s_token
 {
@@ -49,7 +58,9 @@ typedef struct s_token_list
 	struct s_token_list	*next;
 }	t_token_list;
 
-// Expression
+//****************************************************************************//
+//                                 Expression                                 //
+//****************************************************************************//
 
 typedef struct s_exp
 {
@@ -63,32 +74,55 @@ typedef struct s_exp_list
 	struct s_exp_list	*next;
 }	t_exp_list;
 
-// Functions
-// Lexing 1
+//****************************************************************************//
+//                                 Functions                                  //
+//****************************************************************************//
+
+//****************************************************************************//
+//                                  Lexing 1                                  //
+//****************************************************************************//
 
 t_token_list	*get_token_list(char *str);
-int				get_next_state(int state, char character);
-int				state_is_final(int state);
-int				get_token_type(int state);
-int				state_requires_backtrack_one_char(int state);
-void			clear_token_list(t_token_list **token_list);
-void			add_token_to_list(t_token_list **token_list, char *lexeme, int type);
+int				token_get_next_state(int state, char character);
+int				token_state_is_final(int state);
+int				token_get_token_type(int state);
+int				token_state_requires_backtrack(int state);
+void			token_add_to_list(t_token_list **token_list, char *lexeme, int type);
+void			token_clear_list(t_token_list **token_list);
 
-int				get_state_1(char character);
-int				get_state_40(char character);
-int				get_state_50(char character);
-int				get_state_60(char character);
-int				get_state_70(char character);
-int				get_state_80(char character);
-int				get_state_81(char character);
-int				get_state_82(char character);
+int				token_get_state_1(char character);
+int				token_get_state_40(char character);
+int				token_get_state_50(char character);
+int				token_get_state_60(char character);
+int				token_get_state_70(char character);
+int				token_get_state_80(char character);
+int				token_get_state_81(char character);
+int				token_get_state_82(char character);
+
+//****************************************************************************//
+//                                  Lexing 2                                  //
+//****************************************************************************//
+
+t_exp_list		*get_exp_list(t_token_list *token_list);
+int				exp_get_next_state(int state, t_token_list *node);
+int				exp_state_is_final(int state);
+int				exp_get_token_type(int state);
+int				exp_state_requires_backtrack(int state);
+void			exp_back_one_node(t_token_list *token_list, t_token_list **node_to_back);
+t_token_list	*exp_get_first_n_nodes(t_token_list *token_list, int length);
+void			exp_add_to_list(t_exp_list **exp_list, t_token_list *token_lexeme, int token_type);
+void			exp_clear_list(t_exp_list **exp_list);
+
+int				exp_get_state_1(t_token_list *node);
+int				exp_get_state_60(t_token_list *node);
+
+//****************************************************************************//
+//                                   Utils                                    //
+//****************************************************************************//
 
 // Utils
 
 int				is_metacharacter(char character);
-
-// Lexing 2
-
-
+int				is_an_expression(t_token_list *node);
 
 #endif

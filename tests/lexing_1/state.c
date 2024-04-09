@@ -6,13 +6,13 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 17:03:18 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/03/30 18:37:52 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/04/08 21:49:27 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexing.h"
 
-int	state_is_final(int state)
+int	token_state_is_final(int state)
 {
 	if (state == 20
 		|| state == 30
@@ -25,7 +25,7 @@ int	state_is_final(int state)
 	return (0);
 }
 
-int	state_requires_backtrack_one_char(int state)
+int	token_state_requires_backtrack(int state)
 {
 	if (state == 42
 		|| state == 62
@@ -35,32 +35,32 @@ int	state_requires_backtrack_one_char(int state)
 	return (0);
 }
 
-int	get_next_state(int state, char character)
+int	token_get_next_state(int state, char character)
 {
 	int	new_state;
 
 	if (state == 1)
-		new_state = get_state_1(character);
+		new_state = token_get_state_1(character);
 	else if (state == 40)
-		new_state = get_state_40(character);
+		new_state = token_get_state_40(character);
 	else if (state == 50)
-		new_state = get_state_50(character);
+		new_state = token_get_state_50(character);
 	else if (state == 60)
-		new_state = get_state_60(character);
+		new_state = token_get_state_60(character);
 	else if (state == 70)
-		new_state = get_state_70(character);
+		new_state = token_get_state_70(character);
 	else if (state == 80)
-		new_state = get_state_80(character);
+		new_state = token_get_state_80(character);
 	else if (state == 81)
-		new_state = get_state_81(character);
+		new_state = token_get_state_81(character);
 	else if (state == 82)
-		new_state = get_state_82(character);
+		new_state = token_get_state_82(character);
 	else
 		new_state = -1;
 	return (new_state);
 }
 
-int	get_token_type(int state)
+int	token_get_token_type(int state)
 {
 	int	type;
 

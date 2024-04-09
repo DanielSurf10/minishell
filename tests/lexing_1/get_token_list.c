@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 21:01:34 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/04/02 21:01:51 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/04/08 21:39:14 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ t_token_list	*get_token_list(char *str)
 	char			*lexeme;
 	t_token_list	*token_list;
 
+	if (!str)
+		return (NULL);
 	i = 0;
 	state = 1;
 	lexeme_length = 0;
@@ -29,26 +31,27 @@ t_token_list	*get_token_list(char *str)
 	token_list = NULL;
 	while (i <= str_length)		// Aqui o '\0' tem que ser considerado também
 	{
-		state = get_next_state(state, str[i]);
+		state = token_get_next_state(state, str[i]);
+
 		if (state != 1)
 			lexeme_length += 1;
 
 		if (state == -1)
 		{
-			clear_token_list(&token_list);
+			token_clear_list(&token_list);
 			break ;
 		}
 
-		if (state_is_final(state))
+		if (token_state_is_final(state))
 		{
-			if (state_requires_backtrack_one_char(state))
+			if (token_state_requires_backtrack(state))
 			{
 				i -= 1;
 				lexeme_length -= 1;
 			}
-			token_type = get_token_type(state);
+			token_type = token_get_token_type(state);
 			lexeme = ft_substr(str, i - (lexeme_length - 1), lexeme_length);
-			add_token_to_list(&token_list, lexeme, token_type);
+			token_add_to_list(&token_list, lexeme, token_type);
 			lexeme_length = 0;
 			state = 1;
 		}

@@ -4,6 +4,7 @@
 		"minishell.h": "c",
 		"fcntl.h": "c",
 		"libft.h": "c",
-		"lexing.h": "c"
+		"lexing.h": "c",
+		"random": "c"
 	}
 }

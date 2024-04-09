@@ -6,13 +6,13 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 17:25:24 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/03/30 20:49:27 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/04/08 21:49:27 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexing.h"
 
-int	get_state_80(char character)
+int	token_get_state_80(char character)
 {
 	int	state;
 
@@ -29,7 +29,7 @@ int	get_state_80(char character)
 	return (state);
 }
 
-int	get_state_81(char character)
+int	token_get_state_81(char character)
 {
 	int	state;
 
@@ -44,7 +44,7 @@ int	get_state_81(char character)
 	return (state);
 }
 
-int	get_state_82(char character)
+int	token_get_state_82(char character)
 {
 	int	state;
 
