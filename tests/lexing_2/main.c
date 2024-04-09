@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 20:13:04 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/04/02 21:03:32 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/04/09 00:09:32 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,8 +139,8 @@ int	main(int argc, char *argv[])
 	else
 		print_expression(exp_list);
 
-	clear_token_list(&token_list);
-	clear_exp_list(&token_list);
+	token_clear_list(&token_list);
+	exp_clear_list(&exp_list);
 
 	return (0);
 }

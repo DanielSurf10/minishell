@@ -6,29 +6,29 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 16:27:38 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/04/02 21:01:47 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/04/09 00:01:15 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexing.h"
 
-static t_token_list	*create_token(char *lexeme, int type)
+static t_token_list	*token_create_node(char *lexeme, int token_type)
 {
 	t_token_list	*new_token;
 
 	new_token = malloc(sizeof(t_token_list));
 	new_token->token.content = lexeme;
-	new_token->token.type = type;
+	new_token->token.type = token_type;
 	new_token->next = NULL;
 	return (new_token);
 }
 
-void	add_token_to_list(t_token_list **token_list, char *lexeme, int type)
+void	token_add_to_list(t_token_list **token_list, char *lexeme, int token_type)
 {
 	t_token_list	*new_token;
 	t_token_list	*last_node;
 
-	new_token = create_token(lexeme, type);
+	new_token = token_create_node(lexeme, token_type);
 	last_node = *token_list;
 	while (last_node && last_node->next)
 		last_node = last_node->next;
@@ -38,7 +38,7 @@ void	add_token_to_list(t_token_list **token_list, char *lexeme, int type)
 		*token_list = new_token;
 }
 
-void	clear_token_list(t_token_list **token_list)
+void	token_clear_list(t_token_list **token_list)
 {
 	t_token_list	*aux1;
 	t_token_list	*aux2;
