@@ -6,13 +6,13 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 23:49:38 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/04/08 23:49:44 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/04/10 01:00:00 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexing.h"
 
-int	is_an_expression(t_token_list *node)\
+int	is_an_expression(t_token_list *node)
 {
 	if (node->token.type == WORD
 		|| node->token.type == PIPE

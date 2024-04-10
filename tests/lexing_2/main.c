@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 20:13:04 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/04/09 17:51:54 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/04/10 01:08:08 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	print_tokens(t_token_list *token_list)
 
 	i = 1;
 	aux = token_list;
-	printf("Tokens da lista:\n");
 	while (aux)
 	{
 		if (aux->token.type == WORD)
