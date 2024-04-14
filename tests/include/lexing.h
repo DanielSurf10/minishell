@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 15:36:39 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/04/08 23:51:34 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/04/13 23:32:23 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ enum e_token
 typedef struct s_token
 {
 	int		type;
-	char	*content;
+	char	*lexeme;
 }	t_token;
 
 typedef struct s_token_list

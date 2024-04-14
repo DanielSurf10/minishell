@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 20:13:04 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/04/10 01:08:08 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/04/13 23:32:23 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,27 +22,27 @@ void	print_tokens(t_token_list *token_list)
 	while (aux)
 	{
 		if (aux->token.type == WORD)
-			printf("\t\t%2d - %-22s = %s\n", i, "WORD", aux->token.content);
+			printf("\t\t%2d - %-22s = %s\n", i, "WORD", aux->token.lexeme);
 		else if (aux->token.type == PIPE)
-			printf("\t\t%2d - %-22s = %s\n", i, "PIPE", aux->token.content);
+			printf("\t\t%2d - %-22s = %s\n", i, "PIPE", aux->token.lexeme);
 		else if (aux->token.type == REDIRECT_INPUT)
-			printf("\t\t%2d - %-22s = %s\n", i, "REDIRECT_INPUT", aux->token.content);
+			printf("\t\t%2d - %-22s = %s\n", i, "REDIRECT_INPUT", aux->token.lexeme);
 		else if (aux->token.type == REDIRECT_HEREDOC)
-			printf("\t\t%2d - %-22s = %s\n", i, "REDIRECT_HEREDOC", aux->token.content);
+			printf("\t\t%2d - %-22s = %s\n", i, "REDIRECT_HEREDOC", aux->token.lexeme);
 		else if (aux->token.type == REDIRECT_OUTPUT)
-			printf("\t\t%2d - %-22s = %s\n", i, "REDIRECT_OUTPUT", aux->token.content);
+			printf("\t\t%2d - %-22s = %s\n", i, "REDIRECT_OUTPUT", aux->token.lexeme);
 		else if (aux->token.type == REDIRECT_OUTPUT_APPEND)
-			printf("\t\t%2d - %-22s = %s\n", i, "REDIRECT_OUTPUT_APPEND", aux->token.content);
+			printf("\t\t%2d - %-22s = %s\n", i, "REDIRECT_OUTPUT_APPEND", aux->token.lexeme);
 		else if (aux->token.type == OR)
-			printf("\t\t%2d - %-22s = %s\n", i, "OR", aux->token.content);
+			printf("\t\t%2d - %-22s = %s\n", i, "OR", aux->token.lexeme);
 		else if (aux->token.type == AND)
-			printf("\t\t%2d - %-22s = %s\n", i, "AND", aux->token.content);
+			printf("\t\t%2d - %-22s = %s\n", i, "AND", aux->token.lexeme);
 		else if (aux->token.type == OPEN_PARENTHESIS)
-			printf("\t\t%2d - %-22s = %s\n", i, "OPEN_PARENTHESIS", aux->token.content);
+			printf("\t\t%2d - %-22s = %s\n", i, "OPEN_PARENTHESIS", aux->token.lexeme);
 		else if (aux->token.type == CLOSE_PARENTHESIS)
-			printf("\t\t%2d - %-22s = %s\n", i, "CLOSE_PARENTHESIS", aux->token.content);
+			printf("\t\t%2d - %-22s = %s\n", i, "CLOSE_PARENTHESIS", aux->token.lexeme);
 		else
-			printf("\t\t%2d - TOKEN NÃO RECONHECIDO = %s\n", i, aux->token.content);
+			printf("\t\t%2d - TOKEN NÃO RECONHECIDO = %s\n", i, aux->token.lexeme);
 		i++;
 		aux = aux->next;
 	}

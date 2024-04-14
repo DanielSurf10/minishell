@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 22:57:28 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/04/10 00:47:18 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/04/13 23:38:23 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_token_list	*exp_get_first_n_nodes(t_token_list *token_list, int length)
 	new_token_list = NULL;
 	while (aux && i < length)
 	{
-		token_add_to_list(&new_token_list, ft_strdup(aux->token.content), aux->token.type);
+		token_add_to_list(&new_token_list, ft_strdup(aux->token.lexeme), aux->token.type);
 		aux = aux->next;
 		i++;
 	}
@@ -77,7 +77,8 @@ void	exp_clear_list(t_exp_list **exp_list)
 		while (aux1)
 		{
 			aux2 = aux1->next;
-			token_clear_list(&aux1->expression.token_list);
+			if (aux1->expression.token_list)
+				token_clear_list(&aux1->expression.token_list);
 			free(aux1);
 			aux1 = aux2;
 		}
