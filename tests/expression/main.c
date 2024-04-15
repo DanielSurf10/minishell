@@ -6,11 +6,13 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 20:13:04 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/04/15 16:40:00 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/04/15 18:01:20 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexing.h"
+#include <readline/history.h>
+#include <readline/readline.h>
 
 void	print_tokens(t_token_list *token_list)
 {

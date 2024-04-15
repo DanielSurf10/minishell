@@ -6,32 +6,33 @@
 #    By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/23 21:20:35 by danbarbo          #+#    #+#              #
-#    Updated: 2024/04/09 00:11:30 by danbarbo         ###   ########.fr        #
+#    Updated: 2024/04/15 18:48:13 by danbarbo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		:= lexing_2.a
+NAME		:= lexing
 # CFLAGS		:= -Wextra -Wall -Werror -g3
 CFLAGS		:= -g3
 
-LIBFT_DIR	:= ../../lib/libft
+LIBFT_DIR	:= lib/libft
 LIBFT		:= ${LIBFT_DIR}/libft.a
 
-LIBS		:= ${LIBFT} ${LEX_1} -lreadline
+LIBS		:= ${LIBFT} -lreadline
 
-HEADERS		:= -I ../include \
-				-I ../../include \
+HEADERS		:= -I include \
 				-I ${LIBFT_DIR}/include
 
-SRCS		:= ../lexing_1/get_token_list.c ../lexing_1/state.c ../lexing_1/state_change_1.c ../lexing_1/state_change_2.c ../lexing_1/token_list.c ../lexing_1/utils.c \
-				exp_list.c get_exp_list.c state.c state_change.c utils.c
+SRCS		:= $(shell find src -iname "*.c")
 OBJS		:= ${SRCS:%.c=obj/%.o}
 
-all: ${NAME}
+token: ${LIBFT} ${OBJS}
+	@${CC} ${CFLAGS} ${HEADERS} tests/command/main.c ${OBJS} ${LIBS}
 
-${NAME}: ${LIBFT} ${OBJS}
-#	@ar rcs ${NAME} obj/*.o
-	@${CC} ${CFLAGS} ${HEADERS} main.c ${OBJS} ${LIBS} -o ../../a.out
+expression: ${LIBFT} ${OBJS}
+	@${CC} ${CFLAGS} ${HEADERS} tests/expression/main.c ${OBJS} ${LIBS}
+
+command: ${LIBFT} ${OBJS}
+	@${CC} ${CFLAGS} ${HEADERS} tests/token/main.c ${OBJS} ${LIBS}
 
 obj/%.o: %.c
 	@mkdir -p ${dir $@}
