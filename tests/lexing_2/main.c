@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 20:13:04 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/04/13 23:32:23 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/04/15 16:40:00 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,27 @@ void	print_tokens(t_token_list *token_list)
 	}
 }
 
+void	print_cmds(t_cmd_list *cmd_list)
+{
+	int			i;
+	t_cmd_list	*aux;
+
+	i = 0;
+	aux = cmd_list;
+	while (aux)
+	{
+		if (aux->command.type == WORD)
+			printf("\t%2d - %-22s\n", i, "WORD");
+		else if (aux->command.type == PIPE)
+			printf("\t%2d - %-22s\n", i, "PIPE");
+		else
+			printf("\t%2d - TOKEN NÃO RECONHECIDO\n", i);
+		print_tokens(aux->command.token_list);
+		i++;
+		aux = aux->next;
+	}
+}
+
 void	print_expression(t_exp_list *exp_list)
 {
 	int				i;
@@ -61,62 +82,62 @@ void	print_expression(t_exp_list *exp_list)
 		if (aux->expression.type == WORD)
 		{
 			printf("\t%2d - %-22s\n", i, "WORD");
-			print_tokens(aux->expression.token_list);
+			print_cmds(aux->expression.cmd_list);
 		}
 		else if (aux->expression.type == PIPE)
 		{
 			printf("\t%2d - %-22s\n", i, "PIPE");
-			print_tokens(aux->expression.token_list);
+			print_cmds(aux->expression.cmd_list);
 		}
 		else if (aux->expression.type == REDIRECT_INPUT)
 		{
 			printf("\t%2d - %-22s\n", i, "REDIRECT_INPUT");
-			print_tokens(aux->expression.token_list);
+			print_cmds(aux->expression.cmd_list);
 		}
 		else if (aux->expression.type == REDIRECT_HEREDOC)
 		{
 			printf("\t%2d - %-22s\n", i, "REDIRECT_HEREDOC");
-			print_tokens(aux->expression.token_list);
+			print_cmds(aux->expression.cmd_list);
 		}
 		else if (aux->expression.type == REDIRECT_OUTPUT)
 		{
 			printf("\t%2d - %-22s\n", i, "REDIRECT_OUTPUT");
-			print_tokens(aux->expression.token_list);
+			print_cmds(aux->expression.cmd_list);
 		}
 		else if (aux->expression.type == REDIRECT_OUTPUT_APPEND)
 		{
 			printf("\t%2d - %-22s\n", i, "REDIRECT_OUTPUT_APPEND");
-			print_tokens(aux->expression.token_list);
+			print_cmds(aux->expression.cmd_list);
 		}
 		else if (aux->expression.type == OR)
 		{
 			printf("\t%2d - %-22s\n", i, "OR");
-			print_tokens(aux->expression.token_list);
+			print_cmds(aux->expression.cmd_list);
 		}
 		else if (aux->expression.type == AND)
 		{
 			printf("\t%2d - %-22s\n", i, "AND");
-			print_tokens(aux->expression.token_list);
+			print_cmds(aux->expression.cmd_list);
 		}
 		else if (aux->expression.type == OPEN_PARENTHESIS)
 		{
 			printf("\t%2d - %-22s\n", i, "OPEN_PARENTHESIS");
-			print_tokens(aux->expression.token_list);
+			print_cmds(aux->expression.cmd_list);
 		}
 		else if (aux->expression.type == CLOSE_PARENTHESIS)
 		{
 			printf("\t%2d - %-22s\n", i, "CLOSE_PARENTHESIS");
-			print_tokens(aux->expression.token_list);
+			print_cmds(aux->expression.cmd_list);
 		}
 		else if (aux->expression.type == EXPRESSION)
 		{
 			printf("\t%2d - %-22s\n", i, "EXPRESSION");
-			print_tokens(aux->expression.token_list);
+			print_cmds(aux->expression.cmd_list);
 		}
 		else
 		{
 			printf("\t%2d - TOKEN NÃO RECONHECIDO\n", i);
-			print_tokens(aux->expression.token_list);
+			print_cmds(aux->expression.cmd_list);
 		}
 		i++;
 		aux = aux->next;

@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 15:36:39 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/04/14 20:32:05 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/04/15 16:30:33 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ int				exp_get_state_60(t_token_list *node);
 //                                  Lexing 3                                  //
 //****************************************************************************//
 
+t_cmd_list		*get_cmd_list(t_token_list *full_token_list, int start, int list_length);
 void			cmd_clear_list(t_cmd_list **cmd_list);
 
 //****************************************************************************//
