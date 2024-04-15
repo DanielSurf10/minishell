@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 15:36:39 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/04/15 16:30:33 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/04/15 17:52:15 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 //                                  Includes                                  //
 //****************************************************************************//
 
-# include "minishell.h"
+# include <stdlib.h>
+# include "libft.h"
 
 //****************************************************************************//
 //                                   Enums                                    //
@@ -99,13 +100,19 @@ typedef struct s_exp_list
 //                                  Lexing 1                                  //
 //****************************************************************************//
 
+// Coisas de manipulação de lista
 t_token_list	*get_token_list(char *str);
-int				token_get_next_state(int state, char character);
-int				token_state_is_final(int state);
-int				token_get_token_type(int state);
-int				token_state_requires_backtrack(int state);
 void			token_add_to_list(t_token_list **token_list, char *lexeme, int type);
 void			token_clear_list(t_token_list **token_list);
+int				token_list_size(t_token_list *token_list);
+void			token_back_one_node(t_token_list *token_list, t_token_list **node_to_back);
+t_token_list	*token_get_sublist(t_token_list *token_list, int start, int list_length);
+
+// Coisas de estados
+int				token_state_is_final(int state);
+int				token_state_requires_backtrack(int state);
+int				token_get_next_state(int state, char character);
+int				token_get_token_type(int state);
 
 int				token_get_state_1(char character);
 int				token_get_state_40(char character);
@@ -120,15 +127,17 @@ int				token_get_state_82(char character);
 //                                  Lexing 2                                  //
 //****************************************************************************//
 
+// Manipulação de lista
 t_exp_list		*get_exp_list(t_token_list *token_list);
+// t_token_list	*exp_get_first_n_nodes(t_token_list *token_list, int length);
+void			exp_add_to_list(t_exp_list **exp_list, t_cmd_list *cmd_token_lexeme, int token_type);
+void			exp_clear_list(t_exp_list **exp_list);
+
+// Coisas de estado
 int				exp_get_next_state(int state, t_token_list *node);
 int				exp_state_is_final(int state);
 int				exp_get_token_type(int state);
 int				exp_state_requires_backtrack(int state);
-void			exp_back_one_node(t_token_list *token_list, t_token_list **node_to_back);
-t_token_list	*exp_get_first_n_nodes(t_token_list *token_list, int length);
-void			exp_add_to_list(t_exp_list **exp_list, t_cmd_list *cmd_token_lexeme, int token_type);
-void			exp_clear_list(t_exp_list **exp_list);
 
 int				exp_get_state_1(t_token_list *node);
 int				exp_get_state_60(t_token_list *node);
@@ -139,6 +148,8 @@ int				exp_get_state_60(t_token_list *node);
 
 t_cmd_list		*get_cmd_list(t_token_list *full_token_list, int start, int list_length);
 void			cmd_clear_list(t_cmd_list **cmd_list);
+void			cmd_add_to_list(t_cmd_list **cmd_list, t_token_list *token_lexeme, int token_type);
+
 
 //****************************************************************************//
 //                                   Utils                                    //

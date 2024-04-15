@@ -5,12 +5,27 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/08 23:49:38 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/04/10 01:00:00 by danbarbo         ###   ########.fr       */
+/*   Created: 2024/03/30 17:42:42 by danbarbo          #+#    #+#             */
+/*   Updated: 2024/04/15 17:06:26 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexing.h"
+
+int	is_metacharacter(char character)
+{
+	if (character == '('
+		|| character == ')'
+		|| character == '|'
+		|| character == '&'
+		|| character == '<'
+		|| character == '>'
+		|| character == '\''
+		|| character == '\"'
+		|| ft_isspace(character))
+		return (1);
+	return (0);
+}
 
 int	is_an_expression(t_token_list *node)
 {

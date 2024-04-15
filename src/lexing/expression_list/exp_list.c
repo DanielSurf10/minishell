@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 22:57:28 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/04/14 20:08:59 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/04/15 17:10:33 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,33 +38,33 @@ void	exp_add_to_list(t_exp_list **exp_list, t_cmd_list *cmd_token_lexeme, int to
 		*exp_list = new_token;
 }
 
-void	exp_back_one_node(t_token_list *token_list, t_token_list **node_to_back)
-{
-	t_token_list	*aux;
+// void	exp_back_one_node(t_token_list *token_list, t_token_list **node_to_back)
+// {
+// 	t_token_list	*aux;
+//
+// 	aux = token_list;
+// 	while (aux && aux->next != *node_to_back)
+// 		aux = aux->next;
+// 	*node_to_back = aux;
+// }
 
-	aux = token_list;
-	while (aux && aux->next != *node_to_back)
-		aux = aux->next;
-	*node_to_back = aux;
-}
-
-t_token_list	*exp_get_first_n_nodes(t_token_list *token_list, int length)
-{
-	int				i;
-	t_token_list	*aux;
-	t_token_list	*new_token_list;
-
-	i = 0;
-	aux = token_list;
-	new_token_list = NULL;
-	while (aux && i < length)
-	{
-		token_add_to_list(&new_token_list, ft_strdup(aux->token.lexeme), aux->token.type);
-		aux = aux->next;
-		i++;
-	}
-	return (new_token_list);
-}
+// t_token_list	*exp_get_first_n_nodes(t_token_list *token_list, int length)
+// {
+// 	int				i;
+// 	t_token_list	*aux;
+// 	t_token_list	*new_token_list;
+//
+// 	i = 0;
+// 	aux = token_list;
+// 	new_token_list = NULL;
+// 	while (aux && i < length)
+// 	{
+// 		token_add_to_list(&new_token_list, ft_strdup(aux->token.lexeme), aux->token.type);
+// 		aux = aux->next;
+// 		i++;
+// 	}
+// 	return (new_token_list);
+// }
 
 void	exp_clear_list(t_exp_list **exp_list)
 {
@@ -85,3 +85,18 @@ void	exp_clear_list(t_exp_list **exp_list)
 		*exp_list = NULL;
 	}
 }
+
+// int	exp_list_size(t_token_list *token_list)
+// {
+// 	int				i;
+// 	t_token_list	*aux;
+//
+// 	i = 0;
+// 	aux = token_list;
+// 	while (aux)
+// 	{
+// 		i++;
+// 		aux = aux->next;
+// 	}
+// 	return (i);
+// }

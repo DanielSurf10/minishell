@@ -6,26 +6,11 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 21:23:44 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/04/14 21:37:22 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/04/15 17:44:30 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexing.h"
-
-int	exp_list_size(t_token_list *token_list)
-{
-	int				i;
-	t_token_list	*aux;
-
-	i = 0;
-	aux = token_list;
-	while (aux)
-	{
-		i++;
-		aux = aux->next;
-	}
-	return (i);
-}
 
 t_exp_list	*get_exp_list(t_token_list *token_list)
 {
@@ -33,7 +18,7 @@ t_exp_list	*get_exp_list(t_token_list *token_list)
 	int				state;
 	int				length;
 	int				token_type;
-	int				token_list_size;
+	int				token_list_length;
 	t_token_list	*aux;
 	// t_token_list	*first_node_token;
 	t_cmd_list		*cmd_token_lexeme;
@@ -44,11 +29,11 @@ t_exp_list	*get_exp_list(t_token_list *token_list)
 	i = 0;
 	state = 1;
 	length = 0;
-	token_list_size = exp_list_size(token_list);
+	token_list_length = token_list_size(token_list);
 	aux = token_list;
 	// first_node_token = token_list;
 	exp_list = NULL;
-	while (i <= token_list_size)
+	while (i <= token_list_length)
 	{
 		state = exp_get_next_state(state, aux);
 		length += 1;
@@ -57,7 +42,7 @@ t_exp_list	*get_exp_list(t_token_list *token_list)
 		{
 			if (exp_state_requires_backtrack(state))
 			{
-				exp_back_one_node(token_list, &aux);
+				token_back_one_node(token_list, &aux);
 				length -= 1;
 				i--;
 			}
