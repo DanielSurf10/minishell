@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 21:23:44 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/04/13 23:37:27 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/04/14 21:37:22 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	exp_list_size(t_token_list *token_list)
 	return (i);
 }
 
-t_exp_list	*exp_make_list(t_token_list *token_list)
+t_exp_list	*get_exp_list(t_token_list *token_list)
 {
 	int				i;
 	int				state;
@@ -35,8 +35,8 @@ t_exp_list	*exp_make_list(t_token_list *token_list)
 	int				token_type;
 	int				token_list_size;
 	t_token_list	*aux;
-	t_token_list	*first_node_token;
-	t_token_list	*token_lexeme;
+	// t_token_list	*first_node_token;
+	t_cmd_list		*cmd_token_lexeme;
 	t_exp_list		*exp_list;
 
 	if (!token_list)
@@ -46,7 +46,7 @@ t_exp_list	*exp_make_list(t_token_list *token_list)
 	length = 0;
 	token_list_size = exp_list_size(token_list);
 	aux = token_list;
-	first_node_token = token_list;
+	// first_node_token = token_list;
 	exp_list = NULL;
 	while (i <= token_list_size)
 	{
@@ -63,11 +63,12 @@ t_exp_list	*exp_make_list(t_token_list *token_list)
 			}
 			token_type = exp_get_token_type(state);
 			if (token_type == EXPRESSION)
-				token_lexeme = exp_get_first_n_nodes(first_node_token, length);
+				// cmd_token_lexeme = exp_get_first_n_nodes(first_node_token, length);
+				cmd_token_lexeme = get_cmd_list(token_list, i, length);
 			else
-				token_lexeme = NULL;
-			exp_add_to_list(&exp_list, token_lexeme, token_type);
-			first_node_token = aux->next;
+				cmd_token_lexeme = NULL;
+			exp_add_to_list(&exp_list, cmd_token_lexeme, token_type);
+			// first_node_token = aux->next;
 			length = 0;
 			state = 1;
 		}
@@ -75,20 +76,5 @@ t_exp_list	*exp_make_list(t_token_list *token_list)
 		if (aux)
 			aux = aux->next;
 	}
-	return (exp_list);
-}
-
-// t_exp_list	*exp_parse_cmds()
-// {
-//
-// }
-
-t_exp_list	*get_exp_list(t_token_list *token_list)
-{
-	t_exp_list	*exp_list;
-	t_exp_list	*exp_list_cmd;
-
-	exp_list = exp_make_list(token_list);
-	// exp_list_cmd = exp_parse_cmds(exp_list);
 	return (exp_list);
 }
