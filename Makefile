@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/03/23 21:20:35 by danbarbo          #+#    #+#              #
-#    Updated: 2024/04/15 18:48:13 by danbarbo         ###   ########.fr        #
+#    Created: 2024/04/16 19:05:51 by danbarbo          #+#    #+#              #
+#    Updated: 2024/04/16 19:19:16 by danbarbo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,17 +22,25 @@ LIBS		:= ${LIBFT} -lreadline
 HEADERS		:= -I include \
 				-I ${LIBFT_DIR}/include
 
-SRCS		:= $(shell find src -iname "*.c")
-OBJS		:= ${SRCS:%.c=obj/%.o}
+SRCS_TOKEN	:= $(shell find src/lexing/token_list -iname "*.c") src/utils.c
+OBJS_TOKEN	:= ${SRCS_TOKEN:%.c=obj/%.o}
 
-token: ${LIBFT} ${OBJS}
-	@${CC} ${CFLAGS} ${HEADERS} tests/command/main.c ${OBJS} ${LIBS}
+SRCS_EXP	:= $(shell find src/lexing/expression_list -iname "*.c")
+SRCS_EXP	+= SRCS_TOKEN
+OBJS_EXP	:= ${SRCS_EXP:%.c=obj/%.o}
 
-expression: ${LIBFT} ${OBJS}
-	@${CC} ${CFLAGS} ${HEADERS} tests/expression/main.c ${OBJS} ${LIBS}
+SRCS_CMD	:= $(shell find src/lexing/token_list -iname "*.c")
+SRCS_CMD	+= SRCS_EXP
+OBJS_CMD	:= ${SRCS_CMD:%.c=obj/%.o}
 
-command: ${LIBFT} ${OBJS}
-	@${CC} ${CFLAGS} ${HEADERS} tests/token/main.c ${OBJS} ${LIBS}
+token: ${LIBFT} ${OBJS_TOKEN}
+	@${CC} ${CFLAGS} ${HEADERS} tests/token/main.c ${OBJS_TOKEN} ${LIBS}
+
+expression: ${LIBFT} ${OBJS_EXP}
+	@${CC} ${CFLAGS} ${HEADERS} tests/expression/main.c ${OBJS_EXP} ${LIBS}
+
+command: ${LIBFT} ${OBJS_CMD}
+	@${CC} ${CFLAGS} ${HEADERS} tests/command/main.c ${OBJS_CMD} ${LIBS}
 
 obj/%.o: %.c
 	@mkdir -p ${dir $@}
