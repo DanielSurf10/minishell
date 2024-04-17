@@ -6,7 +6,7 @@
 #    By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/16 19:05:51 by danbarbo          #+#    #+#              #
-#    Updated: 2024/04/16 19:19:16 by danbarbo         ###   ########.fr        #
+#    Updated: 2024/04/16 22:43:30 by danbarbo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,13 +34,13 @@ SRCS_CMD	+= SRCS_EXP
 OBJS_CMD	:= ${SRCS_CMD:%.c=obj/%.o}
 
 token: ${LIBFT} ${OBJS_TOKEN}
-	@${CC} ${CFLAGS} ${HEADERS} tests/token/main.c ${OBJS_TOKEN} ${LIBS}
+	@${CC} ${CFLAGS} ${HEADERS} tests/token/main.c ${OBJS_TOKEN} ${LIBS} -o token
 
 expression: ${LIBFT} ${OBJS_EXP}
-	@${CC} ${CFLAGS} ${HEADERS} tests/expression/main.c ${OBJS_EXP} ${LIBS}
+	@${CC} ${CFLAGS} ${HEADERS} tests/expression/main.c ${OBJS_EXP} ${LIBS} -o expression
 
 command: ${LIBFT} ${OBJS_CMD}
-	@${CC} ${CFLAGS} ${HEADERS} tests/command/main.c ${OBJS_CMD} ${LIBS}
+	@${CC} ${CFLAGS} ${HEADERS} tests/command/main.c ${OBJS_CMD} ${LIBS} -o command
 
 obj/%.o: %.c
 	@mkdir -p ${dir $@}
@@ -55,8 +55,9 @@ clean:
 #	@make -C ${LIBFT_DIR} clean
 
 fclean: clean
-	@rm -f ${NAME}
-	@rm -f ${NAME_BONUS}
+	@rm -f token
+	@rm -f expression
+	@rm -f command
 #	@make -C ${LIBFT_DIR} fclean
 
 val: all
@@ -79,6 +80,4 @@ valb: all
 				--trace-children-skip='*/bin/*,*/sbin/*,/usr/bin/*' \
 				./${NAME_BONUS}
 
-re: fclean all
-
-.PHONY: all clean fclean re libft
+.PHONY: token expression command clean fclean libft

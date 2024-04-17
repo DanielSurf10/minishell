@@ -8,7 +8,8 @@ fi
 
 if [ "$1" == "m" ]
 then
-	make -C tests/"$2" re
-else
-	cc -g3 -I tests/"$1" -I include -I lib/libft/include tests/"$1"/*.c lib/libft/libft.a -lreadline
+	make fclean $2
+elif [ "$1" == "t" ] && [ -n "$2" ]
+then
+	tests/$2/$2_test.py
 fi

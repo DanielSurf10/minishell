@@ -2,3 +2,6 @@
 *.a
 a.out
 minishell
+token
+expression
+command
