@@ -6,7 +6,7 @@
 #    By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/16 19:05:51 by danbarbo          #+#    #+#              #
-#    Updated: 2024/04/16 22:43:30 by danbarbo         ###   ########.fr        #
+#    Updated: 2024/04/16 23:21:58 by danbarbo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,13 +34,13 @@ SRCS_CMD	+= SRCS_EXP
 OBJS_CMD	:= ${SRCS_CMD:%.c=obj/%.o}
 
 token: ${LIBFT} ${OBJS_TOKEN}
-	@${CC} ${CFLAGS} ${HEADERS} tests/token/main.c ${OBJS_TOKEN} ${LIBS} -o token
+	@${CC} ${CFLAGS} ${HEADERS} tests/token/main.c ${OBJS_TOKEN} ${LIBS} -o token_test
 
 expression: ${LIBFT} ${OBJS_EXP}
-	@${CC} ${CFLAGS} ${HEADERS} tests/expression/main.c ${OBJS_EXP} ${LIBS} -o expression
+	@${CC} ${CFLAGS} ${HEADERS} tests/expression/main.c ${OBJS_EXP} ${LIBS} -o expression_test
 
 command: ${LIBFT} ${OBJS_CMD}
-	@${CC} ${CFLAGS} ${HEADERS} tests/command/main.c ${OBJS_CMD} ${LIBS} -o command
+	@${CC} ${CFLAGS} ${HEADERS} tests/command/main.c ${OBJS_CMD} ${LIBS} -o command_test
 
 obj/%.o: %.c
 	@mkdir -p ${dir $@}
@@ -55,9 +55,9 @@ clean:
 #	@make -C ${LIBFT_DIR} clean
 
 fclean: clean
-	@rm -f token
-	@rm -f expression
-	@rm -f command
+	@rm -f token_test
+	@rm -f expression_test
+	@rm -f command_test
 #	@make -C ${LIBFT_DIR} fclean
 
 val: all

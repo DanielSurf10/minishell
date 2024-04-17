@@ -2,6 +2,6 @@
 *.a
 a.out
 minishell
-token
-expression
-command
+token_test
+expression_test
+command_test
