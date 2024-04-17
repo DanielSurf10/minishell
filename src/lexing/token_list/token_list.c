@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 16:27:38 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/04/15 17:50:22 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/04/16 23:31:26 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,14 +95,14 @@ t_token_list	*token_get_sublist(t_token_list *token_list, int start, int list_le
 	while (aux && i < start)		// Essa primeira parte chega até o primeiro nó
 	{									// Até o indice do start
 		aux = aux->next;
-		i++;						// Aqui o i conta até chegar no start
+		i++;							// Aqui o i conta até chegar no start
 	}
 	i = 0;
 	while (aux && i < list_length)	// Essa parte copia os nós para uma outra lista até um certo nó
 	{									// Até a lista ter o tamanho list_length
 		token_add_to_list(&new_token_list, ft_strdup(aux->token.lexeme), aux->token.type);
 		aux = aux->next;
-		i++;						// Aqui o i conta até chegar no tamanho máximo
+		i++;							// Aqui o i conta até chegar no tamanho máximo
 	}
 	return (new_token_list);
 }

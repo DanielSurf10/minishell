@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 20:00:51 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/04/15 17:53:12 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/04/17 01:05:15 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ t_cmd_list	*get_cmd_list(t_token_list *full_token_list, int start, int list_leng
 	if (!full_token_list)
 		return (NULL);
 	i = 0;
+	state = 1;
 	length = 0;
 	first_node_index = 0;
 	token_list = token_get_sublist(full_token_list, start, list_length);
@@ -92,14 +93,14 @@ t_cmd_list	*get_cmd_list(t_token_list *full_token_list, int start, int list_leng
 		{
 			if (cmd_state_requires_backtrack(state))
 			{
-				cmd_back_one_node(token_list, &aux);
+				token_back_one_node(token_list, &aux);
 				length -= 1;
 				i--;
 			}
 			token_type = cmd_get_token_type(state);
 			if (token_type == COMMAND)
 				// token_lexeme = cmd_get_cmd_tokens(first_node_token, length);
-				token_lexeme = token_get_sublist(full_token_list, first_node_index, length);
+				token_lexeme = token_get_sublist(token_list, first_node_index, length);
 			else
 				token_lexeme = NULL;
 			cmd_add_to_list(&cmd_list, token_lexeme, token_type);
@@ -113,6 +114,6 @@ t_cmd_list	*get_cmd_list(t_token_list *full_token_list, int start, int list_leng
 			aux = aux->next;
 	}
 
-	token_clear_list(token_list);
+	token_clear_list(&token_list);
 	return (cmd_list);
 }

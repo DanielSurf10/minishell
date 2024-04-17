@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 15:36:39 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/04/15 17:52:15 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/04/17 00:12:42 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,10 +146,18 @@ int				exp_get_state_60(t_token_list *node);
 //                                  Lexing 3                                  //
 //****************************************************************************//
 
+// Manipulação de lista
 t_cmd_list		*get_cmd_list(t_token_list *full_token_list, int start, int list_length);
 void			cmd_clear_list(t_cmd_list **cmd_list);
 void			cmd_add_to_list(t_cmd_list **cmd_list, t_token_list *token_lexeme, int token_type);
 
+// Coisas de estado
+int				cmd_state_is_final(int state);
+int				cmd_state_requires_backtrack(int state);
+int				cmd_get_token_type(int state);
+int				cmd_get_next_state(int state, t_token_list *node);
+int				cmd_get_state_1(t_token_list *node);
+int				cmd_get_state_30(t_token_list *node);
 
 //****************************************************************************//
 //                                   Utils                                    //
@@ -158,6 +166,6 @@ void			cmd_add_to_list(t_cmd_list **cmd_list, t_token_list *token_lexeme, int to
 // Utils
 
 int				is_metacharacter(char character);
-int				is_an_expression(t_token_list *node);
+int				is_an_command_element(t_token_list *node);
 
 #endif

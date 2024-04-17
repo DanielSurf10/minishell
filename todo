@@ -1,2 +1,6 @@
 [-] Rever funções que estão no .h
 [ ] Mudar ordem das funções do .h, para ficar algo mais padronizado
+[ ] Nas funções para mudar o estado, tem algumas funções que a variável está "state" e outra "new_state". Fazer uma padronização.
+[ ] No "state_change" do lexing 2 (command) a função cmd_get_state_1 e a função cmd_get_state_30 estão considerando "node->token.type != PIPE" e talvez isso não seja o melhor.
+[ ] Quando alguma função de mudar de estado retornar -1, tratar como erro
+[ ] Mudei a ft_strdup, ver o que precisa fazer

@@ -8,7 +8,7 @@ cd /path/to/directory
 pwd
 chmod +x script.sh
 mv file.txt new_directory/
-(ls -l | echo a > out && out sleep 5) || ls -la | grep a
-(ls -l|echo a>out&&outsleep 5)||ls -la|grep a
+(ls -l | echo a > out && sleep 5) || ls -la | grep a
+(ls -l|echo a>out&&sleep 5)||ls -la|grep a
 oi|alo|bom dia|ola
 alo&&oi||       oi

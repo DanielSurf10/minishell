@@ -6,13 +6,13 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 20:05:16 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/04/14 21:36:19 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/04/17 00:29:32 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexing.h"
 
-static t_cmd_list	*cmd_create_node(t_cmd_list *token_lexeme, int token_type)
+static t_cmd_list	*cmd_create_node(t_token_list *token_lexeme, int token_type)
 {
 	t_cmd_list	*new_token;
 
