@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 21:17:57 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/03/25 21:41:53 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/04/30 19:57:44 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,22 @@
 # include <readline/readline.h>
 
 # include "libft.h"
+
+enum e_token
+{
+	WORD,
+	PIPE,
+	REDIRECT_INPUT,
+	REDIRECT_HEREDOC,
+	REDIRECT_OUTPUT,
+	REDIRECT_OUTPUT_APPEND,
+	OR,
+	AND,
+	OPEN_PARENTHESIS,
+	CLOSE_PARENTHESIS,
+	EXPRESSION,
+	COMMAND,
+	SUBSHELL,
+};
 
 #endif

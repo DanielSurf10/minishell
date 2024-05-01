@@ -6,11 +6,11 @@
 #    By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/16 19:05:51 by danbarbo          #+#    #+#              #
-#    Updated: 2024/04/17 00:26:39 by danbarbo         ###   ########.fr        #
+#    Updated: 2024/04/30 16:39:20 by danbarbo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		:= lexing
+NAME		:= executor
 # CFLAGS		:= -Wextra -Wall -Werror -g3
 CFLAGS		:= -g3
 
@@ -22,25 +22,13 @@ LIBS		:= ${LIBFT} -lreadline
 HEADERS		:= -I include \
 				-I ${LIBFT_DIR}/include
 
-SRCS_TOKEN	:= $(shell find src/lexing/token_list -iname "*.c") src/utils.c
-OBJS_TOKEN	:= ${SRCS_TOKEN:%.c=obj/%.o}
+SRCS		:= $(shell find src -iname "*.c")
+OBJS		:= ${SRCS:%.c=obj/%.o}
 
-SRCS_CMD	:= $(shell find src/lexing/command_list -iname "*.c")
-SRCS_CMD	+= ${SRCS_TOKEN}
-OBJS_CMD	:= ${SRCS_CMD:%.c=obj/%.o}
+all: ${NAME}
 
-SRCS_EXP	:= $(shell find src/lexing/expression_list -iname "*.c")
-SRCS_EXP	+= ${SRCS_CMD}
-OBJS_EXP	:= ${SRCS_EXP:%.c=obj/%.o}
-
-token: ${LIBFT} ${OBJS_TOKEN}
-	@${CC} ${CFLAGS} ${HEADERS} tests/token/main.c ${OBJS_TOKEN} ${LIBS} -o token_test
-
-command: ${LIBFT} ${OBJS_CMD}
-	@${CC} ${CFLAGS} ${HEADERS} tests/command/main.c ${OBJS_CMD} ${LIBS} -o command_test
-
-expression: ${LIBFT} ${OBJS_EXP}
-	@${CC} ${CFLAGS} ${HEADERS} tests/expression/main.c ${OBJS_EXP} ${LIBS} -o expression_test
+${NAME}: ${LIBFT} ${OBJS}
+	@cc ${HEADERS} tests/main.c ${OBJS} ${LIBFT} -o ${NAME}
 
 obj/%.o: %.c
 	@mkdir -p ${dir $@}
@@ -55,10 +43,10 @@ clean:
 #	@make -C ${LIBFT_DIR} clean
 
 fclean: clean
-	@rm -f token_test
-	@rm -f command_test
-	@rm -f expression_test
+	@rm -f ${NAME}
 #	@make -C ${LIBFT_DIR} fclean
+
+re: fclean all
 
 val: all
 	@valgrind -q --suppressions=readline.supp \
@@ -80,4 +68,4 @@ valb: all
 				--trace-children-skip='*/bin/*,*/sbin/*,/usr/bin/*' \
 				./${NAME_BONUS}
 
-.PHONY: token command expression clean fclean libft
+.PHONY: all clean fclean libft

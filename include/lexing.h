@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 15:36:39 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/04/17 00:12:42 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/04/30 16:38:15 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,26 +19,11 @@
 
 # include <stdlib.h>
 # include "libft.h"
+# include "minishell.h"
 
 //****************************************************************************//
 //                                   Enums                                    //
 //****************************************************************************//
-
-enum e_token
-{
-	WORD,
-	PIPE,
-	REDIRECT_INPUT,
-	REDIRECT_HEREDOC,
-	REDIRECT_OUTPUT,
-	REDIRECT_OUTPUT_APPEND,
-	OR,
-	AND,
-	OPEN_PARENTHESIS,
-	CLOSE_PARENTHESIS,
-	EXPRESSION,
-	COMMAND
-};
 
 //****************************************************************************//
 //                                  Structs                                   //
