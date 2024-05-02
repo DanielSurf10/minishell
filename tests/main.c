@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:43:25 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/04/30 21:21:33 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/02 12:38:09 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,8 @@ int	exec_or(t_exec_tree *tree)
 
 int	exec_tree(t_exec_tree *tree)
 {
+	int	pid;
 	int	ret_code = -1;
-
-	// if (tree == NULL)
-	// 	return ;
 
 	if (tree->type == COMMAND)
 		ret_code = exec_cmd(tree->command);
@@ -73,6 +71,16 @@ int	exec_tree(t_exec_tree *tree)
 		ret_code = exec_and(tree);
 	else if (tree->type == OR)
 		ret_code = exec_or(tree);
+	else if (tree->type == SUBSHELL)
+	{
+		printf("Entrando no subshell\n");
+		pid = fork();
+		if (pid != 0)						// Pai
+			waitpid(pid, &ret_code, 0);
+		else								// Filho
+			exit(exec_tree(tree->subshell));
+		printf("Saindo no subshell\n");
+	}
 	return (ret_code);
 }
 
@@ -162,7 +170,7 @@ int	main()
 	// esquerda direita subshell direita
 	tree->left->right->subshell->right = malloc(sizeof(t_exec_tree));
 	tree->left->right->subshell->right->type = COMMAND;
-	tree->left->right->subshell->right->command = get_token_list("PWD");
+	tree->left->right->subshell->right->command = get_token_list("pwd");
 
 	// esquerda direita subshell esquerda esquerda
 	tree->left->right->subshell->left->left = malloc(sizeof(t_exec_tree));
