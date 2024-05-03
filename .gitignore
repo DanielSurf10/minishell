@@ -2,6 +2,5 @@
 *.a
 a.out
 minishell
-token_test
-expression_test
-command_test
+./executor
+executor
