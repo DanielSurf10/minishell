@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:43:25 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/03 15:09:22 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/03 20:17:56 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,8 +123,14 @@ int	exec_pipe(t_exec_tree *tree)
 		dup2(old_fd[0], STDIN_FILENO);
 		close(old_fd[0]);
 	}
-	else
+	else if (tree->type == COMMAND)
 		pid = exec_cmd(tree->command);
+	else if (tree->type == SUBSHELL)
+	{
+		pid = fork();
+		if (pid == 0)
+			exit(exec_tree(tree->subshell));
+	}
 
 
 // 	old_fd[0] = dup(STDIN_FILENO);
@@ -194,8 +200,6 @@ int	exec_tree(t_exec_tree *tree)
 				ret_code = (num[1] >> 8) & 0xFF;
 			num[0] = wait(&num[1]);
 		}
-
-		// ret_code = exec_pipe(tree);
 	}
 	return (ret_code);
 }
@@ -367,6 +371,31 @@ int	main()
 
 	// pipe
 
+// 	// primeiro
+// 	tree = malloc(sizeof(t_exec_tree));
+// 	tree->type = PIPE;
+//
+// 	// esquerda
+// 	tree->left = malloc(sizeof(t_exec_tree));
+// 	tree->left->type = PIPE;
+//
+// 	// direita
+// 	tree->right = malloc(sizeof(t_exec_tree));
+// 	tree->right->type = COMMAND;
+// 	tree->right->command = get_token_list("/bin/grep 1");
+//
+// 	// esquerda esquerda
+// 	tree->left->left = malloc(sizeof(t_exec_tree));
+// 	tree->left->left->type = COMMAND;
+// 	tree->left->left->command = get_token_list("/bin/ls -l");
+//
+// 	// esquerda direita
+// 	tree->left->right = malloc(sizeof(t_exec_tree));
+// 	tree->left->right->type = COMMAND;
+// 	tree->left->right->command = get_token_list("/bin/hostname -I");
+
+	// pipe com subshell
+
 	// primeiro
 	tree = malloc(sizeof(t_exec_tree));
 	tree->type = PIPE;
@@ -375,20 +404,45 @@ int	main()
 	tree->left = malloc(sizeof(t_exec_tree));
 	tree->left->type = PIPE;
 
-	// direita
+	// direito
 	tree->right = malloc(sizeof(t_exec_tree));
 	tree->right->type = COMMAND;
-	tree->right->command = get_token_list("/bin/grep o");
+	tree->right->command = get_token_list("/bin/cat -e");
 
-	// esquerda esquerda
+	// esquerdo esquerdo
 	tree->left->left = malloc(sizeof(t_exec_tree));
 	tree->left->left->type = COMMAND;
-	tree->left->left->command = get_token_list("ls -l");
+	tree->left->left->command = get_token_list("/bin/ls -l");
 
-	// esquerda direita
+	// esquerdo direito
 	tree->left->right = malloc(sizeof(t_exec_tree));
-	tree->left->right->type = COMMAND;
-	tree->left->right->command = get_token_list("/bin/cat -e");
+	tree->left->right->type = SUBSHELL;
+
+	// esquerdo direito subshell
+	tree->left->right->subshell = malloc(sizeof(t_exec_tree));
+	tree->left->right->subshell->type = COMMAND;
+	tree->left->right->subshell->command = get_token_list("/bin/grep r--");
+
+
+	// pipe com subshell
+
+// 	// primeiro
+// 	tree = malloc(sizeof(t_exec_tree));
+// 	tree->type = PIPE;
+//
+// 	// esquerda
+// 	tree->left = malloc(sizeof(t_exec_tree));
+// 	tree->left->type = COMMAND;
+// 	tree->left->command = get_token_list("/bin/ls -l");
+//
+// 	// direito
+// 	tree->right = malloc(sizeof(t_exec_tree));
+// 	tree->right->type = SUBSHELL;
+//
+// 	// direito subshell
+// 	tree->right->subshell = malloc(sizeof(t_exec_tree));
+// 	tree->right->subshell->type = COMMAND;
+// 	tree->right->subshell->command = get_token_list("/bin/cat -e");
 
 
 	ret_code = exec_tree(tree);
