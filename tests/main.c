@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:43:25 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/03 11:58:00 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/03 15:09:22 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	print_tree(t_exec_tree *exec_tree)
 int	exec_cmd(t_token_list *command)
 {
 	int	pid;
-	int	ret_code;
 
 	char	*cmd = command->token.lexeme;
 	char	*argv[] = {command->token.lexeme, command->next->token.lexeme, NULL};
@@ -42,11 +41,7 @@ int	exec_cmd(t_token_list *command)
 		exit(1);
 	}
 
-	// Isso aqui vai sair
-	waitpid(pid, &ret_code, 0);
-
-	return (ret_code);
-	// return (pid);
+	return (pid);
 }
 
 int	exec_and(t_exec_tree *tree)
@@ -73,33 +68,32 @@ int	exec_or(t_exec_tree *tree)
 	return (ret_code);
 }
 
-int	exec_cmd_pipe(t_token_list *command, int *pipe_fd)
-{
-	int	pid;
-
-	char	*cmd = command->token.lexeme;
-	char	*argv[] = {command->token.lexeme, command->next->token.lexeme, NULL};
-
-	pid = fork();
-
-	if (pid == 0)
-	{
-		close(pipe_fd[0]);
-		close(pipe_fd[1]);
-		execve(cmd, argv, __environ);
-		exit(1);
-	}
-
-	return (pid);
-}
+// int	exec_cmd_pipe(t_token_list *command, int *pipe_fd)
+// {
+// 	int	pid;
+//
+// 	char	*cmd = command->token.lexeme;
+// 	char	*argv[] = {command->token.lexeme, command->next->token.lexeme, NULL};
+//
+// 	pid = fork();
+//
+// 	if (pid == 0)
+// 	{
+// 		close(pipe_fd[0]);
+// 		close(pipe_fd[1]);
+// 		execve(cmd, argv, __environ);
+// 		exit(1);
+// 	}
+//
+// 	return (pid);
+// }
 
 int	exec_pipe(t_exec_tree *tree)
 {
-	int	ret_code;
-	int	pid[2];
+	int	ret_code = 0;
+	int	pid;
 	int	old_fd[2];
 	int	pipe_fd[2];
-
 
 	if (tree->type == PIPE)
 	{
@@ -107,19 +101,30 @@ int	exec_pipe(t_exec_tree *tree)
 		old_fd[0] = dup(STDIN_FILENO);
 		old_fd[1] = dup(STDOUT_FILENO);
 
-		redir_out();
+		// Comando da esquerda
+		// redir_out();
+		dup2(pipe_fd[1], STDOUT_FILENO);
+		close(pipe_fd[1]);
+
 		exec_pipe(tree->left);
 
-		redir_back_old_fd_out();
-		redir_in();
-		exec_pipe(tree->right);
-		redir_back_old_fd_in();
+		// Comando da direita
+		// redir_back_old_fd_out();
+		dup2(old_fd[1], STDOUT_FILENO);
+		close(old_fd[1]);
+
+		// redir_in();
+		dup2(pipe_fd[0], STDIN_FILENO);
+		close(pipe_fd[0]);
+
+		pid = exec_pipe(tree->right);
+
+		// redir_back_old_fd_in();
+		dup2(old_fd[0], STDIN_FILENO);
+		close(old_fd[0]);
 	}
 	else
-	{
-		exec_cmd_pipe(tree->command, pipe_fd);
-		// exec_cmd(tree->right);
-	}
+		pid = exec_cmd(tree->command);
 
 
 // 	old_fd[0] = dup(STDIN_FILENO);
@@ -145,20 +150,20 @@ int	exec_pipe(t_exec_tree *tree)
 // 	waitpid(pid[0], NULL, 0);
 // 	waitpid(pid[1], &ret_code, 0);
 
-	return (ret_code);
+	return (pid);
 }
 
 int	exec_tree(t_exec_tree *tree)
 {
 	int	pid;
+	int	num[2];
 	int	ret_code = -1;
 
 	if (tree->type == COMMAND)
 	{
-		// pid = exec_cmd(tree->command);
-		// waitpid(pid, &ret_code, 0);
-
-		ret_code = exec_cmd(tree->command);
+		pid = exec_cmd(tree->command);
+		waitpid(pid, &ret_code, 0);
+		ret_code = (ret_code >> 8) & 0xFF;
 	}
 	else if (tree->type == AND)
 		ret_code = exec_and(tree);
@@ -169,13 +174,29 @@ int	exec_tree(t_exec_tree *tree)
 		printf("Entrando no subshell\n");
 		pid = fork();
 		if (pid != 0)						// Pai
+		{
 			waitpid(pid, &ret_code, 0);
+			ret_code = (ret_code >> 8) & 0xFF;
+		}
 		else								// Filho
 			exit(exec_tree(tree->subshell));
 		printf("Saindo no subshell\n");
 	}
 	else if (tree->type == PIPE)
-		ret_code = exec_pipe(tree);
+	{
+		pid = exec_pipe(tree);
+
+		num[0] = wait(&num[1]);
+
+		while (num[0] != -1)
+		{
+			if (num[0] == pid)
+				ret_code = (num[1] >> 8) & 0xFF;
+			num[0] = wait(&num[1]);
+		}
+
+		// ret_code = exec_pipe(tree);
+	}
 	return (ret_code);
 }
 
@@ -199,21 +220,21 @@ int	main()
 // 	// Right leaf
 // 	tree->right = malloc(sizeof(t_exec_tree));
 // 	tree->right->type = COMMAND;
-// 	tree->right->command = get_token_list("echo a");
+// 	tree->right->command = get_token_list("/bin/echo a");
 // 	tree->right->left = NULL;
 // 	tree->right->right = NULL;
 //
 // 	// Left left leaf
 // 	tree->left->left = malloc(sizeof(t_exec_tree));
 // 	tree->left->left->type = COMMAND;
-// 	tree->left->left->command = get_token_list("ls");
+// 	tree->left->left->command = get_token_list("/bin/ls -l");
 // 	tree->left->left->left = NULL;
 // 	tree->left->left->right = NULL;
 //
 // 	// Left right leaf
 // 	tree->left->right = malloc(sizeof(t_exec_tree));
 // 	tree->left->right->type = COMMAND;
-// 	tree->left->right->command = get_token_list("ping");
+// 	tree->left->right->command = get_token_list("/bin/hostname -I");
 // 	tree->left->right->left = NULL;
 // 	tree->left->right->right = NULL;
 
@@ -328,24 +349,46 @@ int	main()
 
 	// Pipe
 
+// 	// primeiro
+// 	tree = malloc(sizeof(t_exec_tree));
+// 	tree->type = PIPE;
+// 	tree->command = NULL;
+//
+// 	// esquerda
+// 	tree->left = malloc(sizeof(t_exec_tree));
+// 	tree->left->type = COMMAND;
+// 	tree->left->command = get_token_list("/bin/ls -l");
+//
+// 	// direita
+// 	tree->right = malloc(sizeof(t_exec_tree));
+// 	tree->right->type = COMMAND;
+// 	tree->right->command = get_token_list("/bin/cat -e");
+
+
+	// pipe
+
 	// primeiro
 	tree = malloc(sizeof(t_exec_tree));
 	tree->type = PIPE;
-	tree->command = NULL;
 
 	// esquerda
 	tree->left = malloc(sizeof(t_exec_tree));
-	tree->left->type = COMMAND;
-	tree->left->command = get_token_list("/bin/ls -l");
-	tree->left->left = NULL;
-	tree->left->right = NULL;
+	tree->left->type = PIPE;
 
 	// direita
 	tree->right = malloc(sizeof(t_exec_tree));
 	tree->right->type = COMMAND;
-	tree->right->command = get_token_list("/bin/cat -e");
-	tree->right->left = NULL;
-	tree->right->right = NULL;
+	tree->right->command = get_token_list("/bin/grep o");
+
+	// esquerda esquerda
+	tree->left->left = malloc(sizeof(t_exec_tree));
+	tree->left->left->type = COMMAND;
+	tree->left->left->command = get_token_list("ls -l");
+
+	// esquerda direita
+	tree->left->right = malloc(sizeof(t_exec_tree));
+	tree->left->right->type = COMMAND;
+	tree->left->right->command = get_token_list("/bin/cat -e");
 
 
 	ret_code = exec_tree(tree);
