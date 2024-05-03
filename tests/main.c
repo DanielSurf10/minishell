@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:43:25 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/03 11:55:23 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/03 11:58:00 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,11 @@ int	exec_cmd(t_token_list *command)
 		exit(1);
 	}
 
+	// Isso aqui vai sair
 	waitpid(pid, &ret_code, 0);
 
 	return (ret_code);
+	// return (pid);
 }
 
 int	exec_and(t_exec_tree *tree)
@@ -114,7 +116,10 @@ int	exec_pipe(t_exec_tree *tree)
 		redir_back_old_fd_in();
 	}
 	else
+	{
 		exec_cmd_pipe(tree->command, pipe_fd);
+		// exec_cmd(tree->right);
+	}
 
 
 // 	old_fd[0] = dup(STDIN_FILENO);
@@ -149,7 +154,12 @@ int	exec_tree(t_exec_tree *tree)
 	int	ret_code = -1;
 
 	if (tree->type == COMMAND)
+	{
+		// pid = exec_cmd(tree->command);
+		// waitpid(pid, &ret_code, 0);
+
 		ret_code = exec_cmd(tree->command);
+	}
 	else if (tree->type == AND)
 		ret_code = exec_and(tree);
 	else if (tree->type == OR)
