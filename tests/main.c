@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:43:25 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/03 20:17:56 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/04 16:43:42 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,67 @@ void	print_tree(t_exec_tree *exec_tree)
 		printf("%s\n", exec_tree->command->token.lexeme);
 }
 
-int	exec_cmd(t_token_list *command)
+int	open_redir(char *path_to_file, int type)
+{
+	int	fd;
+
+	if (type == REDIRECT_INPUT)
+		fd = open(path_to_file, O_RDONLY);
+	else if (type == REDIRECT_OUTPUT)
+		fd = open(path_to_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	else if (type == REDIRECT_OUTPUT_APPEND)
+		fd = open(path_to_file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	return (fd);
+}
+
+void	exec_cmd_fork(t_exec_tree *tree)
+{
+	int	fd_redir = 0;
+
+	if (tree->type >= REDIRECT_INPUT && tree->type <= REDIRECT_OUTPUT_APPEND)
+	{
+		fd_redir = open_redir(tree->left->command->token.lexeme, tree->type);
+		if (fd_redir != -1)
+			exit(1);
+
+		if (tree->type == REDIRECT_INPUT)	// Talvez hereredoc
+			dup2(fd_redir, STDIN_FILENO);
+		else if (tree->type == REDIRECT_OUTPUT || tree->type == REDIRECT_OUTPUT_APPEND)
+			dup2(fd_redir, STDOUT_FILENO);
+		close(fd_redir);
+		exec_cmd_fork(tree->right);
+	}
+	else
+	{
+		char	*argv[] = {tree->command->token.lexeme, tree->command->next->token.lexeme, NULL};
+		char	*cmd = tree->command->token.lexeme;
+		execve(cmd, argv, __environ);
+	}
+	exit(1);
+}
+
+int	exec_cmd(t_exec_tree *tree)
 {
 	int	pid;
+// 	int	all_ok;
+//
+// 	char	*cmd;
 
-	char	*cmd = command->token.lexeme;
-	char	*argv[] = {command->token.lexeme, command->next->token.lexeme, NULL};
+// 	all_ok = 1;
+// 	if (tree->type >= REDIRECT_INPUT && tree->type <= REDIRECT_OUTPUT_APPEND)
+// 		all_ok = exec_redirect(tree);
+//
+// 	char	*argv[] = {tree->command->token.lexeme, tree->command->next->token.lexeme, NULL};
+// 	cmd = tree->command->token.lexeme;
 
 	pid = fork();
 
 	if (pid == 0)
-	{
-		execve(cmd, argv, __environ);
-		exit(1);
-	}
+		exec_cmd_fork(tree);
+	// {
+	// 	execve(cmd, argv, __environ);
+	// 	exit(1);
+	// }
 
 	return (pid);
 }
@@ -124,7 +171,7 @@ int	exec_pipe(t_exec_tree *tree)
 		close(old_fd[0]);
 	}
 	else if (tree->type == COMMAND)
-		pid = exec_cmd(tree->command);
+		pid = exec_cmd(tree);
 	else if (tree->type == SUBSHELL)
 	{
 		pid = fork();
@@ -165,9 +212,9 @@ int	exec_tree(t_exec_tree *tree)
 	int	num[2];
 	int	ret_code = -1;
 
-	if (tree->type == COMMAND)
+	if (tree->type == COMMAND || tree->type >= REDIRECT_INPUT && tree->type <= REDIRECT_OUTPUT_APPEND)
 	{
-		pid = exec_cmd(tree->command);
+		pid = exec_cmd(tree);
 		waitpid(pid, &ret_code, 0);
 		ret_code = (ret_code >> 8) & 0xFF;
 	}
@@ -177,7 +224,6 @@ int	exec_tree(t_exec_tree *tree)
 		ret_code = exec_or(tree);
 	else if (tree->type == SUBSHELL)
 	{
-		printf("Entrando no subshell\n");
 		pid = fork();
 		if (pid != 0)						// Pai
 		{
@@ -186,7 +232,6 @@ int	exec_tree(t_exec_tree *tree)
 		}
 		else								// Filho
 			exit(exec_tree(tree->subshell));
-		printf("Saindo no subshell\n");
 	}
 	else if (tree->type == PIPE)
 	{
@@ -396,32 +441,32 @@ int	main()
 
 	// pipe com subshell
 
-	// primeiro
-	tree = malloc(sizeof(t_exec_tree));
-	tree->type = PIPE;
-
-	// esquerda
-	tree->left = malloc(sizeof(t_exec_tree));
-	tree->left->type = PIPE;
-
-	// direito
-	tree->right = malloc(sizeof(t_exec_tree));
-	tree->right->type = COMMAND;
-	tree->right->command = get_token_list("/bin/cat -e");
-
-	// esquerdo esquerdo
-	tree->left->left = malloc(sizeof(t_exec_tree));
-	tree->left->left->type = COMMAND;
-	tree->left->left->command = get_token_list("/bin/ls -l");
-
-	// esquerdo direito
-	tree->left->right = malloc(sizeof(t_exec_tree));
-	tree->left->right->type = SUBSHELL;
-
-	// esquerdo direito subshell
-	tree->left->right->subshell = malloc(sizeof(t_exec_tree));
-	tree->left->right->subshell->type = COMMAND;
-	tree->left->right->subshell->command = get_token_list("/bin/grep r--");
+// 	// primeiro
+// 	tree = malloc(sizeof(t_exec_tree));
+// 	tree->type = PIPE;
+//
+// 	// esquerda
+// 	tree->left = malloc(sizeof(t_exec_tree));
+// 	tree->left->type = PIPE;
+//
+// 	// direito
+// 	tree->right = malloc(sizeof(t_exec_tree));
+// 	tree->right->type = COMMAND;
+// 	tree->right->command = get_token_list("/bin/cat -e");
+//
+// 	// esquerdo esquerdo
+// 	tree->left->left = malloc(sizeof(t_exec_tree));
+// 	tree->left->left->type = COMMAND;
+// 	tree->left->left->command = get_token_list("/bin/ls -l");
+//
+// 	// esquerdo direito
+// 	tree->left->right = malloc(sizeof(t_exec_tree));
+// 	tree->left->right->type = SUBSHELL;
+//
+// 	// esquerdo direito subshell
+// 	tree->left->right->subshell = malloc(sizeof(t_exec_tree));
+// 	tree->left->right->subshell->type = COMMAND;
+// 	tree->left->right->subshell->command = get_token_list("/bin/grep r--");
 
 
 	// pipe com subshell
