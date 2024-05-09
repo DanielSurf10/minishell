@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 21:17:57 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/04 16:32:46 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/09 18:37:49 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ enum e_token
 	EXPRESSION,
 	COMMAND,
 	SUBSHELL,
-	FILE
+	// FILE
 };
 
 #endif
