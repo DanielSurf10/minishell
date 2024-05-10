@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 17:44:55 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/10 20:15:04 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/10 20:38:32 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,8 @@ t_exec_tree	*get_tree(t_token_list *token_list)
 
 	tree = make_tree(token_list);
 
+	token_list = invert_list(token_list);
+
 	return (tree);
 }
 
@@ -211,12 +213,12 @@ int main()
 	t_token_list	*token_list;
 	t_exec_tree		*tree;
 
-	token_list = get_token_list("ls || pwd && echo");
+	token_list = get_token_list("ls | cat -e || echo oi");
 
 	tree = get_tree(token_list);
 
 	print_tree(tree);
 
-	free_tree(&tree);
 	token_clear_list(&token_list);
+	free_tree(&tree);
 }
