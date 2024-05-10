@@ -6,7 +6,7 @@
 #    By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/16 19:05:51 by danbarbo          #+#    #+#              #
-#    Updated: 2024/05/09 18:43:27 by danbarbo         ###   ########.fr        #
+#    Updated: 2024/05/10 18:09:27 by danbarbo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,8 @@ OBJ_MAIN	:= obj/main.o
 all: ${NAME}
 
 ${NAME}: ${LIBFT} ${OBJS} ${OBJ_MAIN}
-	@cc ${HEADERS} ${OBJ_MAIN} ${OBJS} ${LIBFT} -o ${NAME}
+#	@cc ${HEADERS} ${OBJ_MAIN} ${OBJS} ${LIBFT} -o ${NAME}
+	@cc ${HEADERS} ${OBJS} ${LIBFT} -o ${NAME}
 
 obj/%.o: %.c
 	@mkdir -p ${dir $@}
