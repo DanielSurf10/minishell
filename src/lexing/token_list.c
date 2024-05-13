@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 16:27:38 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/13 16:02:43 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/13 17:03:15 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,18 @@ t_token_list	*token_get_node_index(t_token_list *token_list, int index)
 		i++;
 	}
 	return (aux);
+}
+
+t_token_list	*invert_list(t_token_list *head)
+{
+	t_token_list	*rest;
+
+	if (head == NULL || head->next == NULL)
+		return (head);
+	rest = invert_list(head->next);
+	head->next->next = head;
+	head->next = NULL;
+	return (rest);
 }
 
 // t_token_list	*cmd_get_cmd_tokens(t_token_list *token_list, int length)		// Aqui dá pra chamar de algo token_sublist ou sla

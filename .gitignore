@@ -2,5 +2,4 @@
 *.a
 a.out
 minishell
-./executor
-executor
+executor_p
