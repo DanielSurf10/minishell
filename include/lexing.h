@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 15:36:39 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/04/30 16:38:15 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/13 16:02:55 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void			token_clear_list(t_token_list **token_list);
 int				token_list_size(t_token_list *token_list);
 void			token_back_one_node(t_token_list *token_list, t_token_list **node_to_back);
 t_token_list	*token_get_sublist(t_token_list *token_list, int start, int list_length);
+t_token_list	*token_get_node_index(t_token_list *token_list, int index);
 
 // Coisas de estados
 int				token_state_is_final(int state);
