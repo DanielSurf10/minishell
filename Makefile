@@ -6,11 +6,11 @@
 #    By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/16 19:05:51 by danbarbo          #+#    #+#              #
-#    Updated: 2024/05/13 17:00:18 by danbarbo         ###   ########.fr        #
+#    Updated: 2024/05/14 16:43:32 by danbarbo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		:= executor_p
+NAME		:= executor_test
 # CFLAGS		:= -Wextra -Wall -Werror -g3
 CFLAGS		:= -g3
 
@@ -24,21 +24,14 @@ HEADERS		:= -I include \
 
 SRCS		:= $(shell find src -iname "*.c")
 OBJS		:= ${SRCS:%.c=obj/%.o}
-SRC_MAIN	:= tests/main.c
-OBJ_MAIN	:= obj/main.o
 
 all: ${NAME}
 
-${NAME}: ${LIBFT} ${OBJS} ${OBJ_MAIN}
-#	@cc ${HEADERS} ${OBJ_MAIN} ${OBJS} ${LIBFT} -o ${NAME}
-	@cc ${HEADERS} ${OBJS} ${LIBFT} -o ${NAME}
+${NAME}: ${LIBFT} ${OBJS}
+#	@cc ${HEADERS} ${OBJS} ${LIBFT} -o ${NAME}
+	@cc ${HEADERS} ${OBJS} tests/main_exec_tree.c ${LIBFT} -o ${NAME}
 
 obj/%.o: %.c
-	@mkdir -p ${dir $@}
-	@${CC} ${CFLAGS} -c ${HEADERS} $< -o $@
-	@printf "Compiling: ${notdir $<}\n"
-
-obj/main.o: tests/main.c
 	@mkdir -p ${dir $@}
 	@${CC} ${CFLAGS} -c ${HEADERS} $< -o $@
 	@printf "Compiling: ${notdir $<}\n"

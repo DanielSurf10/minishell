@@ -6,48 +6,57 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:02:10 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/13 17:05:55 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/14 16:44:31 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-int	open_redir(char *path_to_file, int type)
-{
-	int	fd;
+// int	open_redir(char *path_to_file, int type)
+// {
+// 	int	fd;
+//
+// 	if (type == REDIRECT_INPUT)
+// 		fd = open(path_to_file, O_RDONLY);
+// 	else if (type == REDIRECT_OUTPUT)
+// 		fd = open(path_to_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+// 	else if (type == REDIRECT_OUTPUT_APPEND)
+// 		fd = open(path_to_file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+// 	return (fd);
+// }
 
-	if (type == REDIRECT_INPUT)
-		fd = open(path_to_file, O_RDONLY);
-	else if (type == REDIRECT_OUTPUT)
-		fd = open(path_to_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	else if (type == REDIRECT_OUTPUT_APPEND)
-		fd = open(path_to_file, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	return (fd);
-}
+// void	exec_cmd_fork(t_exec_tree *tree)
+// {
+// 	int	fd_redir = 0;
+//
+// 	if (tree->type >= REDIRECT_INPUT && tree->type <= REDIRECT_OUTPUT_APPEND)
+// 	{
+// 		fd_redir = open_redir(tree->left->command->token.lexeme, tree->type);
+// 		if (fd_redir != -1)
+// 			exit(1);
+//
+// 		if (tree->type == REDIRECT_INPUT)	// Talvez hereredoc
+// 			dup2(fd_redir, STDIN_FILENO);
+// 		else if (tree->type == REDIRECT_OUTPUT || tree->type == REDIRECT_OUTPUT_APPEND)
+// 			dup2(fd_redir, STDOUT_FILENO);
+// 		close(fd_redir);
+// 		exec_cmd_fork(tree->right);
+// 	}
+// 	else
+// 	{
+// 		char	*argv[] = {tree->command->token.lexeme, tree->command->next->token.lexeme, NULL};
+// 		char	*cmd = tree->command->token.lexeme;
+// 		execve(cmd, argv, __environ);
+// 	}
+// 	exit(1);
+// }
 
 void	exec_cmd_fork(t_exec_tree *tree)
 {
-	int	fd_redir = 0;
+	char	*argv[] = {tree->command->token.lexeme, tree->command->next->token.lexeme, NULL};
+	char	*cmd = tree->command->token.lexeme;
 
-	if (tree->type >= REDIRECT_INPUT && tree->type <= REDIRECT_OUTPUT_APPEND)
-	{
-		fd_redir = open_redir(tree->left->command->token.lexeme, tree->type);
-		if (fd_redir != -1)
-			exit(1);
-
-		if (tree->type == REDIRECT_INPUT)	// Talvez hereredoc
-			dup2(fd_redir, STDIN_FILENO);
-		else if (tree->type == REDIRECT_OUTPUT || tree->type == REDIRECT_OUTPUT_APPEND)
-			dup2(fd_redir, STDOUT_FILENO);
-		close(fd_redir);
-		exec_cmd_fork(tree->right);
-	}
-	else
-	{
-		char	*argv[] = {tree->command->token.lexeme, tree->command->next->token.lexeme, NULL};
-		char	*cmd = tree->command->token.lexeme;
-		execve(cmd, argv, __environ);
-	}
+	execve(cmd, argv, __environ);
 	exit(1);
 }
 
