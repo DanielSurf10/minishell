@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 16:27:38 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/13 17:03:15 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/14 16:50:26 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static t_token_list	*token_create_node(char *lexeme, int token_type)
 	return (new_token);
 }
 
-void	token_add_to_list(t_token_list **token_list, char *lexeme, int token_type)
+void	token_add_to_list(t_token_list **token_list, char *lexeme, \
+		int token_type)
 {
 	t_token_list	*new_token;
 	t_token_list	*last_node;
@@ -38,42 +39,8 @@ void	token_add_to_list(t_token_list **token_list, char *lexeme, int token_type)
 		*token_list = new_token;
 }
 
-void	token_clear_list(t_token_list **token_list)
-{
-	t_token_list	*aux1;
-	t_token_list	*aux2;
-
-	if (token_list)
-	{
-		aux1 = *token_list;
-		while (aux1)
-		{
-			aux2 = aux1->next;
-			if (aux1->token.lexeme)
-				free(aux1->token.lexeme);
-			free(aux1);
-			aux1 = aux2;
-		}
-		*token_list = NULL;
-	}
-}
-
-int	token_list_size(t_token_list *token_list)
-{
-	int				i;
-	t_token_list	*aux;
-
-	i = 0;
-	aux = token_list;
-	while (aux)
-	{
-		i++;
-		aux = aux->next;
-	}
-	return (i);
-}
-
-void	token_back_one_node(t_token_list *token_list, t_token_list **node_to_back)
+void	token_back_one_node(t_token_list *token_list, \
+		t_token_list **node_to_back)
 {
 	t_token_list	*aux;
 
@@ -83,7 +50,8 @@ void	token_back_one_node(t_token_list *token_list, t_token_list **node_to_back)
 	*node_to_back = aux;
 }
 
-t_token_list	*token_get_sublist(t_token_list *token_list, int start, int list_length)
+t_token_list	*token_get_sublist(t_token_list *token_list, int start, \
+				int list_length)
 {
 	int				i;
 	t_token_list	*aux;
@@ -92,34 +60,20 @@ t_token_list	*token_get_sublist(t_token_list *token_list, int start, int list_le
 	i = 0;
 	aux = token_list;
 	new_token_list = NULL;
-	while (aux && i < start)		// Essa primeira parte chega até o primeiro nó
-	{									// Até o indice do start
-		aux = aux->next;
-		i++;							// Aqui o i conta até chegar no start
-	}
-	i = 0;
-	while (aux && i < list_length)	// Essa parte copia os nós para uma outra lista até um certo nó
-	{									// Até a lista ter o tamanho list_length
-		token_add_to_list(&new_token_list, ft_strdup(aux->token.lexeme), aux->token.type);
-		aux = aux->next;
-		i++;							// Aqui o i conta até chegar no tamanho máximo
-	}
-	return (new_token_list);
-}
-
-t_token_list	*token_get_node_index(t_token_list *token_list, int index)
-{
-	int				i;
-	t_token_list	*aux;
-
-	i = 0;
-	aux = token_list;
-	while (aux && i < index)
+	while (aux && i < start)
 	{
 		aux = aux->next;
 		i++;
 	}
-	return (aux);
+	i = 0;
+	while (aux && i < list_length)
+	{
+		token_add_to_list(&new_token_list, ft_strdup(aux->token.lexeme), \
+			aux->token.type);
+		aux = aux->next;
+		i++;
+	}
+	return (new_token_list);
 }
 
 t_token_list	*invert_list(t_token_list *head)
@@ -133,21 +87,3 @@ t_token_list	*invert_list(t_token_list *head)
 	head->next = NULL;
 	return (rest);
 }
-
-// t_token_list	*cmd_get_cmd_tokens(t_token_list *token_list, int length)		// Aqui dá pra chamar de algo token_sublist ou sla
-// {
-// 	int				i;
-// 	t_token_list	*aux;
-// 	t_token_list	*new_token_list;
-//
-// 	i = 0;
-// 	aux = token_list;
-// 	new_token_list = NULL;
-// 	while (aux && i < length)
-// 	{
-// 		token_add_to_list(&new_token_list, ft_strdup(aux->token.lexeme), aux->token.type);
-// 		aux = aux->next;
-// 		i++;
-// 	}
-// 	return (new_token_list);
-// }
