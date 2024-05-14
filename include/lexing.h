@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 15:36:39 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/04/17 00:12:42 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/14 14:00:40 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,38 +61,6 @@ typedef struct s_token_list
 }	t_token_list;
 
 //****************************************************************************//
-//                                  COMMAND                                   //
-//****************************************************************************//
-
-typedef struct s_cmd
-{
-	int				type;
-	t_token_list	*token_list;
-}	t_cmd;
-
-typedef struct s_cmd_list
-{
-	t_cmd				command;
-	struct s_cmd_list	*next;
-}	t_cmd_list;
-
-//****************************************************************************//
-//                                 Expression                                 //
-//****************************************************************************//
-
-typedef struct s_exp
-{
-	int				type;
-	t_cmd_list		*cmd_list;
-}	t_exp;
-
-typedef struct s_exp_list
-{
-	t_exp				expression;
-	struct s_exp_list	*next;
-}	t_exp_list;
-
-//****************************************************************************//
 //                                 Functions                                  //
 //****************************************************************************//
 
@@ -124,46 +92,8 @@ int				token_get_state_81(char character);
 int				token_get_state_82(char character);
 
 //****************************************************************************//
-//                                  Lexing 2                                  //
-//****************************************************************************//
-
-// Manipulação de lista
-t_exp_list		*get_exp_list(t_token_list *token_list);
-// t_token_list	*exp_get_first_n_nodes(t_token_list *token_list, int length);
-void			exp_add_to_list(t_exp_list **exp_list, t_cmd_list *cmd_token_lexeme, int token_type);
-void			exp_clear_list(t_exp_list **exp_list);
-
-// Coisas de estado
-int				exp_get_next_state(int state, t_token_list *node);
-int				exp_state_is_final(int state);
-int				exp_get_token_type(int state);
-int				exp_state_requires_backtrack(int state);
-
-int				exp_get_state_1(t_token_list *node);
-int				exp_get_state_60(t_token_list *node);
-
-//****************************************************************************//
-//                                  Lexing 3                                  //
-//****************************************************************************//
-
-// Manipulação de lista
-t_cmd_list		*get_cmd_list(t_token_list *full_token_list, int start, int list_length);
-void			cmd_clear_list(t_cmd_list **cmd_list);
-void			cmd_add_to_list(t_cmd_list **cmd_list, t_token_list *token_lexeme, int token_type);
-
-// Coisas de estado
-int				cmd_state_is_final(int state);
-int				cmd_state_requires_backtrack(int state);
-int				cmd_get_token_type(int state);
-int				cmd_get_next_state(int state, t_token_list *node);
-int				cmd_get_state_1(t_token_list *node);
-int				cmd_get_state_30(t_token_list *node);
-
-//****************************************************************************//
 //                                   Utils                                    //
 //****************************************************************************//
-
-// Utils
 
 int				is_metacharacter(char character);
 int				is_an_command_element(t_token_list *node);
