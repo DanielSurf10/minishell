@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:43:25 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/13 18:00:35 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/15 16:15:34 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,31 +33,31 @@ int	main()
 
 	// && e ||
 
-// 	// First branch
+// 	// primeiro
 // 	tree = malloc(sizeof(t_exec_tree));
 // 	tree->type = OR;
 // 	tree->command = get_token_list("||");
 //
-// 	// Left leaf
+// 	// Left
 // 	tree->left = malloc(sizeof(t_exec_tree));
 // 	tree->left->type = AND;
 // 	tree->left->command = get_token_list("&&");
 //
-// 	// Right leaf
+// 	// Right
 // 	tree->right = malloc(sizeof(t_exec_tree));
 // 	tree->right->type = COMMAND;
 // 	tree->right->command = get_token_list("/bin/echo a");
 // 	tree->right->left = NULL;
 // 	tree->right->right = NULL;
 //
-// 	// Left left leaf
+// 	// Left left
 // 	tree->left->left = malloc(sizeof(t_exec_tree));
 // 	tree->left->left->type = COMMAND;
 // 	tree->left->left->command = get_token_list("/bin/ls -l");
 // 	tree->left->left->left = NULL;
 // 	tree->left->left->right = NULL;
 //
-// 	// Left right leaf
+// 	// Left right
 // 	tree->left->right = malloc(sizeof(t_exec_tree));
 // 	tree->left->right->type = COMMAND;
 // 	tree->left->right->command = get_token_list("/bin/hostname -I");
@@ -266,6 +266,13 @@ int	main()
 // 	tree->right->subshell->type = COMMAND;
 // 	tree->right->subshell->command = get_token_list("/bin/cat -e");
 
+
+	// comando com vários argumentos
+
+	// primeiro
+	tree = malloc(sizeof(t_exec_tree));
+	tree->type = COMMAND;
+	tree->command = get_token_list("/bin/ls -l -a");
 
 	ret_code = exec_tree(tree);
 

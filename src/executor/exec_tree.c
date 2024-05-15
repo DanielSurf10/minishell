@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:02:10 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/14 16:44:31 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/15 14:40:35 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,23 @@
 
 void	exec_cmd_fork(t_exec_tree *tree)
 {
-	char	*argv[] = {tree->command->token.lexeme, tree->command->next->token.lexeme, NULL};
-	char	*cmd = tree->command->token.lexeme;
+	int		i;
+	int		args_num;
+	char	*cmd;
+	char	**argv;
+
+	i = 0;
+	args_num = token_list_size(tree->command);
+	argv = malloc((args_num + 1) * sizeof(char *));
+	argv[args_num] = NULL;
+
+	while (i < args_num)
+	{
+		// argv[i] = expand_word(token_get_node_index(tree->command, i));
+		argv[i] = ft_strdup(token_get_node_index(tree->command, i)->token.lexeme);
+		i++;
+	}
+	cmd = argv[0];
 
 	execve(cmd, argv, __environ);
 	exit(1);
