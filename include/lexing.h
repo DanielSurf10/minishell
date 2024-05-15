@@ -6,7 +6,7 @@
 /*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 15:36:39 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/15 08:46:07 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/05/15 11:34:39 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,16 @@ typedef struct s_token_list
 	t_token				token;
 	struct s_token_list	*next;
 }	t_token_list;
+
+typedef struct s_aux_token_lits
+{
+	int		i;
+	int		state;
+	int		token_type;
+	int		str_length;
+	int		lexeme_length;
+	char	*lexeme;
+}	t_aux_token_list;
 
 //****************************************************************************//
 //                                 Functions                                  //
