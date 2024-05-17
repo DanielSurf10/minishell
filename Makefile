@@ -6,12 +6,11 @@
 #    By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/23 21:20:35 by danbarbo          #+#    #+#              #
-#    Updated: 2024/04/02 19:54:48 by danbarbo         ###   ########.fr        #
+#    Updated: 2024/05/17 15:20:57 by danbarbo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		:= minishell
-NAME_BONUS	:= minishell_bonus
+NAME		:= expander_test
 # CFLAGS		:= -Wextra -Wall -Werror -g3
 CFLAGS		:= -g3
 
@@ -22,27 +21,15 @@ LIBS		:= ${LIBFT} -lreadline
 HEADERS		:= -I include \
 				-I ${LIBFT_DIR}/include
 
-SRCS		:= ${shell find src -iname "*.c"}		# Não esquecer de mudar isso aqui
+SRCS		:= ${shell find src -iname "*.c"}
 OBJS		:= ${SRCS:src/%.c=obj/%.o}
 
-SRCS_BONUS	:= ${shell find src -iname "*.c"}		# Não esquecer de mudar isso aqui
-OBJS_BONUS	:= ${SRCS_BONUS:src_bonus/%.c=obj/%.o}
-
 all: ${NAME}
-bonus: ${NAME_BONUS}
 
 ${NAME}: ${LIBFT} ${OBJS}
-	@${CC} ${CFLAGS} ${HEADERS} ${OBJS} ${LIBS} -o ${NAME}
-
-${NAME_BONUS}: ${LIBFT} ${OBJS_BONUS}
-	@${CC} ${CFLAGS} ${HEADERS} ${OBJS_BONUS} ${LIBS} -o ${NAME_BONUS}
+	@${CC} ${CFLAGS} ${HEADERS} tests/main.c ${OBJS} ${LIBS} -o ${NAME}
 
 obj/%.o: src/%.c
-	@mkdir -p ${dir $@}
-	@${CC} ${CFLAGS} -c ${HEADERS} $< -o $@
-	@printf "Compiling: ${notdir $<}\n"
-
-obj/%.o: src_bonus/%.c
 	@mkdir -p ${dir $@}
 	@${CC} ${CFLAGS} -c ${HEADERS} $< -o $@
 	@printf "Compiling: ${notdir $<}\n"
@@ -80,6 +67,5 @@ valb: all
 				./${NAME_BONUS}
 
 re: fclean all
-re_bonus: fclean bonus
 
-.PHONY: all bonus clean fclean re re_bonus libft
+.PHONY: all clean fclean re libft
