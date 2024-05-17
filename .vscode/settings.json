@@ -5,6 +5,9 @@
 		"fcntl.h": "c",
 		"libft.h": "c",
 		"lexing.h": "c",
-		"random": "c"
+		"random": "c",
+		"expander.h": "c",
+		"stdio.h": "c",
+		"type_traits": "c"
 	}
 }
