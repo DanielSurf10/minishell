@@ -1,59 +1,59 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_list.c                                       :+:      :+:    :+:   */
+/*   cmd_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/30 16:27:38 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/04/13 23:32:36 by danbarbo         ###   ########.fr       */
+/*   Created: 2024/04/14 20:05:16 by danbarbo          #+#    #+#             */
+/*   Updated: 2024/04/14 21:36:19 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexing.h"
 
-static t_token_list	*token_create_node(char *lexeme, int token_type)
+static t_cmd_list	*cmd_create_node(t_cmd_list *token_lexeme, int token_type)
 {
-	t_token_list	*new_token;
+	t_cmd_list	*new_token;
 
-	new_token = malloc(sizeof(t_token_list));
-	new_token->token.lexeme = lexeme;
-	new_token->token.type = token_type;
+	new_token = malloc(sizeof(t_cmd_list));
+	new_token->command.token_list = token_lexeme;
+	new_token->command.type = token_type;
 	new_token->next = NULL;
 	return (new_token);
 }
 
-void	token_add_to_list(t_token_list **token_list, char *lexeme, int token_type)
+void	cmd_add_to_list(t_cmd_list **cmd_list, t_token_list *token_lexeme, int token_type)
 {
-	t_token_list	*new_token;
-	t_token_list	*last_node;
+	t_cmd_list	*new_token;
+	t_cmd_list	*last_node;
 
-	new_token = token_create_node(lexeme, token_type);
-	last_node = *token_list;
+	new_token = cmd_create_node(token_lexeme, token_type);
+	last_node = *cmd_list;
 	while (last_node && last_node->next)
 		last_node = last_node->next;
 	if (last_node)
 		last_node->next = new_token;
 	else
-		*token_list = new_token;
+		*cmd_list = new_token;
 }
 
-void	token_clear_list(t_token_list **token_list)
+void	cmd_clear_list(t_cmd_list **cmd_list)
 {
-	t_token_list	*aux1;
-	t_token_list	*aux2;
+	t_cmd_list	*aux1;
+	t_cmd_list	*aux2;
 
-	if (token_list)
+	if (cmd_list)
 	{
-		aux1 = *token_list;
+		aux1 = *cmd_list;
 		while (aux1)
 		{
 			aux2 = aux1->next;
-			if (aux1->token.lexeme)
-				free(aux1->token.lexeme);
+			if (aux1->command.token_list)
+				token_clear_list(&aux1->command.token_list);
 			free(aux1);
 			aux1 = aux2;
 		}
-		*token_list = NULL;
+		*cmd_list = NULL;
 	}
 }

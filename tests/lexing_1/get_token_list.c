@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 21:01:34 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/04/08 21:39:14 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/04/13 23:31:25 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,11 @@ t_token_list	*get_token_list(char *str)
 				lexeme_length -= 1;
 			}
 			token_type = token_get_token_type(state);
-			lexeme = ft_substr(str, i - (lexeme_length - 1), lexeme_length);
+
+			if (token_type == WORD)
+				lexeme = ft_substr(str, i - (lexeme_length - 1), lexeme_length);
+			else
+				lexeme = NULL;
 			token_add_to_list(&token_list, lexeme, token_type);
 			lexeme_length = 0;
 			state = 1;

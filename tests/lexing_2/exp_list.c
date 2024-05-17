@@ -6,29 +6,29 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 22:57:28 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/04/09 00:07:27 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/04/14 20:08:59 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexing.h"
 
-static t_exp_list	*exp_create_node(t_token_list *token_lexeme, int token_type)
+static t_exp_list	*exp_create_node(t_cmd_list *cmd_token_lexeme, int token_type)
 {
 	t_exp_list	*new_token;
 
-	new_token = malloc(sizeof(t_token_list));
-	new_token->expression.token_list = token_lexeme;
+	new_token = malloc(sizeof(t_exp_list));
+	new_token->expression.cmd_list = cmd_token_lexeme;
 	new_token->expression.type = token_type;
 	new_token->next = NULL;
 	return (new_token);
 }
 
-void	exp_add_to_list(t_exp_list **exp_list, t_token_list *token_lexeme, int token_type)
+void	exp_add_to_list(t_exp_list **exp_list, t_cmd_list *cmd_token_lexeme, int token_type)
 {
 	t_exp_list	*new_token;
 	t_exp_list	*last_node;
 
-	new_token = exp_create_node(token_lexeme, token_type);
+	new_token = exp_create_node(cmd_token_lexeme, token_type);
 	last_node = *exp_list;
 	while (last_node && last_node->next)
 		last_node = last_node->next;
@@ -59,7 +59,7 @@ t_token_list	*exp_get_first_n_nodes(t_token_list *token_list, int length)
 	new_token_list = NULL;
 	while (aux && i < length)
 	{
-		token_add_to_list(&new_token_list, aux->token.content, aux->token.type);
+		token_add_to_list(&new_token_list, ft_strdup(aux->token.lexeme), aux->token.type);
 		aux = aux->next;
 		i++;
 	}
@@ -77,8 +77,10 @@ void	exp_clear_list(t_exp_list **exp_list)
 		while (aux1)
 		{
 			aux2 = aux1->next;
-			token_clear_list(&aux1->expression.token_list);
+			if (aux1->expression.cmd_list)
+				cmd_clear_list(&aux1->expression.cmd_list);
 			free(aux1);
+			aux1 = aux2;
 		}
 		*exp_list = NULL;
 	}
