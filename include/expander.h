@@ -6,7 +6,7 @@
 /*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 17:07:05 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/05/17 17:24:02 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/05/17 17:38:30 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 # define EXPANDER_H
 
 # include "minishell.h"
+
+# include <stdio.h>
+# include <stdlib.h>
 
 typedef struct s_node
 {
