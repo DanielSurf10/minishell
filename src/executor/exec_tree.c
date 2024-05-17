@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:02:10 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/15 14:40:35 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/17 00:17:13 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,8 +220,10 @@ int	exec_tree(t_exec_tree *tree)
 {
 	int	pid;
 	int	num[2];
-	int	ret_code = -1;
+	int	ret_code;
 
+	if (tree == NULL)
+		return (-1);
 	if (tree->type == COMMAND || tree->type >= REDIRECT_INPUT && tree->type <= REDIRECT_OUTPUT_APPEND)
 	{
 		pid = exec_cmd(tree);

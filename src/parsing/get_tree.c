@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 17:44:55 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/13 18:12:17 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/17 00:14:24 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,10 @@ t_exec_tree	*make_tree(t_token_list *token_list)
 	pipe_indice = -1;
 	// redir_indice = -1;
 	aux = token_list;
+
+	if (token_list == NULL)
+		return (NULL);
+
 	tree = malloc(sizeof(t_exec_tree));
 
 	while (aux != NULL)
@@ -151,6 +155,12 @@ t_exec_tree	*make_tree(t_token_list *token_list)
 
 	token_clear_list(&sub_list_left);
 	token_clear_list(&sub_list_right);
+
+	if (tree->right == NULL || tree->left == NULL)
+	{
+		free(tree);
+		return(NULL);
+	}
 
 	tree->command = NULL;
 	tree->subshell = NULL;

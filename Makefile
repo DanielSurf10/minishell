@@ -6,7 +6,7 @@
 #    By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/16 19:05:51 by danbarbo          #+#    #+#              #
-#    Updated: 2024/05/14 16:43:32 by danbarbo         ###   ########.fr        #
+#    Updated: 2024/05/17 00:11:50 by danbarbo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ all: ${NAME}
 
 ${NAME}: ${LIBFT} ${OBJS}
 #	@cc ${HEADERS} ${OBJS} ${LIBFT} -o ${NAME}
-	@cc ${HEADERS} ${OBJS} tests/main_exec_tree.c ${LIBFT} -o ${NAME}
+	@cc ${HEADERS} ${OBJS} tests/main_exec_tree.c ${LIBS} -o ${NAME}
 
 obj/%.o: %.c
 	@mkdir -p ${dir $@}

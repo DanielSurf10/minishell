@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:43:47 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/13 17:54:43 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/17 00:22:38 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@ int	exec_tree(t_exec_tree *tree);
 
 int	open_redir(char *path_to_file, int type);
 void	exec_cmd_fork(t_exec_tree *tree);
+
+t_exec_tree	*get_tree(t_token_list *token_list);
+void		free_tree(t_exec_tree **tree);
 
 
 #endif

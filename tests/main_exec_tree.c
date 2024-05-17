@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:43:25 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/15 16:15:34 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/17 00:25:26 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,9 @@ void	print_tree(t_exec_tree *exec_tree)
 
 int	main()
 {
-	int			ret_code;
-	t_exec_tree	*tree;
+	int				ret_code;
+	t_exec_tree		*tree;
+	t_token_list	*token_list;
 
 	// && e ||
 
@@ -267,14 +268,23 @@ int	main()
 // 	tree->right->subshell->command = get_token_list("/bin/cat -e");
 
 
-	// comando com vários argumentos
+// 	// comando com vários argumentos
+//
+// 	// primeiro
+// 	tree = malloc(sizeof(t_exec_tree));
+// 	tree->type = COMMAND;
+// 	tree->command = get_token_list("/bin/ls -l -a");
 
-	// primeiro
-	tree = malloc(sizeof(t_exec_tree));
-	tree->type = COMMAND;
-	tree->command = get_token_list("/bin/ls -l -a");
+
+	// comando pela readline
+
+	token_list = get_token_list(readline("minishell$ "));
+	tree = get_tree(token_list);
 
 	ret_code = exec_tree(tree);
+
+	token_clear_list(&token_list);
+	free_tree(&tree);
 
 	printf("ret code main = %d\n", ret_code);
 
