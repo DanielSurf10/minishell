@@ -1,43 +1,42 @@
 
 #include "expander.h"
 
-void	clear_list(t_node *head)
+void	clear_list(t_node **head)
 {
-	t_node	*temp;
-
-	while (head != NULL)
+	if (*head)
 	{
-		temp = head;
-		head = head->next;
-		free(temp->key);
-		free(temp->value);
-		free(temp);
+		clear_list(&(*head)->next);
+		free((*head)->key);
+		free((*head)->value);
+		free((*head));
 	}
+	*head = NULL;
 }
 
 /*Função para deletar um nó da lista, caso a chave(key) exista*/
-t_node	*env_delete_value(t_node *head, char *key)
+void	env_delete_value(t_node **head, char *key)
 {
 	t_node	*temp;
 	t_node	*prev;
 
-	temp = head;
+	temp = *head;
 	prev = NULL;
 	while (temp != NULL)
 	{
-		if (strcmp(temp->key, key) == 0)
+		if (ft_strncmp(temp->key, key, -1) == 0)
 		{
 			if (prev == NULL)
-				head = temp->next;
+				*head = temp->next;
 			else
 				prev->next = temp->next;
-			clear_list(temp);
-			return (head);
+			free(temp->key);
+			free(temp->value);
+			free(temp);
+			break ;
 		}
 		prev = temp;
 		temp = temp->next;
 	}
-	return (head);
 }
 
 /* Funcão para procurar se a chave(key) existe. Caso exista, vai apenas alterar o valor
@@ -49,10 +48,10 @@ int	exist_in_list(t_node *head, char *key, char *value)
 	temp = head;
 	while (temp != NULL)
 	{
-		if (strcmp(temp->key, key) == 0)
+		if (ft_strncmp(temp->key, key, -1) == 0)
 		{
 			free(temp->value);
-			temp->value = strdup(value);
+			temp->value = ft_strdup(value);
 			return (1);
 		}
 		temp = temp->next;
@@ -60,23 +59,51 @@ int	exist_in_list(t_node *head, char *key, char *value)
 	return (0);
 }
 
+char	*search_value(t_node *head, char *key)
+{
+	t_node	*temp;
+
+	temp = head;
+	while (temp != NULL)
+	{
+		if (ft_strncmp(temp->key, key, -1) == 0)
+			return (ft_strdup(temp->value));
+		temp = temp->next;
+	}
+	return (ft_strdup(""));
+}
+
 void	env_malloc(int size, char **dest)
 {
 	*dest = (char *)malloc(sizeof(char) * size);
 	if (*dest == NULL)
 		return ;
-	*dest[size] = '\0';
 }
 
-void	ft_strcpy(char *dest, char *src, int idx)
+int	envp_list_size(t_node *head)
 {
-	int i;
+	int		i;
+	t_node	*aux;
 
 	i = 0;
-	while (src[i] && i <= idx) // i <= idx para copiar até o idx
+	aux = head;
+	while (aux)
 	{
-		dest[i] = src[i];
+		i++;
+		aux = aux->next;
+	}
+	return (i);
+}
+
+void	free_envp(char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		free(envp[i]);
 		i++;
 	}
-	dest[i] = '\0';
+	free(envp);
 }
