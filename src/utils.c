@@ -65,7 +65,8 @@ void	env_malloc(int size, char **dest)
 	*dest = (char *)malloc(sizeof(char) * size);
 	if (*dest == NULL)
 		return ;
-	*dest[size] = '\0';
+	// *dest[size] = '\0';
+	
 }
 
 void	ft_strcpy(char *dest, char *src, int idx)

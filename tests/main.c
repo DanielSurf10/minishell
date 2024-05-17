@@ -6,7 +6,7 @@
 /*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 17:06:49 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/05/17 15:07:35 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/05/17 16:18:13 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,22 +80,19 @@ t_node	*store_to_list(char *envp[])
 
 	head = NULL;
 	i = -1;
-	j = 0;
 	while (envp[++i])
 	{
+		j = 0;
 		while (envp[i][j] != '=')
 			j++;
 		env_malloc(j + 1, &key);
+		k = j + 1;
 		while (envp[i][k] != '\0')
 			k++;
-		k = k - j;
 		env_malloc(k + 1, &value);
-		while (envp[i][j] != '=')
-			ft_strcpy(key, envp[i], j);
-		while (envp[i][k] != '\0')
-			ft_strcpy(value, envp[i], k);
-		if (exist_in_list(head, key, value) == 0)
-			env_insert_node(&head, key, value);
+		ft_strlcpy(key, envp[i], j + 1);
+		ft_strlcpy(value, envp[i] + j + 1, k);
+		env_insert_node(&head, key, value);
 	}
 	return (head);
 }
