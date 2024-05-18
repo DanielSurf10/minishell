@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:02:10 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/17 00:17:13 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/18 11:11:26 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,6 +219,7 @@ int	exec_pipe(t_exec_tree *tree)
 int	exec_tree(t_exec_tree *tree)
 {
 	int	pid;
+	int	pid_pipe;
 	int	num[2];
 	int	ret_code;
 
@@ -247,16 +248,24 @@ int	exec_tree(t_exec_tree *tree)
 	}
 	else if (tree->type == PIPE)
 	{
-		pid = exec_pipe(tree);
+		pid_pipe = fork();
 
-		num[0] = wait(&num[1]);
-
-		while (num[0] != -1)
+		if (pid_pipe == 0)
 		{
-			if (num[0] == pid)
-				ret_code = (num[1] >> 8) & 0xFF;
+			pid = exec_pipe(tree);
+
 			num[0] = wait(&num[1]);
+
+			while (num[0] != -1)
+			{
+				if (num[0] == pid)
+					ret_code = (num[1] >> 8) & 0xFF;
+				num[0] = wait(&num[1]);
+			}
+			exit(ret_code);
 		}
+		waitpid(pid_pipe, &ret_code, 0);
+		ret_code = (ret_code >> 8) & 0xFF;
 	}
 	return (ret_code);
 }

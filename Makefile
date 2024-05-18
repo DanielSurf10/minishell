@@ -6,7 +6,7 @@
 #    By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/16 19:05:51 by danbarbo          #+#    #+#              #
-#    Updated: 2024/05/17 00:11:50 by danbarbo         ###   ########.fr        #
+#    Updated: 2024/05/18 11:14:06 by danbarbo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,15 +58,5 @@ val: all
 				--trace-children=yes \
 				--trace-children-skip='*/bin/*,*/sbin/*,/usr/bin/*' \
 				./${NAME}
-
-valb: all
-	@valgrind -q --suppressions=readline.supp \
-				--leak-check=full \
-				--show-leak-kinds=all \
-				--track-origins=yes \
-				--track-fds=yes \
-				--trace-children=yes \
-				--trace-children-skip='*/bin/*,*/sbin/*,/usr/bin/*' \
-				./${NAME_BONUS}
 
 .PHONY: all clean fclean libft
