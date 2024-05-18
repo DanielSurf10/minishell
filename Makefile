@@ -6,7 +6,7 @@
 #    By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/16 19:05:51 by danbarbo          #+#    #+#              #
-#    Updated: 2024/05/18 11:14:06 by danbarbo         ###   ########.fr        #
+#    Updated: 2024/05/18 12:33:18 by danbarbo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,9 +27,10 @@ OBJS		:= ${SRCS:%.c=obj/%.o}
 
 all: ${NAME}
 
-${NAME}: ${LIBFT} ${OBJS}
+${NAME}: ${LIBFT} ${OBJS} tests/main_exec_tree.c
 #	@cc ${HEADERS} ${OBJS} ${LIBFT} -o ${NAME}
-	@cc ${HEADERS} ${OBJS} tests/main_exec_tree.c ${LIBS} -o ${NAME}
+	@cc ${CFLAGS} ${HEADERS} ${OBJS} tests/main_exec_tree.c ${LIBS} -o ${NAME}
+	@printf "Compiling: tests/main_exec_tree.c\n"
 
 obj/%.o: %.c
 	@mkdir -p ${dir $@}

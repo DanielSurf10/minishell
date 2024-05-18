@@ -6,74 +6,89 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:02:10 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/18 11:11:26 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/18 12:42:31 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-// int	open_redir(char *path_to_file, int type)
-// {
-// 	int	fd;
-//
-// 	if (type == REDIRECT_INPUT)
-// 		fd = open(path_to_file, O_RDONLY);
-// 	else if (type == REDIRECT_OUTPUT)
-// 		fd = open(path_to_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-// 	else if (type == REDIRECT_OUTPUT_APPEND)
-// 		fd = open(path_to_file, O_WRONLY | O_CREAT | O_APPEND, 0644);
-// 	return (fd);
-// }
+int	open_redir(char *path_to_file, int type)
+{
+	int	fd;
 
-// void	exec_cmd_fork(t_exec_tree *tree)
-// {
-// 	int	fd_redir = 0;
-//
-// 	if (tree->type >= REDIRECT_INPUT && tree->type <= REDIRECT_OUTPUT_APPEND)
-// 	{
-// 		fd_redir = open_redir(tree->left->command->token.lexeme, tree->type);
-// 		if (fd_redir != -1)
-// 			exit(1);
-//
-// 		if (tree->type == REDIRECT_INPUT)	// Talvez hereredoc
-// 			dup2(fd_redir, STDIN_FILENO);
-// 		else if (tree->type == REDIRECT_OUTPUT || tree->type == REDIRECT_OUTPUT_APPEND)
-// 			dup2(fd_redir, STDOUT_FILENO);
-// 		close(fd_redir);
-// 		exec_cmd_fork(tree->right);
-// 	}
-// 	else
-// 	{
-// 		char	*argv[] = {tree->command->token.lexeme, tree->command->next->token.lexeme, NULL};
-// 		char	*cmd = tree->command->token.lexeme;
-// 		execve(cmd, argv, __environ);
-// 	}
-// 	exit(1);
-// }
+	if (type == REDIRECT_INPUT)
+		fd = open(path_to_file, O_RDONLY);
+	else if (type == REDIRECT_OUTPUT)
+		fd = open(path_to_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	else if (type == REDIRECT_OUTPUT_APPEND)
+		fd = open(path_to_file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	return (fd);
+}
 
 void	exec_cmd_fork(t_exec_tree *tree)
 {
 	int		i;
+	int		fd_redir;
 	int		args_num;
 	char	*cmd;
 	char	**argv;
 
-	i = 0;
-	args_num = token_list_size(tree->command);
-	argv = malloc((args_num + 1) * sizeof(char *));
-	argv[args_num] = NULL;
-
-	while (i < args_num)
+	if (tree->type >= REDIRECT_INPUT && tree->type <= REDIRECT_OUTPUT_APPEND)
 	{
-		// argv[i] = expand_word(token_get_node_index(tree->command, i));
-		argv[i] = ft_strdup(token_get_node_index(tree->command, i)->token.lexeme);
-		i++;
-	}
-	cmd = argv[0];
+		fd_redir = open_redir(tree->left->command->token.lexeme, tree->type);	// Fazer o tratamento de erro do redirecionamento ambíguo com o wildcard
+		if (fd_redir == -1)
+			exit(3);		// 3 só para testes, colocar 1 depois
 
-	execve(cmd, argv, __environ);
+		if (tree->type == REDIRECT_INPUT)	// Talvez hereredoc
+			dup2(fd_redir, STDIN_FILENO);
+		else if (tree->type == REDIRECT_OUTPUT || tree->type == REDIRECT_OUTPUT_APPEND)
+			dup2(fd_redir, STDOUT_FILENO);
+		close(fd_redir);
+		exec_cmd_fork(tree->right);
+	}
+	else
+	{
+		i = 0;
+		args_num = token_list_size(tree->command);
+		argv = malloc((args_num + 1) * sizeof(char *));
+		argv[args_num] = NULL;
+
+		while (i < args_num)
+		{
+			// argv[i] = expand_word(token_get_node_index(tree->command, i));
+			argv[i] = ft_strdup(token_get_node_index(tree->command, i)->token.lexeme);
+			i++;
+		}
+		cmd = argv[0];
+
+		execve(cmd, argv, __environ);
+	}
 	exit(1);
 }
+
+// void	exec_cmd_fork(t_exec_tree *tree)
+// {
+// 	int		i;
+// 	int		args_num;
+// 	char	*cmd;
+// 	char	**argv;
+//
+// 	i = 0;
+// 	args_num = token_list_size(tree->command);
+// 	argv = malloc((args_num + 1) * sizeof(char *));
+// 	argv[args_num] = NULL;
+//
+// 	while (i < args_num)
+// 	{
+// 		// argv[i] = expand_word(token_get_node_index(tree->command, i));
+// 		argv[i] = ft_strdup(token_get_node_index(tree->command, i)->token.lexeme);
+// 		i++;
+// 	}
+// 	cmd = argv[0];
+//
+// 	execve(cmd, argv, __environ);
+// 	exit(1);
+// }
 
 int	exec_cmd(t_exec_tree *tree)
 {
@@ -225,7 +240,8 @@ int	exec_tree(t_exec_tree *tree)
 
 	if (tree == NULL)
 		return (-1);
-	if (tree->type == COMMAND || tree->type >= REDIRECT_INPUT && tree->type <= REDIRECT_OUTPUT_APPEND)
+	if (tree->type == COMMAND
+		|| tree->type >= REDIRECT_INPUT && tree->type <= REDIRECT_OUTPUT_APPEND)
 	{
 		pid = exec_cmd(tree);
 		waitpid(pid, &ret_code, 0);
