@@ -6,7 +6,7 @@
 #    By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/16 19:05:51 by danbarbo          #+#    #+#              #
-#    Updated: 2024/05/18 12:33:18 by danbarbo         ###   ########.fr        #
+#    Updated: 2024/05/18 20:27:52 by danbarbo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,7 @@ fclean: clean
 re: fclean all
 
 val: all
-	@valgrind -q --suppressions=readline.supp \
+	@valgrind --suppressions=readline.supp \
 				--leak-check=full \
 				--show-leak-kinds=all \
 				--track-origins=yes \

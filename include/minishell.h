@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 21:17:57 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/09 18:37:49 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/18 20:26:18 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,7 @@ enum e_token
 	SUBSHELL,
 	// FILE
 };
+
+void	free_envp(char **envp);
 
 #endif

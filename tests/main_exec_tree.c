@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:43:25 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/18 12:44:11 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/18 20:33:11 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -277,48 +277,62 @@ int	main()
 // 	tree->command = get_token_list("/bin/ls -l -a");
 
 
-	// comando com redirect
-
-	// primeiro
-	tree = malloc(sizeof(t_exec_tree));
-	tree->type = REDIRECT_INPUT;
-	tree->command = get_token_list("<");
-
-	// left
-	tree->left = malloc(sizeof(t_exec_tree));
-	tree->left->type = COMMAND;
-	tree->left->command = get_token_list("Makefile");
-
-	// right
-	tree->right = malloc(sizeof(t_exec_tree));
-	tree->right->type = REDIRECT_OUTPUT;
-	tree->right->command = get_token_list(">");
-
-	// right left
-	tree->right->left = malloc(sizeof(t_exec_tree));
-	tree->right->left->type = COMMAND;
-	tree->right->left->command = get_token_list("out");
-
-	// right right
-	tree->right->right = malloc(sizeof(t_exec_tree));
-	tree->right->right->type = REDIRECT_INPUT;
-	tree->right->right->command = get_token_list("<");
-
-	// right right left
-	tree->right->right->left = malloc(sizeof(t_exec_tree));
-	tree->right->right->left->type = COMMAND;
-	tree->right->right->left->command = get_token_list("todo");
-
-	// right right right
-	tree->right->right->right = malloc(sizeof(t_exec_tree));
-	tree->right->right->right->type = COMMAND;
-	tree->right->right->right->command = get_token_list("/bin/cat -e");
-
-
-// 	// comando pela readline
+// 	// comando com redirect
 //
-// 	token_list = get_token_list(readline("minishell$ "));
-// 	tree = get_tree(token_list);
+// 	// primeiro
+// 	tree = malloc(sizeof(t_exec_tree));
+// 	tree->type = REDIRECT_INPUT;
+// 	tree->command = get_token_list("<");
+//
+// 	// left
+// 	tree->left = malloc(sizeof(t_exec_tree));
+// 	tree->left->type = COMMAND;
+// 	tree->left->command = get_token_list("Makefile");
+//
+// 	// right
+// 	tree->right = malloc(sizeof(t_exec_tree));
+// 	tree->right->type = REDIRECT_OUTPUT;
+// 	tree->right->command = get_token_list(">");
+//
+// 	// right left
+// 	tree->right->left = malloc(sizeof(t_exec_tree));
+// 	tree->right->left->type = COMMAND;
+// 	tree->right->left->command = get_token_list("out");
+//
+// 	// right right
+// 	tree->right->right = malloc(sizeof(t_exec_tree));
+// 	tree->right->right->type = REDIRECT_INPUT;
+// 	tree->right->right->command = get_token_list("<");
+//
+// 	// right right left
+// 	tree->right->right->left = malloc(sizeof(t_exec_tree));
+// 	tree->right->right->left->type = COMMAND;
+// 	tree->right->right->left->command = get_token_list("todo");
+//
+// 	// right right right
+// 	tree->right->right->right = malloc(sizeof(t_exec_tree));
+// 	tree->right->right->right->type = COMMAND;
+// 	tree->right->right->right->command = get_token_list("/bin/cat -e");
+
+
+// 	// subshell 1 comando
+//
+// 	// primeiro
+// 	tree = malloc(sizeof(t_exec_tree));
+// 	ft_bzero(tree, sizeof(t_exec_tree));
+// 	tree->type = SUBSHELL;
+//
+// 	// subshell
+// 	tree->subshell = malloc(sizeof(t_exec_tree));
+// 	ft_bzero(tree->subshell, sizeof(t_exec_tree));
+// 	tree->subshell->type = COMMAND;
+// 	tree->subshell->command = get_token_list("/bin/ls -l");
+
+
+	// comando pela readline
+
+	token_list = get_token_list(readline("minishell$ "));
+	tree = get_tree(token_list);
 
 
 	ret_code = exec_tree(tree);

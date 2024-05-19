@@ -6,63 +6,11 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 17:44:55 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/17 00:14:24 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/18 21:03:53 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
-
-// t_token_list	*get_copy_list(t_token_list *token_list)
-// {
-// 	t_token_list	*new_list;
-//
-// 	new_list = malloc(sizeof(t_token_list));
-// 	while (token_list)
-// 	{
-// 		token_add_to_list(&new_list, ft_strdup(token_list->token.lexeme), token_list->token.type);
-// 		token_list = token_list->next;
-// 	}
-// 	return (new_list);
-// }
-
-// t_token_list	*get_until_list(t_token_list *token_list, int end)
-// {
-// 	int				i;
-// 	t_token_list	*aux;
-// 	t_token_list	*new_list;
-//
-// 	i = 0;
-// 	new_list = NULL;
-// 	aux = token_list;
-// 	while ()
-// }
-
-// t_token_list	*get_rest_list(t_token_list *token_list, int start)
-// {
-// 	int				count;
-// 	t_token_list	*aux;
-// 	t_token_list	*new_list;
-// 	t_token_list	*new_list_aux;
-//
-// 	count = 0;
-// 	aux = token_list;
-// 	while (aux && i >= count)
-// 	{
-// 		aux = aux->next;
-// 		count++;
-// 	}
-// 	new_list = malloc(sizeof(t_token_list));
-// 	new_list_aux = new_list;
-// 	while (aux)
-// 	{
-// 		new_list_aux->token = aux->token;
-// 		new_list_aux->next = malloc(sizeof(t_token_list));
-// 		new_list_aux = new_list_aux->next;
-// 		aux = aux->next;
-// 	}
-// 	new_list_aux = NULL;
-// 	return (new_list);
-// }
 
 t_exec_tree	*make_tree(t_token_list *token_list)
 {
@@ -85,6 +33,7 @@ t_exec_tree	*make_tree(t_token_list *token_list)
 		return (NULL);
 
 	tree = malloc(sizeof(t_exec_tree));
+	ft_bzero(tree, sizeof(t_exec_tree));
 
 	while (aux != NULL)
 	{
@@ -130,7 +79,7 @@ t_exec_tree	*make_tree(t_token_list *token_list)
 	// 	tree->type = aux->token.type;
 	// }
 
-	// sub_list_left = get_until_list(token_list, i);	// Criar uma sub lista até o i (TIPO AND)
+	// sub_list_left = get_until_list(token_list, i);	// Criar uma sub lista até o i
 	// sub_list_right = get_rest_list(token_list, i);	// Criar uma lista com o resto
 
 	sub_list_left = token_get_sublist(token_list, 0, i);
@@ -142,21 +91,14 @@ t_exec_tree	*make_tree(t_token_list *token_list)
 // 	printf("\nright:\n");
 // 	print_tokens(sub_list_right);
 
-	// Já que está invertido, aqui também fica invertido
-	if (sub_list_left)
-		tree->right = make_tree(sub_list_left);		// Left vai pro right
-	else
-		tree->right = NULL;
-
-	if (sub_list_right)
-		tree->left = make_tree(sub_list_right);		// right vai pro left
-	else
-		tree->left = NULL;
+	// Já que está invertido, aqui também fica invertido - ARRUMAR ISSO, inverter na atribuição
+	tree->right = make_tree(sub_list_left);		// Left vai pro right
+	tree->left = make_tree(sub_list_right);		// right vai pro left
 
 	token_clear_list(&sub_list_left);
 	token_clear_list(&sub_list_right);
 
-	if (tree->right == NULL || tree->left == NULL)
+	if (tree->right == NULL || tree->left == NULL)	// Aqui verifica a gramatica
 	{
 		free(tree);
 		return(NULL);
@@ -170,30 +112,35 @@ t_exec_tree	*make_tree(t_token_list *token_list)
 
 t_exec_tree	*get_tree(t_token_list *token_list)
 {
-	t_exec_tree	*tree;
+	t_exec_tree		*tree;
+	t_token_list	*inverted_list;
 
-	token_list = invert_list(token_list);
+	inverted_list = invert_list(token_get_sublist(token_list, 0, token_list_size(token_list)));
 
-	tree = make_tree(token_list);
+	tree = make_tree(inverted_list);
 
-	token_list = invert_list(token_list);
+	token_clear_list(&inverted_list);
 
 	return (tree);
 }
 
-void	free_tree(t_exec_tree **tree)
+void	free_tree(t_exec_tree **tree)		// árvore de graça
 {
 	if (*tree == NULL)
 		return ;
 
-	if ((*tree)->type == COMMAND)
-	{
-		token_clear_list(&(*tree)->command);
-	}
-	else
-	{
+	if ((*tree)->subshell)
+		free_tree(&(*tree)->subshell);
+
+	if ((*tree)->left)
 		free_tree(&(*tree)->left);
+
+	if ((*tree)->right)
 		free_tree(&(*tree)->right);
-	}
+
+	if ((*tree)->command)
+		token_clear_list(&(*tree)->command);
+
 	free(*tree);
+	*tree = NULL;
 }

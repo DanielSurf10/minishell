@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:02:10 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/18 12:42:31 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/18 21:15:57 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,10 @@ void	exec_cmd_fork(t_exec_tree *tree)
 	{
 		fd_redir = open_redir(tree->left->command->token.lexeme, tree->type);	// Fazer o tratamento de erro do redirecionamento ambíguo com o wildcard
 		if (fd_redir == -1)
+		{
+			free_tree(&tree);
 			exit(3);		// 3 só para testes, colocar 1 depois
+		}
 
 		if (tree->type == REDIRECT_INPUT)	// Talvez hereredoc
 			dup2(fd_redir, STDIN_FILENO);
@@ -59,10 +62,13 @@ void	exec_cmd_fork(t_exec_tree *tree)
 			argv[i] = ft_strdup(token_get_node_index(tree->command, i)->token.lexeme);
 			i++;
 		}
+		// cmd = expand_command(argv[0]);
 		cmd = argv[0];
 
 		execve(cmd, argv, __environ);
+		free_envp(argv);
 	}
+	free_tree(&tree);
 	exit(1);
 }
 
@@ -93,25 +99,11 @@ void	exec_cmd_fork(t_exec_tree *tree)
 int	exec_cmd(t_exec_tree *tree)
 {
 	int	pid;
-// 	int	all_ok;
-//
-// 	char	*cmd;
-
-// 	all_ok = 1;
-// 	if (tree->type >= REDIRECT_INPUT && tree->type <= REDIRECT_OUTPUT_APPEND)
-// 		all_ok = exec_redirect(tree);
-//
-// 	char	*argv[] = {tree->command->token.lexeme, tree->command->next->token.lexeme, NULL};
-// 	cmd = tree->command->token.lexeme;
 
 	pid = fork();
 
 	if (pid == 0)
 		exec_cmd_fork(tree);
-	// {
-	// 	execve(cmd, argv, __environ);
-	// 	exit(1);
-	// }
 
 	return (pid);
 }
@@ -169,7 +161,7 @@ int	exec_pipe(t_exec_tree *tree)
 
 	if (tree->type == PIPE)
 	{
-		pipe(pipe_fd);
+		pipe(pipe_fd);						// Resover o leak de fd desses 3 aqui
 		old_fd[0] = dup(STDIN_FILENO);
 		old_fd[1] = dup(STDOUT_FILENO);
 
@@ -201,9 +193,12 @@ int	exec_pipe(t_exec_tree *tree)
 	{
 		pid = fork();
 		if (pid == 0)
-			exit(exec_tree(tree->subshell));
+		{
+			ret_code = exec_tree(tree->subshell);
+			free_tree(&tree);
+			exit(ret_code);
+		}
 	}
-
 
 // 	old_fd[0] = dup(STDIN_FILENO);
 // 	old_fd[1] = dup(STDOUT_FILENO);
@@ -260,7 +255,11 @@ int	exec_tree(t_exec_tree *tree)
 			ret_code = (ret_code >> 8) & 0xFF;
 		}
 		else								// Filho
-			exit(exec_tree(tree->subshell));
+		{
+			ret_code = exec_tree(tree->subshell);
+			free_tree(&tree);
+			exit(ret_code);
+		}
 	}
 	else if (tree->type == PIPE)
 	{
