@@ -109,51 +109,53 @@ char	**create_envp(t_node *head)
 	return (new_envp);
 }
 
-// char	*expand(char *str, t_node *head)
-// {
-	// t_node	*temp;
-	// char	*new_str;
-	// int		i;
-	// int		j;
-	// int		k;
+char	*expand(char *str, t_node *head)
+{
+	t_node	*temp;
+	char	*new_str;
+	int		i;
+	int		j;
+	int		k;
 
-	// i = 0;
-	// j = 0;
-	// k = 0;
-	// temp = head;
-	// while (str[i] != '\0')
-	// {
-	// 	if (str[i] == '$')
-	// 	{
-	// 		i++;
-	// 		while (str[i] != ' ' && str[i] != '\0')
-	// 		{
-	// 			k++;
-	// 			i++;
-	// 		}
-	// 		// env_malloc(k + 1, &new_str);
-	// 		new_str = malloc(sizeof(char) * (k + 1));
+	i = 0;
+	j = 0;
+	k = 0;
+	temp = head;
+	while (str[i] != '\0')
+	{
+		if (str[i] == '$')
+		{
+			i++;
+			while (str[i] != ' ' && str[i] != '\0')
+			{
+				k++;
+				i++;
+			}
+			env_malloc(k + 1, &new_str);
+			new_str = malloc(sizeof(char) * (k + 1));
 
 
-	// 		// while (str[j] != '$')
-	// 		// 	ft_strcpy(new_str, str, j);
-	// 		// {
-	// 		// 	new_str[j] = str[j];
-	// 		// 	j++;
-	// 		// }
-	// 		while (temp != NULL)
-	// 		{
-	// 			if (ft_strncmp(temp->key, &str[j], k) == 0)
-	// 			{
-	// 				new_str = ft_strjoin(new_str, temp->value);
-	// 				j = j + k;
-	// 				break ;
-	// 			}
-	// 			temp = temp->next;
-	// 		}
-	// 		k = 0;
-	// 	}
-	// 	i++;
-	// }
-	// return (new_str);
-// }
+			while (str[j] != '$')
+				ft_strlcpy(new_str, str, j);
+			{
+				new_str[j] = str[j];
+				j++;
+			}
+			while (temp != NULL)
+			{
+				if (ft_strncmp(temp->key, &str[j], k) == 0)
+				{
+					new_str = ft_strjoin(new_str, temp->value);
+					j = j + k;
+					break ;
+				}
+				temp = temp->next;
+			}
+			k = 0;
+		}
+		i++;
+	}
+	return (new_str);
+}
+
+
