@@ -109,6 +109,7 @@ char	**create_envp(t_node *head)
 	return (new_envp);
 }
 
+
 char	*expand(char *str, t_node *head)
 {
 	t_node	*temp;
@@ -159,3 +160,60 @@ char	*expand(char *str, t_node *head)
 }
 
 
+// Funcao expander dividida em duas funcoes, porem esta dando seg fault
+
+// typedef struct s_exp_aux
+// {
+// 	char	*new_str;
+// 	int		i;
+// 	int		j;
+// 	int		k;
+// }				t_exp_aux;
+
+// void	aux_expan(t_exp_aux *exp_aux, char *str, t_node *temp)
+// {
+// 	if (str[exp_aux->i] == '$')
+// 	{
+// 		exp_aux->i++;
+// 		while (str[exp_aux->i] != ' ' && str[exp_aux->i] != '\0')
+// 		{
+// 			exp_aux->k++;
+// 			exp_aux->i++;
+// 		}
+// 		env_malloc(exp_aux->k + 1, &exp_aux->new_str);
+// 		exp_aux->new_str = malloc(sizeof(char) * (exp_aux->k + 1));
+
+
+// 		while (str[exp_aux->j] != '$')
+// 			ft_strlcpy(exp_aux->new_str, str, exp_aux->j);
+// 		{
+// 			exp_aux->new_str[exp_aux->j] = str[exp_aux->j];
+// 			exp_aux->j++;
+// 		}
+// 	}
+// }
+
+// char	*expand(char *str, t_node *head)
+// {
+// 	t_node	*temp;
+// 	t_exp_aux	*exp_aux;
+
+// 	temp = head;
+// 	while (str[exp_aux->i] != '\0')
+// 	{
+// 		aux_expan(exp_aux, str, temp);
+// 		while (temp != NULL)
+// 		{
+// 			if (ft_strncmp(temp->key, &str[exp_aux->j], exp_aux->k) == 0)
+// 			{
+// 				exp_aux->new_str = ft_strjoin(exp_aux->new_str, temp->value);
+// 				exp_aux->j = exp_aux->j + exp_aux->k;
+// 				break ;
+// 			}
+// 			temp = temp->next;
+// 		}
+// 		exp_aux->k = 0;
+// 	}
+// 	exp_aux->i++;
+// 	return (exp_aux->new_str);
+// }
