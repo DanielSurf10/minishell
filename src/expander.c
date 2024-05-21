@@ -6,7 +6,7 @@
 /*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:56:46 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/05/17 17:32:22 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/05/21 13:41:03 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,12 +132,8 @@ char	*expand(char *str, t_node *head)
 				k++;
 				i++;
 			}
-			env_malloc(k + 1, &new_str);
 			new_str = malloc(sizeof(char) * (k + 1));
-
-
 			while (str[j] != '$')
-				ft_strlcpy(new_str, str, j);
 			{
 				new_str[j] = str[j];
 				j++;
@@ -154,10 +150,10 @@ char	*expand(char *str, t_node *head)
 			}
 			k = 0;
 		}
-		i++;
 	}
 	return (new_str);
 }
+
 
 
 // Funcao expander dividida em duas funcoes, porem esta dando seg fault
