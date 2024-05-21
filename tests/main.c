@@ -6,7 +6,7 @@
 /*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 17:06:49 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/05/17 17:38:34 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/05/21 16:19:03 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 int main(int argc, char *argv[], char *envp[]) {
 	t_node	*list_envp;
 	char	**new_envp;
-	char	*expanded;
+	// char	*expanded;
 
-	list_envp = store_to_list(envp);
+	// list_envp = store_to_list(envp);
 
 	// printList(list_envp);
 
@@ -26,7 +26,7 @@ int main(int argc, char *argv[], char *envp[]) {
 
 	// env_delete_value(&list_envp, "HOME");
 
-	new_envp = create_envp(list_envp);
+	// new_envp = create_envp(list_envp);
 
 	// expanded = expand("ola $teste", list_envp);		// ola bomdia
 
@@ -39,8 +39,32 @@ int main(int argc, char *argv[], char *envp[]) {
 	// for (t_node *node = list_envp; node; node = node->next)
 	// 	printf("%s = %s\n", node->key, search_value(list_envp, node->key));
 
-	free_envp(new_envp);
+	t_node	*head;
+	char	*str;
+	char	*new_str;
+
+	head = store_to_list(envp);
+	// printList(head);
+	str = ft_strdup("oi $$$USER");
+
+	// ola $USER, tudo bem?
+	// ola danbarbo, tudo bem?
+
+	new_str = expand(str, head);
+	printf("%s\n", new_str);
+
+	// free_envp(new_envp);
 	clear_list(&list_envp);
 
 	return (0);
 }
+
+// $USER -> danbarbo
+// oi $USER -> oi danbarbo
+// oi $1 tudo bem-> oi  tudo bem
+// $$ ->
+// oi $$ tudo bem -> oi  tudo bem
+// oi $1USER tudo bem -> oi  tudo bem
+// oi $ a -> oi  a
+// oi $$ a -> oi  a
+// oi $$$USER -> oi danbarbo

@@ -6,7 +6,7 @@
 /*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 17:07:05 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/05/17 17:38:30 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/05/21 15:12:03 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,12 @@ typedef struct s_node
 	char 			*value;
 	struct s_node	*next;
 }					t_node;
+
+typedef struct s_expand_list
+{
+	char					letter;
+	struct s_expand_list	*next;
+}					t_expand_list;
 
 t_node	*env_create_node(char *key, char *value);
 void	env_insert_node(t_node **head, char *key, char *value);
