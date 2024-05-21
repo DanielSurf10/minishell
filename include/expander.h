@@ -45,5 +45,7 @@ char	**create_envp(t_node *head);
 int		envp_list_size(t_node *head);
 void	free_envp(char **envp);
 char	*search_value(t_node *head, char *key);
+char 	*create_string_from_list(t_expand_list *lst);
+int		size_list(t_expand_list *lst);
 
 #endif

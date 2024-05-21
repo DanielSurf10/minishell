@@ -62,20 +62,114 @@ void	print_string(t_expand_list *head)
 	printf("\n");
 }
 
+void	clear_str_list(t_expand_list **head)
+{
+	t_expand_list	*temp;
+
+	while (*head != NULL)
+	{
+		temp = *head;
+		*head = (*head)->next;
+		free(temp);
+	}
+}
+
+int	size_list(t_expand_list *lst)
+{
+	int	size;
+
+	size = 0;
+	while (lst)
+	{
+		size++;
+		lst = lst->next;
+	}
+	return (size);
+}
+
+char 	*create_string_from_list(t_expand_list *lst)
+{
+	int		i;
+	int		size_str;
+	char	*str;
+
+	i = 0;
+	size_str = size_list(lst);
+	str = malloc(sizeof(char) * (size_str + 1));
+	while (lst)
+	{
+		str[i] = lst->letter;
+		lst = lst->next;
+		i++;
+	}
+	str[i] = '\0';
+	return (str);
+}
+
+// fora das aspas = 0
+// aspas simples = 1
+// aspas duplas = 2
+char	*remote_quotes(char *str)
+{
+	int				i;
+	char			*new_string;
+	t_expand_list	*new_str_list;
+
+	i = 0;
+	new_str_list = NULL;
+
+	while (str[i])
+	{
+		if (str[i] == '\'')
+		{
+			i++;
+			while (str[i] != '\'')
+			{
+				add_letter_list(&new_str_list, str[i]);
+				i++;
+			}
+		}
+		else if (str[i] == '\"')
+		{
+			i++;
+			while (str[i] != '\"')
+			{
+				add_letter_list(&new_str_list, str[i]);
+				i++;
+			}
+		}
+		else
+			add_letter_list(&new_str_list, str[i]);
+
+		i++;
+	}
+
+	new_string = create_string_from_list(new_str_list);
+
+	clear_str_list(&new_str_list);
+
+	return (new_string);
+}
+
 char	*expand(char *str, t_node *head)
 {
 	// char	*new_str;
-	char 	*key;
-	char	*expanded;
-	int		i;
-	int		k;
+	int				i;
+	int				k;
+	int				in_single_quotes;
+	char 			*key;
+	char			*expanded;
+	char			*expanded_without_quotes;
 	t_expand_list	*new_str;
 
 	i = 0;
+	in_single_quotes = 0;
 	new_str = NULL;
 	while (str[i] != '\0')
 	{
-		if (str[i] == '$')
+		if (str[i] == '\'')
+			in_single_quotes = !in_single_quotes;
+		if (str[i] == '$' && in_single_quotes == 0)
 		{
 			i++;
 			if (str[i] >= '0' && str[i] <= '9' || str[i] == '$' || is_valid_variable(str[i]) == 0)	// Isso tá meio estranho
@@ -110,7 +204,15 @@ char	*expand(char *str, t_node *head)
 		}
 	}
 
-	print_string(new_str);
+	// print_string(new_str);
 
-	return (NULL);		// MUDAR ISSO AQUIIII
+	expanded = create_string_from_list(new_str);
+
+	expanded_without_quotes = remote_quotes(expanded);
+
+	free(expanded);
+
+	clear_str_list(&new_str);
+
+	return (expanded_without_quotes);		// MUDAR ISSO AQUIIII
 }
