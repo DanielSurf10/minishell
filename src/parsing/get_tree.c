@@ -6,11 +6,30 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 17:44:55 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/18 21:03:53 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/21 13:59:49 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
+
+t_exec_tree	*make_tree_cmd(t_token_list *token_list)
+{
+	t_token_list	*aux;
+	t_token_list	*aux2;
+	t_exec_tree		*tree_aux;
+	t_exec_tree		*tree_first;
+
+	aux = token_list;
+	tree_first = NULL;
+	while (aux)
+	{
+		if (aux->token.type >= REDIRECT_INPUT && aux->token.type <= REDIRECT_OUTPUT_APPEND)
+		{
+			
+		}
+	}
+	return (tree_aux);
+}
 
 t_exec_tree	*make_tree(t_token_list *token_list)
 {
@@ -35,7 +54,7 @@ t_exec_tree	*make_tree(t_token_list *token_list)
 	tree = malloc(sizeof(t_exec_tree));
 	ft_bzero(tree, sizeof(t_exec_tree));
 
-	while (aux != NULL)
+	while (aux)
 	{
 		if (and_or_indice == -1 && (aux->token.type == AND || aux->token.type == OR))
 			and_or_indice = i;
@@ -61,11 +80,20 @@ t_exec_tree	*make_tree(t_token_list *token_list)
 	// }
 	else
 	{
-		tree->type = COMMAND;
-		tree->command = invert_list(token_get_sublist(token_list, 0, token_list_size(token_list)));
-		tree->left = NULL;
-		tree->right = NULL;
-		tree->subshell = NULL;
+		// tree->type = COMMAND;
+		// tree->command = invert_list(token_get_sublist(token_list, 0, token_list_size(token_list)));
+		// tree->left = NULL;
+		// tree->right = NULL;
+		// tree->subshell = NULL;
+
+		aux = invert_list(token_get_sublist(token_list, 0, token_list_size(token_list)));
+
+		free(tree);
+
+		tree = make_tree_cmd(aux);
+
+		token_clear_list(&aux);
+
 		return (tree);
 	}
 
