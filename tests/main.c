@@ -6,41 +6,62 @@
 /*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 17:06:49 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/05/17 17:38:34 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/05/21 16:19:03 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 
-int main(int argc, char *argv[], char *envp[]) {
-	t_node	*list_envp;
+int main(int argc, char *argv[], char *envp[])
+{
+	char	*str;
+	char	*new_str;
 	char	**new_envp;
-	char	*expanded;
+	t_node	*list_envp;
 
 	list_envp = store_to_list(envp);
 
-	// printList(list_envp);
+	// printf("%s\n", expand("$USER", list_envp));
+	// printf("%s\n", expand("\"$USER\"", list_envp));
+	// printf("%s\n", expand("abc\"$USER\"abc", list_envp));
+	// printf("%s\n", expand("abc$USER abc", list_envp));
+	// printf("%s\n", expand("abc $USER", list_envp));
+	// printf("%s\n", expand("\'$USER\'", list_envp));
+	// printf("%s\n", expand("abc \'$USER\'", list_envp));
+	// printf("%s\n", expand("\'$USER\' abc", list_envp));
+	// printf("%s\n", expand("abc\'$USER\"\'abc", list_envp));
+	// printf("%s\n", expand("batata", list_envp));
+	// printf("%s\n", expand("\"a\"", list_envp));
+	// printf("%s\n", expand("\"abc\"", list_envp));
+	// printf("%s\n", expand("abc\"a\"", list_envp));
+	// printf("%s\n", expand("\"a\"abc", list_envp));
+	// printf("%s\n", expand("abc\"a\"abc", list_envp));
+	// printf("%s\n", expand("\"a\"abc\'a\'", list_envp));
+	// printf("%s\n", expand("\"a\"\'a\'", list_envp));
+	// printf("%s\n", expand("\"a\'\"", list_envp));
+	// printf("%s\n", expand("\"batata\'bata\'\"", list_envp));
 
-	// env_insert_node(&list_envp, ft_strdup("teste"), ft_strdup("bomdia"));
-	// env_insert_node(&list_envp, "teste", "boa tarde");
+	char	*line;
 
-	// env_delete_value(&list_envp, "HOME");
+	do {
+		line = readline("string: ");
+		add_history(line);
+		if (line)
+			printf("%s\n", expand(line, list_envp));
+	} while (line);
 
-	new_envp = create_envp(list_envp);
-
-	// expanded = expand("ola $teste", list_envp);		// ola bomdia
-
-	// printList(list_envp);
-
-	// printf("%s = %s\n", "SHELL", search_value(list_envp, "SHELL"));
-
-	// free(search_value(list_envp, "SHELL"));
-
-	// for (t_node *node = list_envp; node; node = node->next)
-	// 	printf("%s = %s\n", node->key, search_value(list_envp, node->key));
-
-	free_envp(new_envp);
+	// free(new_str);
 	clear_list(&list_envp);
 
 	return (0);
 }
+
+// $USER -> danbarbo
+// oi $USER -> oi danbarbo
+// oi $1 tudo bem-> oi  tudo bem
+// $$ ->
+// oi $$ tudo bem -> oi  tudo bem
+// oi $1USER tudo bem -> oi  tudo bem
+// oi $ a -> oi  a
+// oi $$ a -> oi  a
+// oi $$$USER -> oi danbarbo
