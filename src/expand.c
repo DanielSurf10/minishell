@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:08:56 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/05/21 16:17:11 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/05/22 19:29:59 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	add_string_to_list(t_expand_list **lst, char *str)
 	}
 }
 
-void	print_string(t_expand_list *head)
+void	print_string(t_expand_list *head)		// TIRAR DPS
 {
 	t_expand_list	*temp;
 
@@ -151,25 +151,45 @@ char	*remote_quotes(char *str)
 	return (new_string);
 }
 
+// fora das aspas = 0
+// aspas simples = 1
+// aspas duplas = 2
 char	*expand(char *str, t_node *head)
 {
 	// char	*new_str;
 	int				i;
 	int				k;
-	int				in_single_quotes;
+	int				in_quotes;
 	char 			*key;
 	char			*expanded;
 	char			*expanded_without_quotes;
 	t_expand_list	*new_str;
 
 	i = 0;
-	in_single_quotes = 0;
+	in_quotes = 0;
 	new_str = NULL;
 	while (str[i] != '\0')
 	{
-		if (str[i] == '\'')
-			in_single_quotes = !in_single_quotes;
-		if (str[i] == '$' && in_single_quotes == 0)
+		if (str[i] == '\'' && (in_quotes == 0 || in_quotes == 1))
+		{
+			if (in_quotes == 0)
+				in_quotes = 1;
+			else if (in_quotes == 1)
+				in_quotes = 0;
+			i++;
+			continue ;
+		}
+		else if (str[i] == '\"' && (in_quotes == 0 || in_quotes == 2))
+		{
+			if (in_quotes == 0)
+				in_quotes = 2;
+			else if (in_quotes == 2)
+				in_quotes = 0;
+			i++;
+			continue ;
+		}
+
+		if (str[i] == '$' && in_quotes != 1)
 		{
 			i++;
 			if (str[i] >= '0' && str[i] <= '9' || str[i] == '$' || is_valid_variable(str[i]) == 0)	// Isso tá meio estranho
@@ -208,7 +228,8 @@ char	*expand(char *str, t_node *head)
 
 	expanded = create_string_from_list(new_str);
 
-	expanded_without_quotes = remote_quotes(expanded);
+	// expanded_without_quotes = remote_quotes(expanded);	// ARRUMAR ISSO AQUI
+	expanded_without_quotes = ft_strdup(expanded);
 
 	free(expanded);
 
