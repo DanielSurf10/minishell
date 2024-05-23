@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 17:06:49 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/05/22 19:27:02 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/23 19:05:52 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,14 @@ int main(int argc, char *argv[], char *envp[])
 	printf("%2d - %s\n", count++, expand("''\"\"''", list_envp));
 	printf("%2d - %s\n", count++, expand("''\"$A\"''", list_envp));
 
-	char	*line;
-
-	do {
-		line = readline("string: ");
-		add_history(line);
-		if (line)
-			printf("%s\n", expand(line, list_envp));
-	} while (line);
+// 	char	*line;
+//
+// 	do {
+// 		line = readline("string: ");
+// 		add_history(line);
+// 		if (line)
+// 			printf("%s\n", expand(line, list_envp));
+// 	} while (line);
 
 	// free(new_str);
 	clear_list(&list_envp);

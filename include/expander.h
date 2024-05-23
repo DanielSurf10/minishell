@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 17:07:05 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/05/21 15:12:03 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/05/23 19:00:58 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,8 @@ void	free_envp(char **envp);
 char	*search_value(t_node *head, char *key);
 char 	*create_string_from_list(t_expand_list *lst);
 int		size_list(t_expand_list *lst);
+
+// Utils
+int		ternary(int condition, int if_true, int if_false);		// ARRUMAR ESSA BOSTA: colocar no minishell.h
 
 #endif

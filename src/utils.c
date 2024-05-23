@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 17:34:51 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/05/17 17:36:48 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/05/23 18:59:11 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,4 +117,11 @@ void	free_envp(char **envp)
 		i++;
 	}
 	free(envp);
+}
+
+int	ternary(int condition, int if_true, int if_false)
+{
+	if (condition)
+		return (if_true);
+	return (if_false);
 }
