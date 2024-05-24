@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expander.c                                         :+:      :+:    :+:   */
+/*   envp_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:56:46 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/05/21 15:35:24 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/05/24 16:34:21 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	env_insert_node(t_node **head, char *key, char *value)
 	t_node *new_node;
 	t_node *temp;
 
-	if (exist_in_list(*head, key, value) == 1)
+	if (att_existing_value(*head, key, value) == 1)
 		return ;
 	new_node = env_create_node(key, value);
 	if (*head == NULL)
@@ -42,21 +42,6 @@ void	env_insert_node(t_node **head, char *key, char *value)
 	}
 }
 
-void	printList(t_node *head)
-{
-	t_node	*temp;
-
-	temp = head;
-	while (temp != NULL)
-	{
-		printf("Key: %s, Value: %s\n", temp->key, temp->value);
-		temp = temp->next;
-	}
-}
-
-/*
-Cria um lista a partir do envp
-*/
 t_node	*store_to_list(char *envp[])
 {
 	t_node		*head;
@@ -97,7 +82,7 @@ char	**create_envp(t_node *head)
 	new_envp = malloc(sizeof(char *) * (envp_list_size(head) + 1));
 	while (temp != NULL)
 	{
-		full_size = ft_strlen(temp->key) + ft_strlen(temp->value) + 2;		// tamando da chave + tamanho do valor + 1 para o sinal de "=" + 1 para o \0
+		full_size = ft_strlen(temp->key) + ft_strlen(temp->value) + 2;
 		new_envp[i] = malloc(sizeof(char) * full_size);
 		ft_strlcpy(new_envp[i], temp->key, full_size);
 		ft_strlcat(new_envp[i], "=", full_size);
@@ -109,51 +94,27 @@ char	**create_envp(t_node *head)
 	return (new_envp);
 }
 
-// char	*expand(char *str, t_node *head)
-// {
-	// t_node	*temp;
-	// char	*new_str;
-	// int		i;
-	// int		j;
-	// int		k;
+void	env_delete_value(t_node **head, char *key)
+{
+	t_node	*temp;
+	t_node	*prev;
 
-	// i = 0;
-	// j = 0;
-	// k = 0;
-	// temp = head;
-	// while (str[i] != '\0')
-	// {
-	// 	if (str[i] == '$')
-	// 	{
-	// 		i++;
-	// 		while (str[i] != ' ' && str[i] != '\0')
-	// 		{
-	// 			k++;
-	// 			i++;
-	// 		}
-	// 		// env_malloc(k + 1, &new_str);
-	// 		new_str = malloc(sizeof(char) * (k + 1));
-
-
-	// 		// while (str[j] != '$')
-	// 		// 	ft_strcpy(new_str, str, j);
-	// 		// {
-	// 		// 	new_str[j] = str[j];
-	// 		// 	j++;
-	// 		// }
-	// 		while (temp != NULL)
-	// 		{
-	// 			if (ft_strncmp(temp->key, &str[j], k) == 0)
-	// 			{
-	// 				new_str = ft_strjoin(new_str, temp->value);
-	// 				j = j + k;
-	// 				break ;
-	// 			}
-	// 			temp = temp->next;
-	// 		}
-	// 		k = 0;
-	// 	}
-	// 	i++;
-	// }
-	// return (new_str);
-// }
+	temp = *head;
+	prev = NULL;
+	while (temp != NULL)
+	{
+		if (ft_strncmp(temp->key, key, -1) == 0)
+		{
+			if (prev == NULL)
+				*head = temp->next;
+			else
+				prev->next = temp->next;
+			free(temp->key);
+			free(temp->value);
+			free(temp);
+			break ;
+		}
+		prev = temp;
+		temp = temp->next;
+	}
+}

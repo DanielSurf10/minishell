@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 17:06:49 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/05/24 16:07:35 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/24 16:32:57 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ struct test_list
 
 int	check_expand(t_node *list_envp, char *to_expand, char *expected)
 {
-	char	*expanded = expand(to_expand, list_envp);
+	char	*expanded = expand_string(to_expand, list_envp);
 
 	return (ft_strncmp(expected, expanded, -1) == 0);
 }
@@ -60,6 +60,8 @@ int main(int argc, char *argv[], char *envp[])
 	list_envp = store_to_list(envp);
 
 	env_insert_node(&list_envp, ft_strdup("A"), ft_strdup("a\""));
+	// env_delete_value(&list_envp, "USER");
+	// env_insert_node(&list_envp, "USER", "BATATA");
 
 	// Adiciona os testes
 	add_test(&expand_test_list, "$USER", "danbarbo");
@@ -97,7 +99,7 @@ int main(int argc, char *argv[], char *envp[])
 	{
 		printf("%11s - ", check_expand(list_envp, aux->to_expand, aux->expected) ? G"[ CORRETO ]"RST : RED"[ ERRADO! ]"RST);
 
-		printf("%s - %s - %s\n", aux->to_expand, expand(aux->to_expand, list_envp), aux->expected);
+		printf("%s - %s - %s\n", aux->to_expand, expand_string(aux->to_expand, list_envp), aux->expected);
 
 		aux = aux->next;
 	}
