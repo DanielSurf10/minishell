@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:08:56 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/05/23 19:32:01 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/24 14:45:12 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,12 +137,16 @@ char	*expand(char *str, t_node *head)
 			if (str[i] >= '0' && str[i] <= '9' || str[i] == '$'
 				|| is_valid_variable(str[i]) == 0)
 			{
-				while (is_valid_variable(str[i]))
-					i++;
-				if (str[i] == '$')
-					i++;
-				if (str[i] == ' ' || str[i] == '\'' || str[i] == '"')
-					i--;
+				if (!(str[i] >= '0' && str[i] <= '9'))
+				{
+					while (is_valid_variable(str[i]))
+						i++;
+					if (str[i] == '$')
+						i++;
+					// if (str[i] == ' ' || str[i] == '\'' || str[i] == '"')
+					if (is_valid_variable(str[i]) == 0)
+						i--;
+				}
 			}
 			else
 			{
