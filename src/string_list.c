@@ -6,19 +6,19 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 16:21:39 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/24 16:36:15 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/24 17:20:26 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 
-void	add_letter_list(t_string_list **lst, char letter)
+void	add_letter_list(t_str_lst **lst, char letter)
 {
-	t_string_list	*node;
-	t_string_list	*last_node;
+	t_str_lst	*node;
+	t_str_lst	*last_node;
 
 	last_node = *lst;
-	node = malloc(sizeof(t_string_list));
+	node = malloc(sizeof(t_str_lst));
 	node->letter = letter;
 	node->next = NULL;
 	while (last_node && last_node->next)
@@ -29,7 +29,7 @@ void	add_letter_list(t_string_list **lst, char letter)
 		*lst = node;
 }
 
-int	size_list(t_string_list *lst)
+int	size_list(t_str_lst *lst)
 {
 	int	size;
 
@@ -42,7 +42,7 @@ int	size_list(t_string_list *lst)
 	return (size);
 }
 
-void	add_string_to_list(t_string_list **lst, char *str)
+void	add_string_to_list(t_str_lst **lst, char *str)
 {
 	int	i;
 
@@ -54,9 +54,9 @@ void	add_string_to_list(t_string_list **lst, char *str)
 	}
 }
 
-void	clear_str_list(t_string_list **head)
+void	clear_str_list(t_str_lst **head)
 {
-	t_string_list	*temp;
+	t_str_lst	*temp;
 
 	while (*head != NULL)
 	{
@@ -66,7 +66,7 @@ void	clear_str_list(t_string_list **head)
 	}
 }
 
-char 	*create_string_from_list(t_string_list *lst)
+char	*create_string_from_list(t_str_lst *lst)
 {
 	int		i;
 	int		size_str;

@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:56:46 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/05/24 16:34:21 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/24 17:44:32 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_node	*env_create_node(char *key, char *value)
 {
 	t_node	*new_node;
 
-	new_node = (t_node*)malloc(sizeof(t_node));
+	new_node = (t_node *)malloc(sizeof(t_node));
 	new_node->key = key;
 	new_node->value = value;
 	new_node->next = NULL;
@@ -25,8 +25,8 @@ t_node	*env_create_node(char *key, char *value)
 
 void	env_insert_node(t_node **head, char *key, char *value)
 {
-	t_node *new_node;
-	t_node *temp;
+	t_node	*new_node;
+	t_node	*temp;
 
 	if (att_existing_value(*head, key, value) == 1)
 		return ;
@@ -44,27 +44,25 @@ void	env_insert_node(t_node **head, char *key, char *value)
 
 t_node	*store_to_list(char *envp[])
 {
-	t_node		*head;
+	t_node	*head;
 	char	*key;
 	char	*value;
-	int		i;
-	int		j;
-	int		k;
+	int		idx[3];
 
 	head = NULL;
-	i = -1;
-	while (envp[++i])
+	idx[0] = -1;
+	while (envp[++idx[0]])
 	{
-		j = 0;
-		while (envp[i][j] != '=')
-			j++;
-		key = malloc(sizeof(char) * (j + 1));
-		k = j + 1;
-		while (envp[i][k] != '\0')
-			k++;
-		value = malloc(sizeof(char) * (k + 1));
-		ft_strlcpy(key, envp[i], j + 1);
-		ft_strlcpy(value, envp[i] + j + 1, k);
+		idx[1] = 0;
+		while (envp[idx[0]][idx[1]] != '=')
+			idx[1]++;
+		key = malloc(sizeof(char) * (idx[1] + 1));
+		idx[2] = idx[1] + 1;
+		while (envp[idx[0]][idx[2]] != '\0')
+			idx[2]++;
+		value = malloc(sizeof(char) * (idx[2] + 1));
+		ft_strlcpy(key, envp[idx[0]], idx[1] + 1);
+		ft_strlcpy(value, envp[idx[0]] + idx[1] + 1, idx[2]);
 		env_insert_node(&head, key, value);
 	}
 	return (head);
