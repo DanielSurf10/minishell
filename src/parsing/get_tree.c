@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 17:44:55 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/21 13:59:49 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/25 15:12:42 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@ t_exec_tree	*make_tree_cmd(t_token_list *token_list)
 	{
 		if (aux->token.type >= REDIRECT_INPUT && aux->token.type <= REDIRECT_OUTPUT_APPEND)
 		{
-			
+
 		}
+		aux = aux->next;
 	}
 	return (tree_aux);
 }
@@ -80,19 +81,19 @@ t_exec_tree	*make_tree(t_token_list *token_list)
 	// }
 	else
 	{
-		// tree->type = COMMAND;
-		// tree->command = invert_list(token_get_sublist(token_list, 0, token_list_size(token_list)));
-		// tree->left = NULL;
-		// tree->right = NULL;
-		// tree->subshell = NULL;
+		tree->type = COMMAND;
+		tree->command = invert_list(token_get_sublist(token_list, 0, token_list_size(token_list)));
+		tree->left = NULL;
+		tree->right = NULL;
+		tree->subshell = NULL;
 
-		aux = invert_list(token_get_sublist(token_list, 0, token_list_size(token_list)));
-
-		free(tree);
-
-		tree = make_tree_cmd(aux);
-
-		token_clear_list(&aux);
+// 		aux = invert_list(token_get_sublist(token_list, 0, token_list_size(token_list)));
+//
+// 		free(tree);
+//
+// 		tree = make_tree_cmd(aux);
+//
+// 		token_clear_list(&aux);
 
 		return (tree);
 	}

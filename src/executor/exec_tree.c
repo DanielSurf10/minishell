@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:02:10 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/18 21:15:57 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/25 15:44:54 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,9 @@ int	exec_pipe(t_exec_tree *tree)
 		pid = exec_cmd(tree);
 	else if (tree->type == SUBSHELL)
 	{
+		// ret_code = exec_tree(tree->subshell);	// NÃO É ISSO
+													// Precisa retornar o PID
+
 		pid = fork();
 		if (pid == 0)
 		{
@@ -263,10 +266,10 @@ int	exec_tree(t_exec_tree *tree)
 	}
 	else if (tree->type == PIPE)
 	{
-		pid_pipe = fork();
-
-		if (pid_pipe == 0)
-		{
+// 		pid_pipe = fork();
+//
+// 		if (pid_pipe == 0)
+// 		{
 			pid = exec_pipe(tree);
 
 			num[0] = wait(&num[1]);
@@ -277,10 +280,10 @@ int	exec_tree(t_exec_tree *tree)
 					ret_code = (num[1] >> 8) & 0xFF;
 				num[0] = wait(&num[1]);
 			}
-			exit(ret_code);
-		}
-		waitpid(pid_pipe, &ret_code, 0);
-		ret_code = (ret_code >> 8) & 0xFF;
+		// 	exit(ret_code);
+		// }
+		// waitpid(pid_pipe, &ret_code, 0);
+		// ret_code = (ret_code >> 8) & 0xFF;
 	}
 	return (ret_code);
 }
