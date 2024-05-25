@@ -70,15 +70,13 @@ int main(int argc, char *argv[], char *envp[])
 	list_envp = store_to_list(envp);
 
 	env_insert_node(&list_envp, ft_strdup("A"), ft_strdup("a\""));
-	// env_delete_value(&list_envp, "USER");
-	// env_insert_node(&list_envp, "USER", "BATATA");
-
+	printf(B"\n************************ RODANDO TESTES ************************\n\n"RST);
 	// Adiciona os testes
-	add_test(&expand_test_list, "$USER", "danbarbo");
-	add_test(&expand_test_list, "\"$USER\"", "danbarbo");
-	add_test(&expand_test_list, "abc\"$USER\"abc", "abcdanbarboabc");
-	add_test(&expand_test_list, "abc$USER abc", "abcdanbarbo abc");
-	add_test(&expand_test_list, "abc $USER", "abc danbarbo");
+	add_test(&expand_test_list, "$USER", "leobarbo");
+	add_test(&expand_test_list, "\"$USER\"", "leobarbo");
+	add_test(&expand_test_list, "abc\"$USER\"abc", "abcleobarboabc");
+	add_test(&expand_test_list, "abc$USER abc", "abcleobarbo abc");
+	add_test(&expand_test_list, "abc $USER", "abc leobarbo");
 	add_test(&expand_test_list, "\'$USER\'", "$USER");
 	add_test(&expand_test_list, "abc \'$USER\'", "abc $USER");
 	add_test(&expand_test_list, "\'$USER\' abc", "$USER abc");
@@ -93,8 +91,8 @@ int main(int argc, char *argv[], char *envp[])
 	add_test(&expand_test_list, "\"a\"\'a\'", "aa");
 	add_test(&expand_test_list, "\"a\'\"", "a'");
 	add_test(&expand_test_list, "\"batata\'bata\'\"", "batata'bata'");
-	add_test(&expand_test_list, "\"'$USER'\"", "'danbarbo'");
-	add_test(&expand_test_list, "\"'\"$USER", "'danbarbo");
+	add_test(&expand_test_list, "\"'$USER'\"", "'leobarbo'");
+	add_test(&expand_test_list, "\"'\"$USER", "'leobarbo");
 	add_test(&expand_test_list, "\"\"", "");
 	add_test(&expand_test_list, "\"$A\"", "a\"");
 	add_test(&expand_test_list, "'\"$A\"'", "\"$A\"");
@@ -103,7 +101,7 @@ int main(int argc, char *argv[], char *envp[])
 	add_test(&expand_test_list, "''\"\"''", "");
 	add_test(&expand_test_list, "''\"$A\"''", "a\"");
 
-	// Testa
+	// Teste
 	aux = expand_test_list;
 	while (aux)
 	{
@@ -114,6 +112,7 @@ int main(int argc, char *argv[], char *envp[])
 		aux = aux->next;
 	}
 
+	printf(B"\n****************************************************************\n\n"RST);
 	return (0);
 }
 
