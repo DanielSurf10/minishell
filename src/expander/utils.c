@@ -5,22 +5,16 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/18 20:25:26 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/18 20:26:52 by danbarbo         ###   ########.fr       */
+/*   Created: 2024/05/24 16:33:47 by danbarbo          #+#    #+#             */
+/*   Updated: 2024/05/24 16:34:02 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"			// MUDAR ISSO AQUI PARA `expander.h`
+#include "expander.h"
 
-void	free_envp(char **envp)
+int	ternary(int condition, int if_true, int if_false)
 {
-	int	i;
-
-	i = 0;
-	while (envp[i])
-	{
-		free(envp[i]);
-		i++;
-	}
-	free(envp);
+	if (condition)
+		return (if_true);
+	return (if_false);
 }
