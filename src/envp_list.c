@@ -44,10 +44,10 @@ void	env_insert_node(t_node **head, char *key, char *value)
 
 t_node	*store_to_list(char *envp[])
 {
-	t_node	*head;
+	int		idx[3];
 	char	*key;
 	char	*value;
-	int		idx[3];
+	t_node	*head;
 
 	head = NULL;
 	idx[0] = -1;
@@ -72,8 +72,8 @@ char	**create_envp(t_node *head)
 {
 	int		i;
 	int		full_size;
-	t_node	*temp;
 	char	**new_envp;
+	t_node	*temp;
 
 	i = 0;
 	temp = head;
