@@ -25,11 +25,11 @@ static void	invalid_var(char *str, int *i)
 	if (!(str[(*i)] >= '0' && str[(*i)] <= '9'))
 	{
 		while (is_valid_var(str[(*i)]))
-			i++;
+			(*i)++;
 		if (str[(*i)] == '$')
-			i++;
+			(*i)++;
 		if (is_valid_var(str[(*i)]) == 0)
-			i--;
+			(*i)--;
 	}
 }
 
