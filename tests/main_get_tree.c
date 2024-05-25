@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:11:12 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/13 18:13:14 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/25 19:59:49 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,11 +118,10 @@ int main()
 	t_token_list	*token_list;
 	t_exec_tree		*tree;
 
-	token_list = get_token_list("< infile cat | cat -e");
-
+	token_list = get_token_list("cat < infile -e");
 	tree = get_tree(token_list);
 
-	print_tree(tree);
+	// print_tree(tree);
 
 	token_clear_list(&token_list);
 	free_tree(&tree);

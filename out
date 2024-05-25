@@ -1,4 +1,0 @@
-[ ] Colocar o enum e_token num arquivo separado nas outras branchs$
-[ ] Mudar o utils.c do lexing de lugar para por na pasta sM-CM-3 do lexing$
-[ ] Depois mudar todo o lexing para uma pasta abaixo$
-[ ] Arrumar o .h do expander$
