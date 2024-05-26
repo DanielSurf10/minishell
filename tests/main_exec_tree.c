@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:43:25 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/25 20:37:22 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/25 23:37:18 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -329,15 +329,42 @@ int	main()
 // 	tree->subshell->command = get_token_list("/bin/ls -l");
 
 
-	// comando pela readline
+// 	// subshell com redirect - (/bin/cat -e) > out
+//
+// 	// primeiro
+// 	tree = malloc(sizeof(t_exec_tree));
+// 	ft_bzero(tree, sizeof(t_exec_tree));
+// 	tree->type = REDIRECT_OUTPUT;
+// 	tree->command = get_token_list(">");
+//
+// 	// esquerda
+// 	tree->left = malloc(sizeof(t_exec_tree));
+// 	ft_bzero(tree->left, sizeof(t_exec_tree));
+// 	tree->left->type = COMMAND;
+// 	tree->left->command = get_token_list("out");
+//
+// 	// direita
+// 	tree->right = malloc(sizeof(t_exec_tree));
+// 	ft_bzero(tree->right, sizeof(t_exec_tree));
+// 	tree->right->type = SUBSHELL;
+//
+// 	// direita subshell
+// 	tree->right->subshell = malloc(sizeof(t_exec_tree));
+// 	ft_bzero(tree->right->subshell, sizeof(t_exec_tree));
+// 	tree->right->subshell->type = COMMAND;
+// 	tree->right->subshell->command = get_token_list("/bin/cat -e");
 
-	token_list = get_token_list(readline("minishell$ "));
-	tree = get_tree(token_list);
+
+// 	// comando pela readline
+//
+// 	token_list = get_token_list(readline("minishell$ "));
+// 	tree = get_tree(token_list);
 
 
 	// Comando fixo
-	// token_list = get_token_list("/bin/cat < todo > out > out1 > out2 < todo");
-	// tree = get_tree(token_list);
+
+	token_list = get_token_list("/bin/cat < todo > out > out1 > out2 < todo");
+	tree = get_tree(token_list);
 
 
 	ret_code = exec_tree(tree);

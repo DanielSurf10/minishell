@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:02:10 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/25 15:44:54 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/25 23:15:17 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	exec_cmd_fork(t_exec_tree *tree)
 	int		i;
 	int		fd_redir;
 	int		args_num;
+	int		ret_code;
 	char	*cmd;
 	char	**argv;
 
@@ -48,6 +49,12 @@ void	exec_cmd_fork(t_exec_tree *tree)
 			dup2(fd_redir, STDOUT_FILENO);
 		close(fd_redir);
 		exec_cmd_fork(tree->right);
+	}
+	else if (tree->type == SUBSHELL)
+	{
+		ret_code = exec_tree(tree->subshell);
+		free_tree(&tree);
+		exit(ret_code);
 	}
 	else
 	{
