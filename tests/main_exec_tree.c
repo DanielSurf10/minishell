@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:43:25 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/25 23:37:18 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/26 01:57:17 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,7 +287,7 @@ int	main()
 // 	// left
 // 	tree->left = calloc(1, sizeof(t_exec_tree));
 // 	tree->left->type = COMMAND;
-// 	tree->left->command = get_token_list("Makefil");
+// 	tree->left->command = get_token_list("infile");
 //
 // 	// right
 // 	tree->right = calloc(1, sizeof(t_exec_tree));
@@ -309,7 +309,7 @@ int	main()
 // 	tree->right->right->left->type = COMMAND;
 // 	tree->right->right->left->command = get_token_list("todo");
 //
-// 	// right right right
+// 	right right right
 // 	tree->right->right->right = calloc(1, sizeof(t_exec_tree));
 // 	tree->right->right->right->type = COMMAND;
 // 	tree->right->right->right->command = get_token_list("/bin/cat -e");
@@ -355,16 +355,17 @@ int	main()
 // 	tree->right->subshell->command = get_token_list("/bin/cat -e");
 
 
-// 	// comando pela readline
-//
-// 	token_list = get_token_list(readline("minishell$ "));
-// 	tree = get_tree(token_list);
+	// comando pela readline
 
-
-	// Comando fixo
-
-	token_list = get_token_list("/bin/cat < todo > out > out1 > out2 < todo");
+	token_list = get_token_list(readline("minishell$ "));
 	tree = get_tree(token_list);
+
+
+// 	// Comando fixo
+//
+// 	// token_list = get_token_list("/bin/cat < todo > out > out1 > out2 < todo");
+// 	token_list = get_token_list("/bin/ls | < infile");
+// 	tree = get_tree(token_list);
 
 
 	ret_code = exec_tree(tree);

@@ -6,18 +6,52 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 17:44:55 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/25 20:32:22 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/26 01:46:46 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
+
+t_exec_tree	*make_tree_cmd_recursive(t_token_list *redir_list, t_token_list *args)
+{
+	t_exec_tree		*tree;
+
+	tree = malloc(sizeof(t_exec_tree));
+	ft_bzero(tree, sizeof(t_exec_tree));
+	if (!redir_list && args)
+	{
+		// Não sei se faço uma cópia ou uso sem copiar
+		// tree->command = args;
+		tree->command = token_get_sublist(args, 0, token_list_size(args));
+
+		tree->type = COMMAND;
+	}
+	else if (redir_list && redir_list->token.type != WORD && redir_list->next
+		&& redir_list->next->token.type == WORD)
+	{
+		tree->type = redir_list->token.type;
+
+		tree->left = malloc(sizeof(t_exec_tree));
+		ft_bzero(tree->left, sizeof(t_exec_tree));
+		tree->left->type = COMMAND;
+		tree->left->command = token_get_sublist(redir_list, 1, 1);
+
+		tree->right = make_tree_cmd_recursive(token_get_node_index(redir_list, 2), args);
+	}
+	else
+	{
+		free(tree);
+		tree = NULL;
+	}
+	return (tree);
+}
 
 t_exec_tree	*make_tree_cmd(t_token_list *token_list)
 {
 	int				redir_counter;
 	int				redir_list_size;
 	t_token_list	*aux;
-	t_token_list	*args;
+	t_token_list	*args;			// Não precisa dar free, to usando na árvore
 	t_token_list	*redir_list;
 	t_exec_tree		*tree;
 	t_exec_tree		*aux_tree;
@@ -63,6 +97,7 @@ t_exec_tree	*make_tree_cmd(t_token_list *token_list)
 // 			aux = aux->next;
 // 	}
 
+
 // 	aux = redir_list;
 //
 // 	tree = malloc(sizeof(t_exec_tree));
@@ -105,42 +140,46 @@ t_exec_tree	*make_tree_cmd(t_token_list *token_list)
 // 	// aux_tree = aux_tree->right;
 // 	// redir_counter += 2;
 
-	redir_list_size = token_list_size(redir_list);
 
-	aux = redir_list;
+// 	redir_list_size = token_list_size(redir_list);
+//
+// 	aux = redir_list;
+//
+// 	tree = malloc(sizeof(t_exec_tree));
+// 	ft_bzero(tree, sizeof(t_exec_tree));
+//
+// 	if (redir_list_size == 0)
+// 	{
+// 		tree->type = COMMAND;
+// 		tree->command = token_get_sublist(args, 0, token_list_size(args));
+// 		return (tree);
+// 	}
+//
+// 	aux_tree = tree;
+//
+// 	while (redir_counter < redir_list_size)
+// 	{
+// 		aux_tree->type = token_get_node_index(redir_list, redir_counter)->token.type;
+//
+// 		aux_tree->left = malloc(sizeof(t_exec_tree));
+// 		ft_bzero(aux_tree->left, sizeof(t_exec_tree));
+// 		aux_tree->left->type = COMMAND;
+// 		aux_tree->left->command = token_get_sublist(redir_list, redir_counter + 1, 1);
+//
+// 		aux_tree->right = malloc(sizeof(t_exec_tree));
+// 		ft_bzero(aux_tree->right, sizeof(t_exec_tree));
+//
+// 		aux_tree = aux_tree->right;
+// 		redir_counter += 2;
+// 	}
+//
+// 	aux_tree->type = COMMAND;
+// 	aux_tree->command = token_get_sublist(args, 0, token_list_size(args));
+//
+// 	// print_tree_aaa(tree);
 
-	tree = malloc(sizeof(t_exec_tree));
-	ft_bzero(tree, sizeof(t_exec_tree));
 
-	if (redir_list_size == 0)
-	{
-		tree->type = COMMAND;
-		tree->command = token_get_sublist(args, 0, token_list_size(args));
-		return (tree);
-	}
-
-	aux_tree = tree;
-
-	while (redir_counter < redir_list_size)
-	{
-		aux_tree->type = token_get_node_index(redir_list, redir_counter)->token.type;
-
-		aux_tree->left = malloc(sizeof(t_exec_tree));
-		ft_bzero(aux_tree->left, sizeof(t_exec_tree));
-		aux_tree->left->type = COMMAND;
-		aux_tree->left->command = token_get_sublist(redir_list, redir_counter + 1, 1);
-
-		aux_tree->right = malloc(sizeof(t_exec_tree));
-		ft_bzero(aux_tree->right, sizeof(t_exec_tree));
-
-		aux_tree = aux_tree->right;
-		redir_counter += 2;
-	}
-
-	aux_tree->type = COMMAND;
-	aux_tree->command = token_get_sublist(args, 0, token_list_size(args));
-
-	// print_tree_aaa(tree);
+	tree = make_tree_cmd_recursive(redir_list, args);
 
 	return (tree);
 }
@@ -234,13 +273,13 @@ t_exec_tree	*make_tree(t_token_list *token_list)
 // 	print_tokens(sub_list_right);
 
 	// Já que está invertido, aqui também fica invertido - ARRUMAR ISSO, inverter na atribuição
-	tree->right = make_tree(sub_list_left);		// Left vai pro right
 	tree->left = make_tree(sub_list_right);		// right vai pro left
+	tree->right = make_tree(sub_list_left);		// Left vai pro right
 
 	token_clear_list(&sub_list_left);
 	token_clear_list(&sub_list_right);
 
-	if (tree->right == NULL || tree->left == NULL)	// Aqui verifica a gramatica
+	if (tree->left == NULL || tree->right == NULL)	// Aqui verifica a gramatica
 	{
 		free(tree);
 		return(NULL);

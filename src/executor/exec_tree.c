@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:02:10 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/25 23:15:17 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/26 01:53:46 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	exec_cmd_fork(t_exec_tree *tree)
 	char	*cmd;
 	char	**argv;
 
+	if (!tree)
+		exit(1);
 	if (tree->type >= REDIRECT_INPUT && tree->type <= REDIRECT_OUTPUT_APPEND)
 	{
 		fd_redir = open_redir(tree->left->command->token.lexeme, tree->type);	// Fazer o tratamento de erro do redirecionamento ambíguo com o wildcard
@@ -194,7 +196,8 @@ int	exec_pipe(t_exec_tree *tree)
 		dup2(old_fd[0], STDIN_FILENO);
 		close(old_fd[0]);
 	}
-	else if (tree->type == COMMAND)
+	else if (tree->type == COMMAND
+		|| tree->type >= REDIRECT_INPUT && tree->type <= REDIRECT_OUTPUT_APPEND)
 		pid = exec_cmd(tree);
 	else if (tree->type == SUBSHELL)
 	{
