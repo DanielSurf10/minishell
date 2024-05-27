@@ -6,7 +6,7 @@
 #    By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/16 19:05:51 by danbarbo          #+#    #+#              #
-#    Updated: 2024/05/25 20:22:25 by danbarbo         ###   ########.fr        #
+#    Updated: 2024/05/26 19:05:00 by danbarbo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,14 @@ val: all
 	@valgrind --suppressions=readline.supp \
 				--leak-check=full \
 				--show-leak-kinds=all \
+				--track-origins=yes \
+				--track-fds=yes \
+				--trace-children=yes \
+				--trace-children-skip='*/bin/*,*/sbin/*,/usr/bin/*' \
+				./${NAME}
+
+vall: all
+	@valgrind --suppressions=readline.supp \
 				--track-origins=yes \
 				--track-fds=yes \
 				--trace-children=yes \
