@@ -5,6 +5,7 @@
 		"fcntl.h": "c",
 		"libft.h": "c",
 		"lexing.h": "c",
-		"random": "c"
+		"random": "c",
+		"executor.h": "c"
 	}
 }

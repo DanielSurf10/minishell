@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 17:44:55 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/26 22:23:37 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/28 01:05:48 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	index_to_open_parenthesis(t_token_list *token_list)
 		if (aux->token.type == OPEN_PARENTHESIS)
 			open_parenthis_to_count--;
 		else if (aux->token.type == CLOSE_PARENTHESIS)
-			open_parenthis_to_count--;
+			open_parenthis_to_count++;
 		if (open_parenthis_to_count != 0)
 			index++;
 		aux = aux->next;
@@ -81,14 +81,14 @@ t_exec_tree	*make_tree_cmd_recursive(t_token_list *redir_list, t_token_list *arg
 				tree->command = token_get_sublist(args, 1, token_list_size(args) - 2);		// Gambiarra a vista e '- 1' para tirar o token CLOSE_PARENTHESIS
 				tree->subshell = get_tree(tree->command);
 				token_clear_list(&tree->command);
+
+				if (!tree->subshell)
+					free_tree(&tree);
 			}
 		}
 		else
 		{
 			tree->type = COMMAND;
-
-			// Não sei se faço uma cópia ou uso sem copiar
-			// tree->command = args;
 			tree->command = token_get_sublist(args, 0, token_list_size(args));
 		}
 	}
@@ -103,12 +103,12 @@ t_exec_tree	*make_tree_cmd_recursive(t_token_list *redir_list, t_token_list *arg
 		tree->left->command = token_get_sublist(redir_list, 1, 1);
 
 		tree->right = make_tree_cmd_recursive(token_get_node_index(redir_list, 2), args);
+
+		if (!tree->right)
+			free_tree(&tree);
 	}
 	else
-	{
-		free(tree);
-		tree = NULL;
-	}
+		free_tree(&tree);
 	return (tree);
 }
 
@@ -293,6 +293,7 @@ t_exec_tree	*make_tree_cmd(t_token_list *token_list)
 t_exec_tree	*make_tree(t_token_list *token_list)
 {
 	int				i;
+	int				idx_parenthesis;
 	int				and_or_indice;
 	int				pipe_indice;
 	// int				redir_indice;
@@ -302,6 +303,7 @@ t_exec_tree	*make_tree(t_token_list *token_list)
 	t_exec_tree		*tree = NULL;
 
 	i = 0;
+	idx_parenthesis = 0;
 	and_or_indice = -1;
 	pipe_indice = -1;
 	// redir_indice = -1;
@@ -317,8 +319,14 @@ t_exec_tree	*make_tree(t_token_list *token_list)
 	{
 		if (aux->token.type == CLOSE_PARENTHESIS)
 		{
-			i = index_to_open_parenthesis(aux->next);
-			aux = token_get_node_index(aux, i);
+			idx_parenthesis = index_to_open_parenthesis(aux->next);
+			if (idx_parenthesis != -1)
+			{
+				i += idx_parenthesis;
+				aux = token_get_node_index(aux, idx_parenthesis);
+			}
+			else
+				break ;
 		}
 		else if (and_or_indice == -1 && (aux->token.type == AND || aux->token.type == OR))
 			and_or_indice = i;
@@ -327,7 +335,14 @@ t_exec_tree	*make_tree(t_token_list *token_list)
 		// else if (pipe_indice == -1 && (aux->token.type >= 2 && aux->token.type <= 5))
 		// 	redir_indice = i;
 		i++;
-		aux = aux->next;
+		if (aux)
+			aux = aux->next;
+	}
+
+	if (idx_parenthesis == -1)
+	{
+		free_tree(&tree);
+		return (NULL);
 	}
 
 	if (and_or_indice != -1)
