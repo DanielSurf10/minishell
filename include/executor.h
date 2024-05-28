@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:43:47 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/17 00:22:38 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/28 20:26:41 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct s_exec_tree
 	struct s_exec_tree	*right;
 }	t_exec_tree;
 
-int	exec_cmd(t_exec_tree *tree);
+int	exec_cmd(t_exec_tree *tree, int fd_to_close);
 int	exec_and(t_exec_tree *tree);
 int	exec_or(t_exec_tree *tree);
 int	exec_tree(t_exec_tree *tree);

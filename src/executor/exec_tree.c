@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:02:10 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/28 01:46:52 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/28 20:33:09 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,38 +90,18 @@ void	exec_cmd_fork(t_exec_tree *tree)
 	exit(1);
 }
 
-// void	exec_cmd_fork(t_exec_tree *tree)
-// {
-// 	int		i;
-// 	int		args_num;
-// 	char	*cmd;
-// 	char	**argv;
-//
-// 	i = 0;
-// 	args_num = token_list_size(tree->command);
-// 	argv = malloc((args_num + 1) * sizeof(char *));
-// 	argv[args_num] = NULL;
-//
-// 	while (i < args_num)
-// 	{
-// 		// argv[i] = expand_word(token_get_node_index(tree->command, i));
-// 		argv[i] = ft_strdup(token_get_node_index(tree->command, i)->token.lexeme);
-// 		i++;
-// 	}
-// 	cmd = argv[0];
-//
-// 	execve(cmd, argv, __environ);
-// 	exit(1);
-// }
-
-int	exec_cmd(t_exec_tree *tree)
+int	exec_cmd(t_exec_tree *tree, int fd_to_close)
 {
 	int	pid;
 
 	pid = fork();
 
 	if (pid == 0)
+	{
+		if (fd_to_close != -1)
+			close(fd_to_close);
 		exec_cmd_fork(tree);
+	}
 
 	return (pid);
 }
@@ -170,13 +150,14 @@ int	exec_or(t_exec_tree *tree)
 // 	return (pid);
 // }
 
-int	exec_pipe(t_exec_tree *tree)
+int	exec_pipe(t_exec_tree *tree, int fd_to_close)
 {
 	int	ret_code = 0;
 	int	pid;
 	int	old_fd[2];
 	int	pipe_fd[2];
 
+	pid = -1;
 	if (tree->type == PIPE)
 	{
 		pipe(pipe_fd);						// Resover o leak de fd desses 3 aqui
@@ -188,7 +169,7 @@ int	exec_pipe(t_exec_tree *tree)
 		dup2(pipe_fd[1], STDOUT_FILENO);
 		close(pipe_fd[1]);
 
-		exec_pipe(tree->left);
+		exec_pipe(tree->left, pipe_fd[0]);
 
 		// Comando da direita
 		// redir_back_old_fd_out();
@@ -199,7 +180,7 @@ int	exec_pipe(t_exec_tree *tree)
 		dup2(pipe_fd[0], STDIN_FILENO);
 		close(pipe_fd[0]);
 
-		pid = exec_pipe(tree->right);
+		pid = exec_pipe(tree->right, -1);
 
 		// redir_back_old_fd_in();
 		dup2(old_fd[0], STDIN_FILENO);
@@ -207,7 +188,7 @@ int	exec_pipe(t_exec_tree *tree)
 	}
 	else if (tree->type == COMMAND
 		|| tree->type >= REDIRECT_INPUT && tree->type <= REDIRECT_OUTPUT_APPEND)
-		pid = exec_cmd(tree);
+		pid = exec_cmd(tree, fd_to_close);
 	else if (tree->type == SUBSHELL)
 	{
 		// ret_code = exec_tree(tree->subshell);	// NÃO É ISSO
@@ -261,7 +242,7 @@ int	exec_tree(t_exec_tree *tree)
 	if (tree->type == COMMAND
 		|| tree->type >= REDIRECT_INPUT && tree->type <= REDIRECT_OUTPUT_APPEND)
 	{
-		pid = exec_cmd(tree);
+		pid = exec_cmd(tree, -1);
 		waitpid(pid, &ret_code, 0);
 		ret_code = (ret_code >> 8) & 0xFF;
 	}
@@ -290,7 +271,7 @@ int	exec_tree(t_exec_tree *tree)
 //
 // 		if (pid_pipe == 0)
 // 		{
-			pid = exec_pipe(tree);
+			pid = exec_pipe(tree, -1);
 
 			num[0] = wait(&num[1]);
 
