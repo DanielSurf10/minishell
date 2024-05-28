@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 17:44:55 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/28 11:26:10 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:35:01 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ t_exec_tree	*make_tree_cmd(t_token_list *token_list)
 	int				idx_parenthesis;
 	t_token_list	*aux;
 	t_token_list	*aux2;
-	t_token_list	*args;			// Não precisa dar free, to usando na árvore
+	t_token_list	*args;
 	t_token_list	*redir_list;
 	t_exec_tree		*tree;
 	t_exec_tree		*aux_tree;
@@ -287,6 +287,9 @@ t_exec_tree	*make_tree_cmd(t_token_list *token_list)
 
 	tree = make_tree_cmd_recursive(redir_list, args);
 
+	token_clear_list(&args);
+	token_clear_list(&redir_list);
+
 	return (tree);
 }
 
@@ -296,7 +299,6 @@ t_exec_tree	*make_tree(t_token_list *token_list)
 	int				idx_parenthesis;
 	int				and_or_indice;
 	int				pipe_indice;
-	// int				redir_indice;
 	t_token_list	*aux;
 	t_token_list	*sub_list_left;
 	t_token_list	*sub_list_right;
@@ -306,7 +308,6 @@ t_exec_tree	*make_tree(t_token_list *token_list)
 	idx_parenthesis = 0;
 	and_or_indice = -1;
 	pipe_indice = -1;
-	// redir_indice = -1;
 	aux = token_list;
 
 	if (token_list == NULL)
@@ -353,31 +354,18 @@ t_exec_tree	*make_tree(t_token_list *token_list)
 	{
 		i = pipe_indice;
 	}
-	// else if (redir_indice != -1)
-	// {
-	// 	i = redir_indice;
-	// }
 	else
 	{
-		// tree->type = COMMAND;
-		// tree->command = invert_list(token_get_sublist(token_list, 0, token_list_size(token_list)));
-		// tree->left = NULL;
-		// tree->right = NULL;
-		// tree->subshell = NULL;
-
-		aux = invert_list(token_get_sublist(token_list, 0, token_list_size(token_list)));
-
 		free(tree);
-
+		aux = invert_list(token_get_sublist(token_list, 0, token_list_size(token_list)));
 		tree = make_tree_cmd(aux);
-
 		token_clear_list(&aux);
-
 		return (tree);
 	}
 
-	// Isso aqui tá meio coisado, talvez eu mude dps
-	tree->type = token_get_node_index(token_list, i)->token.type;
+	aux = token_get_node_index(token_list, i);
+	if (aux)
+		tree->type = aux->token.type;
 
 	// printf("%d\n", i);
 
