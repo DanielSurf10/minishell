@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 17:44:55 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/28 01:56:53 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/28 11:26:10 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,9 @@ t_exec_tree	*make_tree_cmd_recursive(t_token_list *redir_list, t_token_list *arg
 
 	tree = malloc(sizeof(t_exec_tree));
 	ft_bzero(tree, sizeof(t_exec_tree));
-	if (!redir_list && args)
+	if (!redir_list)
 	{
-		if (args->token.type == OPEN_PARENTHESIS)
+		if (args && args->token.type == OPEN_PARENTHESIS)
 		{
 			if (index_to_close_parenthesis(args->next) != token_list_size(args) - 1)		// Verificação de erro do subshell
 			{
@@ -78,7 +78,7 @@ t_exec_tree	*make_tree_cmd_recursive(t_token_list *redir_list, t_token_list *arg
 			else
 			{
 				tree->type = SUBSHELL;
-				tree->command = token_get_sublist(args, 1, token_list_size(args) - 2);		// Gambiarra a vista e '- 1' para tirar o token CLOSE_PARENTHESIS
+				tree->command = token_get_sublist(args, 1, token_list_size(args) - 2);		// Gambiarra a vista e '- 2' para tirar os tokens dos parenteses
 				tree->subshell = get_tree(tree->command);
 				token_clear_list(&tree->command);
 

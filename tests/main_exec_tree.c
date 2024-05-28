@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:43:25 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/28 01:57:33 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/28 11:40:55 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -368,13 +368,14 @@ int	main()
 	// token_list = get_token_list("/bin/cat < todo > out > out1 > out2 < todo");
 	// token_list = get_token_list("<infile (/bin/cat > out -e > out2 | /bin/ps)");
 	// token_list = get_token_list("/bin/ls | /bin/grep o > out | /bin/ps");
+	// token_list = get_token_list("/bin/ps > out | /bin/ls | /bin/grep o");
 	// token_list = get_token_list("( /bin/ls < infile ) < infile | < infile /bin/cat -e && ( ( ( < infile /bin/cat -e ) ) )");
 	// token_list = get_token_list("< todo ( < todo /bin/ls < infile ) < infile | < infile /bin/cat -e && < infile ( < infile ( < infile ( < infile /bin/cat -e < todo ) < todo ) < todo ) < todo");
 	// token_list = get_token_list("(<infile())");
 	// token_list = get_token_list("<infile())");
 	// token_list = get_token_list("((/bin/ls)");
 	// token_list = get_token_list("(/bin/ls))");
-	token_list = get_token_list("< infile");
+	// token_list = get_token_list("> out | /bin/ls");
 	// tree = get_tree(token_list);
 
 
