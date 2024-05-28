@@ -2,3 +2,9 @@
 [ ] Ver o que deu quando tenta executar algum comando com redirect e pipe, parece que está errado.
 [ ] Mudar enum para começar em 1 não em 0, mas precisa testar antes
 [ ] Arrumar leaks de fd para fazer o teste < /dev/urandom cat | head -1
+[ ] Resover erro, `< infile`
+	- Para resolver um erro do subshell eu fiz um if que ve se a direita foi construida.
+		- Se foi, segue normal
+		- Senão, limpa e dá erro de sitaxe
+	- Nesse comando ele também não gera a direita, porém deve ser considerado como certo
+	- Ver um jeito diferente pra fazer isso

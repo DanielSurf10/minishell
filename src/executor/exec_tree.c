@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:02:10 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/26 01:53:46 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/28 01:46:52 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,20 +62,29 @@ void	exec_cmd_fork(t_exec_tree *tree)
 	{
 		i = 0;
 		args_num = token_list_size(tree->command);
-		argv = malloc((args_num + 1) * sizeof(char *));
-		argv[args_num] = NULL;
 
-		while (i < args_num)
+		if (args_num != 0)			// Se não tiver commando mas tiver alguma coisa, tipo redirect ele retorna 0 no exit
 		{
-			// argv[i] = expand_word(token_get_node_index(tree->command, i));
-			argv[i] = ft_strdup(token_get_node_index(tree->command, i)->token.lexeme);
-			i++;
-		}
-		// cmd = expand_command(argv[0]);
-		cmd = argv[0];
+			argv = malloc((args_num + 1) * sizeof(char *));
+			argv[args_num] = NULL;
 
-		execve(cmd, argv, __environ);
-		free_envp(argv);
+			while (i < args_num)
+			{
+				// argv[i] = expand_word(token_get_node_index(tree->command, i));
+				argv[i] = ft_strdup(token_get_node_index(tree->command, i)->token.lexeme);
+				i++;
+			}
+			// cmd = expand_command(argv[0]);
+			cmd = argv[0];
+
+			execve(cmd, argv, __environ);
+			free_envp(argv);
+		}
+		else
+		{
+			free_tree(&tree);
+			exit(0);
+		}
 	}
 	free_tree(&tree);
 	exit(1);
@@ -247,7 +256,8 @@ int	exec_tree(t_exec_tree *tree)
 	int	ret_code;
 
 	if (tree == NULL)
-		return (-1);
+		return (-1);		// Mudar isso aqui para 1 ou alguma coisa sla
+	ret_code = 2;			// Mudar esse aqui tb, para algo legal
 	if (tree->type == COMMAND
 		|| tree->type >= REDIRECT_INPUT && tree->type <= REDIRECT_OUTPUT_APPEND)
 	{
@@ -255,11 +265,11 @@ int	exec_tree(t_exec_tree *tree)
 		waitpid(pid, &ret_code, 0);
 		ret_code = (ret_code >> 8) & 0xFF;
 	}
-	else if (tree->type == AND)
+	else if (tree->type == AND && tree->left && tree->right)
 		ret_code = exec_and(tree);
-	else if (tree->type == OR)
+	else if (tree->type == OR && tree->left && tree->right)
 		ret_code = exec_or(tree);
-	else if (tree->type == SUBSHELL)
+	else if (tree->type == SUBSHELL && tree->subshell)
 	{
 		pid = fork();
 		if (pid != 0)						// Pai
@@ -274,7 +284,7 @@ int	exec_tree(t_exec_tree *tree)
 			exit(ret_code);
 		}
 	}
-	else if (tree->type == PIPE)
+	else if (tree->type == PIPE && tree->left && tree->right)
 	{
 // 		pid_pipe = fork();
 //

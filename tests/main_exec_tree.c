@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:43:25 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/28 01:06:24 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/28 01:57:33 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -355,10 +355,12 @@ int	main()
 // 	tree->right->subshell->command = get_token_list("/bin/cat -e");
 
 
-// 	// comando pela readline
-//
-// 	token_list = get_token_list(readline("minishell$ "));
-// 	tree = get_tree(token_list);
+	// comando pela readline
+
+	token_list = get_token_list(readline("minishell$ "));
+	tree = get_tree(token_list);
+	// if (tree->right)
+	// 	free_tree(&tree->right);
 
 
 	// Comando fixo
@@ -367,12 +369,13 @@ int	main()
 	// token_list = get_token_list("<infile (/bin/cat > out -e > out2 | /bin/ps)");
 	// token_list = get_token_list("/bin/ls | /bin/grep o > out | /bin/ps");
 	// token_list = get_token_list("( /bin/ls < infile ) < infile | < infile /bin/cat -e && ( ( ( < infile /bin/cat -e ) ) )");
-	token_list = get_token_list("< todo ( < todo /bin/ls < infile ) < infile | < infile /bin/cat -e && < infile ( < infile ( < infile ( < infile /bin/cat -e < todo ) < todo ) < todo ) < todo");
+	// token_list = get_token_list("< todo ( < todo /bin/ls < infile ) < infile | < infile /bin/cat -e && < infile ( < infile ( < infile ( < infile /bin/cat -e < todo ) < todo ) < todo ) < todo");
 	// token_list = get_token_list("(<infile())");
 	// token_list = get_token_list("<infile())");
 	// token_list = get_token_list("((/bin/ls)");
 	// token_list = get_token_list("(/bin/ls))");
-	tree = get_tree(token_list);
+	token_list = get_token_list("< infile");
+	// tree = get_tree(token_list);
 
 
 	ret_code = exec_tree(tree);
