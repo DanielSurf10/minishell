@@ -6,7 +6,7 @@
 #    By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/16 19:05:51 by danbarbo          #+#    #+#              #
-#    Updated: 2024/05/28 16:20:12 by danbarbo         ###   ########.fr        #
+#    Updated: 2024/05/28 17:00:33 by danbarbo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,11 @@ all: ${NAME}
 ${NAME}: ${LIBFT} ${OBJS} tests/main_get_tree.c
 #	@cc ${CFLAGS} ${HEADERS} ${OBJS} ${LIBFT} -o ${NAME}
 	@cc ${CFLAGS} ${HEADERS} ${OBJS} tests/main_get_tree.c ${LIBS} -o ${NAME}
+	@printf "Compiling: tests/main_get_tree.c\n"
+
+parsing_test: ${LIBFT} ${OBJS} tests/main_get_tree.c
+#	@cc ${CFLAGS} ${HEADERS} ${OBJS} ${LIBFT} -o ${NAME}
+	@cc ${CFLAGS} ${HEADERS} ${OBJS} tests/main_get_tree.c ${LIBS} -o $@
 	@printf "Compiling: tests/main_get_tree.c\n"
 
 obj/%.o: %.c

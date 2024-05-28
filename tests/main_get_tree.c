@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:11:12 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/28 16:36:41 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/28 17:43:15 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,18 +147,23 @@ void	print_tree(t_exec_tree *tree, int tab_count)
 	}
 }
 
-int main()
+int main(int argc, char *argv[])
 {
 	t_token_list	*token_list;
 	t_exec_tree		*tree;
 
 	// token_list = get_token_list("< todo ( < todo /bin/ls < infile ) < infile | < infile /bin/cat -e && < infile ( < infile ( < infile ( < infile /bin/cat -e < todo ) < todo ) < todo ) < todo");
+	// token_list = get_token_list(readline("minishell$: "));
 
-	token_list = get_token_list(readline("minishell$: "));
+	token_list = get_token_list(argv[1]);
 	tree = get_tree(token_list);
 
-	print_tree(tree, 0);
+	if (tree)
+		print_tree(tree, 0);
+	else
+		printf("Sintaxe error!\n");
 
 	token_clear_list(&token_list);
 	free_tree(&tree);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 17:44:55 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/28 16:35:01 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:40:46 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ t_exec_tree	*make_tree_cmd_recursive(t_token_list *redir_list, t_token_list *arg
 	{
 		if (args && args->token.type == OPEN_PARENTHESIS)
 		{
-			if (index_to_close_parenthesis(args->next) != token_list_size(args) - 1)		// Verificação de erro do subshell
+			if (index_to_close_parenthesis(args->next) != token_list_size(args) - 1)		// Verificação de erro do subshell - ()
 			{
 				free(tree);
 				tree = NULL;
