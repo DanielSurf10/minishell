@@ -1,0 +1,18 @@
+echo hi | (echo hello | cat -e)
+TYPE: PIPE
+LEFT:
+	TYPE: COMMAND:
+		 1 - WORD = echo
+		 2 - WORD = hi
+RIGHT:
+	TYPE: SUBSHELL
+	SUBSHELL:
+		TYPE: PIPE
+		LEFT:
+			TYPE: COMMAND:
+				 1 - WORD = echo
+				 2 - WORD = hello
+		RIGHT:
+			TYPE: COMMAND:
+				 1 - WORD = cat
+				 2 - WORD = -e

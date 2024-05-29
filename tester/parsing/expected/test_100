@@ -1,0 +1,9 @@
+echo hi < /
+TYPE: REDIRECT_INPUT
+LEFT:
+	TYPE: COMMAND:
+		 1 - WORD = /
+RIGHT:
+	TYPE: COMMAND:
+		 1 - WORD = echo
+		 2 - WORD = hi

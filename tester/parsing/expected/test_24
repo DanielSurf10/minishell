@@ -1,0 +1,28 @@
+/bin/cat < todo > out > out1 > out2 < todo
+TYPE: REDIRECT_INPUT
+LEFT:
+	TYPE: COMMAND:
+		 1 - WORD = todo
+RIGHT:
+	TYPE: REDIRECT_OUTPUT
+	LEFT:
+		TYPE: COMMAND:
+			 1 - WORD = out
+	RIGHT:
+		TYPE: REDIRECT_OUTPUT
+		LEFT:
+			TYPE: COMMAND:
+				 1 - WORD = out1
+		RIGHT:
+			TYPE: REDIRECT_OUTPUT
+			LEFT:
+				TYPE: COMMAND:
+					 1 - WORD = out2
+			RIGHT:
+				TYPE: REDIRECT_INPUT
+				LEFT:
+					TYPE: COMMAND:
+						 1 - WORD = todo
+				RIGHT:
+					TYPE: COMMAND:
+						 1 - WORD = /bin/cat

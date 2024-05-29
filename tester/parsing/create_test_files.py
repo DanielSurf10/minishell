@@ -2,6 +2,7 @@ import subprocess
 import tests_list
 
 subprocess.call("make parsing_test", shell=True)
+subprocess.call("mkdir -p tester/parsing/expected", shell=True)
 print()
 
 for test in tests_list.tests:

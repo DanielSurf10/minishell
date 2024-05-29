@@ -1,0 +1,20 @@
+echo hi > infile1 && echo bye > infile2
+TYPE: AND
+LEFT:
+	TYPE: REDIRECT_OUTPUT
+	LEFT:
+		TYPE: COMMAND:
+			 1 - WORD = infile1
+	RIGHT:
+		TYPE: COMMAND:
+			 1 - WORD = echo
+			 2 - WORD = hi
+RIGHT:
+	TYPE: REDIRECT_OUTPUT
+	LEFT:
+		TYPE: COMMAND:
+			 1 - WORD = infile2
+	RIGHT:
+		TYPE: COMMAND:
+			 1 - WORD = echo
+			 2 - WORD = bye

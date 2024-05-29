@@ -1,0 +1,6 @@
+echo $  "" USER
+TYPE: COMMAND:
+	 1 - WORD = echo
+	 2 - WORD = $
+	 3 - WORD = ""
+	 4 - WORD = USER

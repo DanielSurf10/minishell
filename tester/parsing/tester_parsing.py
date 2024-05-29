@@ -5,7 +5,7 @@ RST		= '\033[0m'
 GREEN	= '\033[32;1m'
 RED		= '\033[31;1m'
 ORANGE	= '\033[38;5;208m'
-COR		= "\033[38;5;141m"
+PURPLE	= "\033[38;5;141m"
 
 subprocess.call("make parsing_test", shell=True)
 print()
@@ -24,6 +24,6 @@ for test in tests_list.tests:
 	# expected = f'{test.test_line}\n{expected}'
 
 	if f'{test.test_line}\n{test.expected}' == expected:
-		print(f"{COR}{test.test_count:3}{RST} - {GREEN}[ ✓ ]{RST} {ORANGE}Command:{RST} {test.test_line}")
+		print(f"{PURPLE}{test.test_count:3}{RST} - {GREEN}[ ✓ ]{RST} {ORANGE}Command:{RST} {test.test_line}")
 	else:
-		print(f"{COR}{test.test_count:3}{RST} - {RED}[ ✗ ]{RST} {ORANGE}Command:{RST} {test.test_line}")
+		print(f"{PURPLE}{test.test_count:3}{RST} - {RED}[ ✗ ]{RST} {ORANGE}Command:{RST} {test.test_line}")

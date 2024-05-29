@@ -1,0 +1,4 @@
+rm infile1
+TYPE: COMMAND:
+	 1 - WORD = rm
+	 2 - WORD = infile1

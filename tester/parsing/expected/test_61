@@ -1,0 +1,8 @@
+< infile1 cat
+TYPE: REDIRECT_INPUT
+LEFT:
+	TYPE: COMMAND:
+		 1 - WORD = infile1
+RIGHT:
+	TYPE: COMMAND:
+		 1 - WORD = cat

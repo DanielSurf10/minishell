@@ -1,0 +1,9 @@
+echo hi > /usr/local/bin
+TYPE: REDIRECT_OUTPUT
+LEFT:
+	TYPE: COMMAND:
+		 1 - WORD = /usr/local/bin
+RIGHT:
+	TYPE: COMMAND:
+		 1 - WORD = echo
+		 2 - WORD = hi

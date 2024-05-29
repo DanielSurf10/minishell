@@ -1,0 +1,28 @@
+echo oi && ech oi2 | echo oi3 | echo oi4 || echo oi5
+TYPE: OR
+LEFT:
+	TYPE: AND
+	LEFT:
+		TYPE: COMMAND:
+			 1 - WORD = echo
+			 2 - WORD = oi
+	RIGHT:
+		TYPE: PIPE
+		LEFT:
+			TYPE: PIPE
+			LEFT:
+				TYPE: COMMAND:
+					 1 - WORD = ech
+					 2 - WORD = oi2
+			RIGHT:
+				TYPE: COMMAND:
+					 1 - WORD = echo
+					 2 - WORD = oi3
+		RIGHT:
+			TYPE: COMMAND:
+				 1 - WORD = echo
+				 2 - WORD = oi4
+RIGHT:
+	TYPE: COMMAND:
+		 1 - WORD = echo
+		 2 - WORD = oi5

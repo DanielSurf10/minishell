@@ -1,0 +1,8 @@
+cat > .
+TYPE: REDIRECT_OUTPUT
+LEFT:
+	TYPE: COMMAND:
+		 1 - WORD = .
+RIGHT:
+	TYPE: COMMAND:
+		 1 - WORD = cat

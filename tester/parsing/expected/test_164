@@ -1,0 +1,4 @@
+export " "
+TYPE: COMMAND:
+	 1 - WORD = export
+	 2 - WORD = " "

@@ -1,0 +1,6 @@
+-l (ls)
+TYPE: COMMAND:
+	 1 - WORD = -l
+	 2 - OPEN_PARENTHESIS = (null)
+	 3 - WORD = ls
+	 4 - CLOSE_PARENTHESIS = (null)
