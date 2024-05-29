@@ -21,7 +21,6 @@
 # define C      "\033[1;36m"   /* Bold Cyan */
 # define W      "\033[1;37m"   /* Bold White */
 
-
 typedef struct test_list test_list;
 
 struct test_list
@@ -34,8 +33,10 @@ struct test_list
 int	check_expand(t_node *list_envp, char *to_expand, char *expected)
 {
 	char	*expanded = expand_string(to_expand, list_envp);
+	int		result = ft_strncmp(expected, expanded, -1) == 0;
 
-	return (ft_strncmp(expected, expanded, -1) == 0);
+	free(expanded);
+	return (result);
 }
 
 void	add_test(test_list **expand_test_list, char *to_expand, char *expected)
@@ -58,6 +59,23 @@ void	add_test(test_list **expand_test_list, char *to_expand, char *expected)
 		aux->next = new_node;
 }
 
+void	clear_test_list(test_list **expand_test_list)
+{
+	test_list	*aux;
+	test_list	*next;
+
+	aux = *expand_test_list;
+	while (aux)
+	{
+		next = aux->next;
+		free(aux->to_expand);
+		free(aux->expected);
+		free(aux);
+		aux = next;
+	}
+	*expand_test_list = NULL;
+}
+
 int main(int argc, char *argv[], char *envp[])
 {
 	char		*str;
@@ -70,7 +88,11 @@ int main(int argc, char *argv[], char *envp[])
 	list_envp = store_to_list(envp);
 
 	env_insert_node(&list_envp, ft_strdup("A"), ft_strdup("a\""));
-	printf(B"\n************************ RODANDO TESTES ************************\n\n"RST);
+	env_insert_node(&list_envp, ft_strdup("carol"), ft_strdup("55"));
+	env_insert_node(&list_envp, ft_strdup("var"), ft_strdup("o hello"));
+	env_insert_node(&list_envp, ft_strdup("var50"), ft_strdup("abc      def"));
+
+	printf(B"\n*************************************** RODANDO TESTES *************************************\n\n"RST);
 	// Adiciona os testes
 	add_test(&expand_test_list, "$USER", "leobarbo");
 	add_test(&expand_test_list, "\"$USER\"", "leobarbo");
@@ -100,6 +122,16 @@ int main(int argc, char *argv[], char *envp[])
 	add_test(&expand_test_list, "\"\"$A\"\"", "a\"");
 	add_test(&expand_test_list, "''\"\"''", "");
 	add_test(&expand_test_list, "''\"$A\"''", "a\"");
+	add_test(&expand_test_list, "$USER$carol", "leobarbo55");
+	add_test(&expand_test_list, "$USER$var", "leobarboo hello");
+	add_test(&expand_test_list, "oitudobem", "oitudobem");
+	add_test(&expand_test_list, "$USERoi", "");
+	add_test(&expand_test_list, "'$USER'", "$USER");
+	add_test(&expand_test_list, "\"$USER\"", "leobarbo");
+	add_test(&expand_test_list, "$$$", "");
+	add_test(&expand_test_list, "$\"\" USER", " USER");
+	add_test(&expand_test_list, "$\"\" USER \"\"", " USER ");
+
 
 	// Teste
 	aux = expand_test_list;
@@ -107,31 +139,55 @@ int main(int argc, char *argv[], char *envp[])
 	{
 		printf("%11s - ", check_expand(list_envp, aux->to_expand, aux->expected) ? G"[ CORRETO ]"RST : RED"[ ERRADO! ]"RST);
 
-		printf("%s - %s - %s\n", aux->to_expand, expand_string(aux->to_expand, list_envp), aux->expected);
+		str = expand_string(aux->to_expand, list_envp);
+		printf(C"Input: "RST "%-15s" "| " C"Retorno: "RST "%-15s" "| " C"Esperado: "RST "%s\n", aux->to_expand, str, aux->expected);
+		free(str);
 
 		aux = aux->next;
 	}
 
-	printf(B"\n****************************************************************\n\n"RST);
+	clear_test_list(&expand_test_list);
+	clear_list(&list_envp);
+	printf(B"\n********************************************************************************************\n\n"RST);
 	return (0);
 }
 
-// $USER -> danbarbo
-// oi $USER -> oi danbarbo
-// oi $1 tudo bem-> oi  tudo bem
-// $$ ->
-// oi $$ tudo bem -> oi  tudo bem
-// oi $1USER tudo bem -> oi  tudo bem
-// oi $ a -> oi  a
-// oi $$ a -> oi  a
-// oi $$$USER -> oi danbarbo
-// ""
-// "$A"
-// '"$A"'
-// "'$A'"
-// ""$A""
-// ''""''
-// ''"$A"''
-// $"'"
-// $'"'
-// $1"'"
+
+
+
+// $"" USER ""
+// $"""                 " USER ""
+// $"""""""""""" USER ""
+// $"""" USER ""
+// $""'' USER ""
+// $'' USER ""
+// $'''' USER ""
+// $' ' '' USER ""
+// $' '"" USER ""
+// $"''" USER ""
+// $'''' USER ""
+// $  "''" USER ""
+// $  """" USER ""
+// $  "" USER
+// "        $USER   "
+// "carol"
+// $"carol"
+// "$carol"
+// '$carol'
+// $carolbia$
+// $carolbia$ hi
+// $carol$?bia$ hi
+// $'carol'$'bia'$
+// $"carol"$"bia"$
+// $'carol''bia'
+// $"carol""bia"
+// ech$var
+// $var50
+// $adfasfsd
+// $adfasfsd
+// $%342342
+
+
+// export carol=55
+// export var="o hello"
+// export var50="abc      def"
