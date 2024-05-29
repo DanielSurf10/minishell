@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 16:27:38 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/15 08:43:05 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/05/29 15:21:13 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,17 +58,7 @@ void	token_clear_list(t_token_list **token_list)
 	}
 }
 
-void	token_back_one_node(t_token_list *tok_lst, t_token_list **node_to_back)
-{
-	t_token_list	*aux;
-
-	aux = tok_lst;
-	while (aux && aux->next != *node_to_back)
-		aux = aux->next;
-	*node_to_back = aux;
-}
-
-t_token_list	*tok_get_sublst(t_token_list *tok_lst, int start, int lst_len)
+t_token_list	*token_get_sublist(t_token_list *tok_lst, int start, int lst_len)
 {
 	int				i;
 	t_token_list	*aux;

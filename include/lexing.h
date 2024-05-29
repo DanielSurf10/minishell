@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexing.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 15:36:39 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/15 11:34:39 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/05/29 15:22:53 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,8 @@ void			token_clear_list(t_token_list **token_list);
 int				token_list_size(t_token_list *token_list);
 void			token_back_one_node(t_token_list *tok_lst, t_token_list \
 **node_to_back);
-t_token_list	*tok_get_sublst(t_token_list *tok_lst, int start, int lst_len);
+t_token_list	*token_get_sublist(t_token_list *tok_lst, int start, int lst_len);
+t_token_list	*invert_list(t_token_list *head);
 
 // Coisas de estados
 int				token_state_is_final(int state);

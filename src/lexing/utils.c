@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 17:42:42 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/15 08:39:08 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/05/29 15:19:07 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,4 @@ int	is_an_command_element(t_token_list *node)
 			|| node->token.type == REDIRECT_OUTPUT_APPEND))
 		return (1);
 	return (0);
-}
-
-int	token_list_size(t_token_list *token_list)
-{
-	int				i;
-	t_token_list	*aux;
-
-	i = 0;
-	aux = token_list;
-	while (aux)
-	{
-		i++;
-		aux = aux->next;
-	}
-	return (i);
 }
