@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 21:17:07 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/03/25 17:56:16 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/29 20:01:41 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,39 @@ void	signal_handler(int sig)
 
 int main(void)
 {
-	char	*line;
-	char	**split_line;
+	int				ret_code;
+	char			*line;
+	t_token_list	*token_list;
+	t_exec_tree		*tree;
 
+	tree = NULL;
+	token_list = NULL;
+	ret_code = 0;
 	signal(SIGINT, signal_handler);
 	signal(SIGTSTP, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 
-	line = readline("minishell$ ");
-	split_line = ft_split(line, ' ');
+	do
+	{
+		line = readline("minishell$ ");
 
-	// exec_commands(split_line);
+		if (!line)
+			break ;
+		else if (!line[0])
+			continue ;
 
-	free(line);
-	ft_free_split(split_line);
+		token_list = get_token_list(line);
+		tree = get_tree(token_list);
+		free(line);
+
+		ret_code = exec_tree(tree);
+
+		token_clear_list(&token_list);
+		free_tree(&tree);
+
+	} while (line);
+
+	printf("\nret code main = %d\n", ret_code);
 	rl_clear_history();
 
 	return (0);

@@ -6,7 +6,7 @@
 #    By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/23 21:20:35 by danbarbo          #+#    #+#              #
-#    Updated: 2024/04/02 19:54:48 by danbarbo         ###   ########.fr        #
+#    Updated: 2024/05/29 17:45:49 by danbarbo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ SRCS_BONUS	:= ${shell find src -iname "*.c"}		# Não esquecer de mudar isso aqui
 OBJS_BONUS	:= ${SRCS_BONUS:src_bonus/%.c=obj/%.o}
 
 all: ${NAME}
-bonus: ${NAME_BONUS}
+bonus: all
 
 ${NAME}: ${LIBFT} ${OBJS}
 	@${CC} ${CFLAGS} ${HEADERS} ${OBJS} ${LIBS} -o ${NAME}
@@ -69,17 +69,14 @@ val: all
 				--trace-children-skip='*/bin/*,*/sbin/*,/usr/bin/*' \
 				./${NAME}
 
-valb: all
+vall: all
 	@valgrind -q --suppressions=readline.supp \
-				--leak-check=full \
-				--show-leak-kinds=all \
-				--track-origins=yes \
 				--track-fds=yes \
 				--trace-children=yes \
 				--trace-children-skip='*/bin/*,*/sbin/*,/usr/bin/*' \
-				./${NAME_BONUS}
+				./${NAME}
 
 re: fclean all
 re_bonus: fclean bonus
 
-.PHONY: all bonus clean fclean re re_bonus libft
+.PHONY: all bonus clean fclean re re_bonus libft val vall

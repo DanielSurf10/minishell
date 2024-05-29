@@ -1,28 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/13 19:13:05 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/04/17 00:56:54 by danbarbo         ###   ########.fr       */
+/*   Created: 2024/05/24 16:33:47 by danbarbo          #+#    #+#             */
+/*   Updated: 2024/05/29 19:33:55 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-char	*ft_strdup(const char *s)
+int	ternary(int condition, int if_true, int if_false)
 {
-	size_t	i;
-	char	*dup;
-
-	if (!s)
-		return (NULL);
-	i = ft_strlen((char *) s) + 1;
-	dup = malloc(i);
-	if (!dup)
-		return (NULL);
-	ft_strlcpy(dup, s, i);
-	return (dup);
+	if (condition)
+		return (if_true);
+	return (if_false);
 }
