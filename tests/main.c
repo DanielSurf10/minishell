@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 17:06:49 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/05/24 17:38:11 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/30 16:12:31 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ struct test_list
 	test_list	*next;
 };
 
-int	check_expand(t_node *list_envp, char *to_expand, char *expected)
+int	check_expand(t_envp_list *list_envp, char *to_expand, char *expected)
 {
 	char	*expanded = expand_string(to_expand, list_envp);
 	int		result = ft_strncmp(expected, expanded, -1) == 0;
@@ -81,7 +81,7 @@ int main(int argc, char *argv[], char *envp[])
 	char		*str;
 	char		*new_str;
 	char		**new_envp;
-	t_node		*list_envp;
+	t_envp_list		*list_envp;
 	test_list	*aux;
 	test_list	*expand_test_list = NULL;
 

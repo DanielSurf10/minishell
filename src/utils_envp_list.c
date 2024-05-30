@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils_envp_list.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 17:34:51 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/05/24 16:33:45 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/30 16:12:31 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 
-void	clear_list(t_node **head)
+void	clear_list(t_envp_list **head)
 {
 	if (*head)
 	{
@@ -24,9 +24,9 @@ void	clear_list(t_node **head)
 	*head = NULL;
 }
 
-int	att_existing_value(t_node *head, char *key, char *value)
+int	att_existing_value(t_envp_list *head, char *key, char *value)
 {
-	t_node	*temp;
+	t_envp_list	*temp;
 
 	temp = head;
 	while (temp != NULL)
@@ -42,9 +42,9 @@ int	att_existing_value(t_node *head, char *key, char *value)
 	return (0);
 }
 
-char	*search_value(t_node *head, char *key)
+char	*search_value(t_envp_list *head, char *key)
 {
-	t_node	*temp;
+	t_envp_list	*temp;
 
 	temp = head;
 	while (temp != NULL)
@@ -56,10 +56,10 @@ char	*search_value(t_node *head, char *key)
 	return (ft_strdup(""));
 }
 
-int	envp_list_size(t_node *head)
+int	envp_list_size(t_envp_list *head)
 {
 	int		i;
-	t_node	*aux;
+	t_envp_list	*aux;
 
 	i = 0;
 	aux = head;
