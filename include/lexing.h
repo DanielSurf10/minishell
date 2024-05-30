@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 15:36:39 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/29 19:31:50 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/30 17:23:30 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@
 
 # include <stdlib.h>
 
+# include <fcntl.h>
+# include <stdio.h>
+# include <stdlib.h>
+
+# include "libft.h"
 # include "minishell.h"
 
 //****************************************************************************//

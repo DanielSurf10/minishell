@@ -6,11 +6,11 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 17:44:55 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/29 19:43:02 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/30 17:32:40 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "parsing.h"
 
 static int	index_to_close_parenthesis(t_token_list *token_list)
 {
@@ -60,7 +60,7 @@ static int	index_to_open_parenthesis(t_token_list *token_list)
 	return (index);
 }
 
-t_exec_tree	*make_tree_cmd_recursive(t_token_list *redir_list, t_token_list *args)
+t_exec_tree	*make_tree_cmd_recursive(t_token_list *redir_list, t_token_list *args, t_minishell *data)
 {
 	t_exec_tree		*tree;
 
@@ -79,7 +79,7 @@ t_exec_tree	*make_tree_cmd_recursive(t_token_list *redir_list, t_token_list *arg
 			{
 				tree->type = SUBSHELL;
 				tree->command = token_get_sublist(args, 1, token_list_size(args) - 2);		// Gambiarra a vista e '- 2' para tirar os tokens dos parenteses
-				tree->subshell = get_tree(tree->command);
+				tree->subshell = get_tree(tree->command, data);
 				token_clear_list(&tree->command);
 
 				if (!tree->subshell)
@@ -96,13 +96,32 @@ t_exec_tree	*make_tree_cmd_recursive(t_token_list *redir_list, t_token_list *arg
 		&& redir_list->next->token.type == WORD)
 	{
 		tree->type = redir_list->token.type;
-
 		tree->left = malloc(sizeof(t_exec_tree));
 		ft_bzero(tree->left, sizeof(t_exec_tree));
 		tree->left->type = COMMAND;
-		tree->left->command = token_get_sublist(redir_list, 1, 1);
 
-		tree->right = make_tree_cmd_recursive(token_get_node_index(redir_list, 2), args);
+		if (tree->type == REDIRECT_HEREDOC)
+		{
+			// ARRUMAR ISSO
+			tree->left->command = get_token_list("infile");
+
+			// Fork para fazer o heredoc
+			// fork()
+
+			// pai
+			// wait()
+
+			// filho
+			// executar heredoc
+				// criar arquivo do heredoc
+				// apagar tudo do data
+				// obs: apagar arquivo quando for apagar a árvore
+
+		}
+		else
+			tree->left->command = token_get_sublist(redir_list, 1, 1);
+
+		tree->right = make_tree_cmd_recursive(token_get_node_index(redir_list, 2), args, data);
 
 		if (!tree->right)
 			free_tree(&tree);
@@ -112,7 +131,7 @@ t_exec_tree	*make_tree_cmd_recursive(t_token_list *redir_list, t_token_list *arg
 	return (tree);
 }
 
-t_exec_tree	*make_tree_cmd(t_token_list *token_list)
+t_exec_tree	*make_tree_cmd(t_token_list *token_list, t_minishell *data)
 {
 	int				redir_counter;
 	int				redir_list_size;
@@ -268,7 +287,7 @@ t_exec_tree	*make_tree_cmd(t_token_list *token_list)
 		return (NULL);
 	}
 
-	tree = make_tree_cmd_recursive(redir_list, args);
+	tree = make_tree_cmd_recursive(redir_list, args, data);
 
 	token_clear_list(&args);
 	token_clear_list(&redir_list);
@@ -276,7 +295,7 @@ t_exec_tree	*make_tree_cmd(t_token_list *token_list)
 	return (tree);
 }
 
-t_exec_tree	*make_tree(t_token_list *token_list)
+t_exec_tree	*make_tree(t_token_list *token_list, t_minishell *data)
 {
 	int				i;
 	int				idx_parenthesis;
@@ -341,7 +360,7 @@ t_exec_tree	*make_tree(t_token_list *token_list)
 	{
 		free(tree);
 		aux = invert_list(token_get_sublist(token_list, 0, token_list_size(token_list)));
-		tree = make_tree_cmd(aux);
+		tree = make_tree_cmd(aux, data);
 		token_clear_list(&aux);
 		return (tree);
 	}
@@ -370,32 +389,26 @@ t_exec_tree	*make_tree(t_token_list *token_list)
 // 	print_tokens(sub_list_right);
 
 	// Já que está invertido, aqui também fica invertido - ARRUMAR ISSO, inverter na atribuição
-	tree->left = make_tree(sub_list_right);		// right vai pro left
-	tree->right = make_tree(sub_list_left);		// Left vai pro right
+	tree->left = make_tree(sub_list_right, data);		// right vai pro left
+	tree->right = make_tree(sub_list_left, data);		// Left vai pro right
 
 	token_clear_list(&sub_list_left);
 	token_clear_list(&sub_list_right);
 
 	if (tree->left == NULL || tree->right == NULL)	// Aqui verifica a gramatica
-	{
-		free(tree);
-		return(NULL);
-	}
-
-	tree->command = NULL;
-	tree->subshell = NULL;
+		free_tree(&tree);
 
 	return (tree);
 }
 
-t_exec_tree	*get_tree(t_token_list *token_list)
+t_exec_tree	*get_tree(t_token_list *token_list, t_minishell *data)
 {
 	t_exec_tree		*tree;
 	t_token_list	*inverted_list;
 
 	inverted_list = invert_list(token_get_sublist(token_list, 0, token_list_size(token_list)));
 
-	tree = make_tree(inverted_list);
+	tree = make_tree(inverted_list, data);
 
 	token_clear_list(&inverted_list);
 

@@ -6,10 +6,13 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 21:17:07 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/29 20:01:41 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/30 17:31:11 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "lexing.h"
+#include "expander.h"
+#include "executor.h"
 #include "minishell.h"
 
 void	signal_handler(int sig)
@@ -23,12 +26,13 @@ void	signal_handler(int sig)
 	}
 }
 
-int main(void)
+int main(int argc, char *argv[], char *envp[])
 {
 	int				ret_code;
 	char			*line;
 	t_token_list	*token_list;
 	t_exec_tree		*tree;
+	t_minishell		data;
 
 	tree = NULL;
 	token_list = NULL;
@@ -37,9 +41,11 @@ int main(void)
 	signal(SIGTSTP, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 
-	do
+	data.envp_list = store_to_list(envp);
+
+	line = readline("minishell$ ");
+	while (line)
 	{
-		line = readline("minishell$ ");
 
 		if (!line)
 			break ;
@@ -47,15 +53,17 @@ int main(void)
 			continue ;
 
 		token_list = get_token_list(line);
-		tree = get_tree(token_list);
+		data.tree = get_tree(token_list, &data);
 		free(line);
 
-		ret_code = exec_tree(tree);
+		ret_code = exec_tree(data.tree);
 
 		token_clear_list(&token_list);
-		free_tree(&tree);
+		free_tree(&data.tree);
 
-	} while (line);
+		line = readline("minishell$ ");
+
+	}
 
 	printf("\nret code main = %d\n", ret_code);
 	rl_clear_history();

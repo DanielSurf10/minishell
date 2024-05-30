@@ -6,11 +6,11 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:18:46 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/29 19:33:49 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/30 17:23:09 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "lexing.h"
 
 void	token_join_lists(t_token_list **dest, t_token_list *source)
 {
