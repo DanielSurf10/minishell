@@ -6,7 +6,7 @@
 /*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 17:07:05 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/05/30 16:24:18 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/05/30 16:28:21 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void		clear_str_list(t_str_lst **head);
 char		*create_string_from_list(t_str_lst *lst);
 
 //****************************************************************************//
-//                               utils_envp_list                              //
+//                              utils_envp_list                               //
 //****************************************************************************//
 
 void		clear_list(t_envp_list **head);
@@ -79,7 +79,7 @@ int			envp_list_size(t_envp_list *head);
 void		free_envp(char **envp);
 
 //****************************************************************************//
-//                                    utils                                   //
+//                                   utils                                    //
 //****************************************************************************//
 
 int			ternary(int condition, int if_true, int if_false);
