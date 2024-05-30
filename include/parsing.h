@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 17:32:16 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/30 18:43:23 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/30 19:21:50 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PARSING_H
 
 # include "lexing.h"
+# include "minishell.h"
 
 typedef struct s_exec_tree
 {

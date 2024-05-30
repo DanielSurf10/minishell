@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:02:10 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/30 17:23:57 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/30 19:27:15 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	open_redir(char *path_to_file, int type)
 	return (fd);
 }
 
-void	exec_cmd_fork(t_exec_tree *tree)
+void	exec_cmd_fork(t_exec_tree *tree, t_minishell *data)
 {
 	int		i;
 	int		fd_redir;
@@ -50,11 +50,11 @@ void	exec_cmd_fork(t_exec_tree *tree)
 		else if (tree->type == REDIRECT_OUTPUT || tree->type == REDIRECT_OUTPUT_APPEND)
 			dup2(fd_redir, STDOUT_FILENO);
 		close(fd_redir);
-		exec_cmd_fork(tree->right);
+		exec_cmd_fork(tree->right, data);
 	}
 	else if (tree->type == SUBSHELL)
 	{
-		ret_code = exec_tree(tree->subshell);
+		ret_code = exec_tree(tree->subshell, data);
 		free_tree(&tree);
 		exit(ret_code);
 	}
@@ -70,8 +70,9 @@ void	exec_cmd_fork(t_exec_tree *tree)
 
 			while (i < args_num)
 			{
-				// argv[i] = expand_word(token_get_node_index(tree->command, i));
-				argv[i] = ft_strdup(token_get_node_index(tree->command, i)->token.lexeme);
+				// DPS arrumar isso
+				argv[i] = expand_string(token_get_node_index(tree->command, i)->token.lexeme, data->envp_list);
+				// argv[i] = ft_strdup(token_get_node_index(tree->command, i)->token.lexeme);
 				i++;
 			}
 			// cmd = expand_command(argv[0]);
@@ -90,7 +91,7 @@ void	exec_cmd_fork(t_exec_tree *tree)
 	exit(1);
 }
 
-int	exec_cmd(t_exec_tree *tree, int fd_to_close)
+int	exec_cmd(t_exec_tree *tree, int fd_to_close, t_minishell *data)
 {
 	int	pid;
 
@@ -100,32 +101,32 @@ int	exec_cmd(t_exec_tree *tree, int fd_to_close)
 	{
 		if (fd_to_close != -1)
 			close(fd_to_close);
-		exec_cmd_fork(tree);
+		exec_cmd_fork(tree, data);
 	}
 
 	return (pid);
 }
 
-int	exec_and(t_exec_tree *tree)
+int	exec_and(t_exec_tree *tree, t_minishell *data)
 {
 	int	ret_code;
 
-	ret_code = exec_tree(tree->left);
+	ret_code = exec_tree(tree->left, data);
 
 	if (ret_code == 0)
-		ret_code = exec_tree(tree->right);
+		ret_code = exec_tree(tree->right, data);
 
 	return (ret_code);
 }
 
-int	exec_or(t_exec_tree *tree)
+int	exec_or(t_exec_tree *tree, t_minishell *data)
 {
 	int	ret_code;
 
-	ret_code = exec_tree(tree->left);
+	ret_code = exec_tree(tree->left, data);
 
 	if (ret_code != 0)
-		ret_code = exec_tree(tree->right);
+		ret_code = exec_tree(tree->right, data);
 
 	return (ret_code);
 }
@@ -150,7 +151,7 @@ int	exec_or(t_exec_tree *tree)
 // 	return (pid);
 // }
 
-int	exec_pipe(t_exec_tree *tree, int fd_to_close)
+int	exec_pipe(t_exec_tree *tree, int fd_to_close, t_minishell *data)
 {
 	int	ret_code = 0;
 	int	pid;
@@ -169,7 +170,7 @@ int	exec_pipe(t_exec_tree *tree, int fd_to_close)
 		dup2(pipe_fd[1], STDOUT_FILENO);
 		close(pipe_fd[1]);
 
-		exec_pipe(tree->left, pipe_fd[0]);
+		exec_pipe(tree->left, pipe_fd[0], data);
 
 		// Comando da direita
 		// redir_back_old_fd_out();
@@ -180,7 +181,7 @@ int	exec_pipe(t_exec_tree *tree, int fd_to_close)
 		dup2(pipe_fd[0], STDIN_FILENO);
 		close(pipe_fd[0]);
 
-		pid = exec_pipe(tree->right, -1);
+		pid = exec_pipe(tree->right, -1, data);
 
 		// redir_back_old_fd_in();
 		dup2(old_fd[0], STDIN_FILENO);
@@ -188,7 +189,7 @@ int	exec_pipe(t_exec_tree *tree, int fd_to_close)
 	}
 	else if (tree->type == COMMAND
 		|| tree->type >= REDIRECT_INPUT && tree->type <= REDIRECT_OUTPUT_APPEND)
-		pid = exec_cmd(tree, fd_to_close);
+		pid = exec_cmd(tree, fd_to_close, data);
 	else if (tree->type == SUBSHELL)
 	{
 		// ret_code = exec_tree(tree->subshell);	// NÃO É ISSO
@@ -197,7 +198,7 @@ int	exec_pipe(t_exec_tree *tree, int fd_to_close)
 		pid = fork();
 		if (pid == 0)
 		{
-			ret_code = exec_tree(tree->subshell);
+			ret_code = exec_tree(tree->subshell, data);
 			free_tree(&tree);
 			exit(ret_code);
 		}
@@ -229,7 +230,7 @@ int	exec_pipe(t_exec_tree *tree, int fd_to_close)
 	return (pid);
 }
 
-int	exec_tree(t_exec_tree *tree)
+int	exec_tree(t_exec_tree *tree, t_minishell *data)
 {
 	int	pid;
 	int	pid_pipe;
@@ -242,14 +243,14 @@ int	exec_tree(t_exec_tree *tree)
 	if (tree->type == COMMAND
 		|| tree->type >= REDIRECT_INPUT && tree->type <= REDIRECT_OUTPUT_APPEND)
 	{
-		pid = exec_cmd(tree, -1);
+		pid = exec_cmd(tree, -1, data);
 		waitpid(pid, &ret_code, 0);
 		ret_code = (ret_code >> 8) & 0xFF;
 	}
 	else if (tree->type == AND && tree->left && tree->right)
-		ret_code = exec_and(tree);
+		ret_code = exec_and(tree, data);
 	else if (tree->type == OR && tree->left && tree->right)
-		ret_code = exec_or(tree);
+		ret_code = exec_or(tree, data);
 	else if (tree->type == SUBSHELL && tree->subshell)
 	{
 		pid = fork();
@@ -260,7 +261,7 @@ int	exec_tree(t_exec_tree *tree)
 		}
 		else								// Filho
 		{
-			ret_code = exec_tree(tree->subshell);
+			ret_code = exec_tree(tree->subshell, data);
 			free_tree(&tree);
 			exit(ret_code);
 		}
@@ -271,7 +272,7 @@ int	exec_tree(t_exec_tree *tree)
 //
 // 		if (pid_pipe == 0)
 // 		{
-			pid = exec_pipe(tree, -1);
+			pid = exec_pipe(tree, -1, data);
 
 			num[0] = wait(&num[1]);
 

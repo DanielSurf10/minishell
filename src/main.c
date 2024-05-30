@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 21:17:07 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/30 17:31:11 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/30 19:30:19 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int main(int argc, char *argv[], char *envp[])
 	signal(SIGQUIT, SIG_IGN);
 
 	data.envp_list = store_to_list(envp);
+	env_insert_node(&data.envp_list, ft_strdup("A"), ft_strdup("\""));
 
 	line = readline("minishell$ ");
 	while (line)
@@ -54,9 +55,10 @@ int main(int argc, char *argv[], char *envp[])
 
 		token_list = get_token_list(line);
 		data.tree = get_tree(token_list, &data);
+		add_history(line);
 		free(line);
 
-		ret_code = exec_tree(data.tree);
+		ret_code = exec_tree(data.tree, &data);
 
 		token_clear_list(&token_list);
 		free_tree(&data.tree);
