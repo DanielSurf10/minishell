@@ -6,11 +6,11 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 16:33:47 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/29 19:33:55 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/24 16:34:02 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "expander.h"
 
 int	ternary(int condition, int if_true, int if_false)
 {

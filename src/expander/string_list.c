@@ -6,11 +6,11 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 16:21:39 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/29 19:33:55 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/24 17:20:26 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "expander.h"
 
 void	add_letter_list(t_str_lst **lst, char letter)
 {
