@@ -6,7 +6,7 @@
 /*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:08:56 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/05/30 16:12:31 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/05/30 16:22:28 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ static void	invalid_var(char *str, int *i)
 	}
 }
 
-static void	expand_var(char *str, int *i, t_envp_list *head, t_str_lst **new_str)
+static void	expand_var(char *str, int *i, t_envp_list *head, \
+	t_str_lst **new_str)
 {
 	int		j;
 	char	*key;
@@ -53,7 +54,8 @@ static void	expand_var(char *str, int *i, t_envp_list *head, t_str_lst **new_str
 	(*i)--;
 }
 
-static void	var_validation(int *i, char *str, t_envp_list *head, t_str_lst **new_str)
+static void	var_validation(int *i, char *str, \
+	t_envp_list *head, t_str_lst **new_str)
 {
 	(*i)++;
 	if (str[*i] >= '0' && str[*i] <= '9' || str[*i] == '$'

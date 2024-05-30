@@ -6,7 +6,7 @@
 /*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 17:34:51 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/05/30 16:12:31 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/05/30 16:22:51 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*search_value(t_envp_list *head, char *key)
 
 int	envp_list_size(t_envp_list *head)
 {
-	int		i;
+	int			i;
 	t_envp_list	*aux;
 
 	i = 0;

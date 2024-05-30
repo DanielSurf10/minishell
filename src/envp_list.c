@@ -6,7 +6,7 @@
 /*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:56:46 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/05/30 16:12:31 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/05/30 16:21:25 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ void	env_insert_node(t_envp_list **head, char *key, char *value)
 
 t_envp_list	*store_to_list(char *envp[])
 {
-	int		idx[3];
-	char	*key;
-	char	*value;
+	int			idx[3];
+	char		*key;
+	char		*value;
 	t_envp_list	*head;
 
 	head = NULL;
@@ -70,9 +70,9 @@ t_envp_list	*store_to_list(char *envp[])
 
 char	**create_envp(t_envp_list *head)
 {
-	int		i;
-	int		full_size;
-	char	**new_envp;
+	int			i;
+	int			full_size;
+	char		**new_envp;
 	t_envp_list	*temp;
 
 	i = 0;
