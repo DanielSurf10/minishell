@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:02:10 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/30 19:27:15 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/31 00:36:59 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	exec_cmd_fork(t_exec_tree *tree, t_minishell *data)
 	int		ret_code;
 	char	*cmd;
 	char	**argv;
+	char	**envp;
 
 	if (!tree)
 		exit(1);
@@ -77,9 +78,13 @@ void	exec_cmd_fork(t_exec_tree *tree, t_minishell *data)
 			}
 			// cmd = expand_command(argv[0]);
 			cmd = argv[0];
+			envp = create_envp(data->envp_list);
 
-			execve(cmd, argv, __environ);
+			execve(cmd, argv, envp);
 			free_envp(argv);
+			free_envp(envp);
+			free_tree(&data->tree);
+			exit(127);
 		}
 		else
 		{
