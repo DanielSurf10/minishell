@@ -2,3 +2,4 @@
 *.a
 a.out
 minishell
+no_permission

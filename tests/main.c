@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 17:06:49 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/05/30 16:12:31 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/05/30 23:00:22 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,11 @@ int main(int argc, char *argv[], char *envp[])
 
 	list_envp = store_to_list(envp);
 
-	env_insert_node(&list_envp, ft_strdup("A"), ft_strdup("a\""));
-	env_insert_node(&list_envp, ft_strdup("carol"), ft_strdup("55"));
-	env_insert_node(&list_envp, ft_strdup("var"), ft_strdup("o hello"));
-	env_insert_node(&list_envp, ft_strdup("var50"), ft_strdup("abc      def"));
+	env_insert_node(&list_envp, "A", "a\"");
+	env_insert_node(&list_envp, "carol", "55");
+	env_insert_node(&list_envp, "var", "o hello");
+	env_insert_node(&list_envp, "var50", "abc      def");
+	env_insert_node(&list_envp, "var50", "abc      def");
 
 	printf(B"\n*************************************** RODANDO TESTES *************************************\n\n"RST);
 	// Adiciona os testes

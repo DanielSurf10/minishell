@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:56:46 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/05/30 16:21:25 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/05/30 23:01:46 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ t_envp_list	*env_create_node(char *key, char *value)
 	t_envp_list	*new_node;
 
 	new_node = (t_envp_list *)malloc(sizeof(t_envp_list));
-	new_node->key = key;
-	new_node->value = value;
+	new_node->key = ft_strdup(key);
+	new_node->value = ft_strdup(value);
 	new_node->next = NULL;
 	return (new_node);
 }
@@ -64,6 +64,8 @@ t_envp_list	*store_to_list(char *envp[])
 		ft_strlcpy(key, envp[idx[0]], idx[1] + 1);
 		ft_strlcpy(value, envp[idx[0]] + idx[1] + 1, idx[2]);
 		env_insert_node(&head, key, value);
+		free(key);
+		free(value);
 	}
 	return (head);
 }
