@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_string.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:08:56 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/05/30 16:22:28 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/05/30 22:35:43 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	invalid_var(char *str, int *i)
 }
 
 static void	expand_var(char *str, int *i, t_envp_list *head, \
-	t_str_lst **new_str)
+	t_str_list **new_str)
 {
 	int		j;
 	char	*key;
@@ -55,7 +55,7 @@ static void	expand_var(char *str, int *i, t_envp_list *head, \
 }
 
 static void	var_validation(int *i, char *str, \
-	t_envp_list *head, t_str_lst **new_str)
+	t_envp_list *head, t_str_list **new_str)
 {
 	(*i)++;
 	if (str[*i] >= '0' && str[*i] <= '9' || str[*i] == '$'
@@ -71,7 +71,7 @@ char	*expand_string(char *str, t_envp_list *head)
 	int				in_quotes;
 	char			*key;
 	char			*expanded;
-	t_str_lst		*new_str;
+	t_str_list		*new_str;
 
 	i = 0;
 	in_quotes = 0;

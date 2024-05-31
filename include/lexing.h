@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 15:36:39 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/30 17:23:30 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/30 22:28:46 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,27 +17,31 @@
 //                                  Includes                                  //
 //****************************************************************************//
 
-# include <stdlib.h>
-
-# include <fcntl.h>
-# include <stdio.h>
-# include <stdlib.h>
-
-# include "libft.h"
 # include "minishell.h"
 
 //****************************************************************************//
 //                                   Enums                                    //
 //****************************************************************************//
 
-
+enum e_token
+{
+	WORD,
+	PIPE,
+	REDIRECT_INPUT,
+	REDIRECT_HEREDOC,
+	REDIRECT_OUTPUT,
+	REDIRECT_OUTPUT_APPEND,
+	OR,
+	AND,
+	OPEN_PARENTHESIS,
+	CLOSE_PARENTHESIS,
+	EXPRESSION,
+	COMMAND,
+	SUBSHELL
+};
 
 //****************************************************************************//
 //                                  Structs                                   //
-//****************************************************************************//
-
-//****************************************************************************//
-//                                   Token                                    //
 //****************************************************************************//
 
 typedef struct s_token
@@ -52,7 +56,7 @@ typedef struct s_token_list
 	struct s_token_list	*next;
 }	t_token_list;
 
-typedef struct s_aux_token_lits
+typedef struct s_aux_token_list
 {
 	int		i;
 	int		state;
@@ -67,22 +71,25 @@ typedef struct s_aux_token_lits
 //****************************************************************************//
 
 //****************************************************************************//
-//                                  Lexing 1                                  //
+//                              List Manipulation                             //
 //****************************************************************************//
 
-// Coisas de manipulação de lista
 t_token_list	*get_token_list(char *str);
 void			token_add_to_list(t_token_list **tok_lst, char *lex, int type);
 void			token_clear_list(t_token_list **token_list);
 int				token_list_size(t_token_list *token_list);
 void			token_back_one_node(t_token_list *tok_lst, t_token_list \
-**node_to_back);
-t_token_list	*token_get_sublist(t_token_list *tok_lst, int start, int lst_len);
+					**node_to_back);
+t_token_list	*token_get_sublist(t_token_list *tok_lst, int start, \
+					int lst_len);
 t_token_list	*invert_list(t_token_list *head);
 t_token_list	*token_get_node_index(t_token_list *token_list, int index);
 void			token_join_lists(t_token_list **dest, t_token_list *source);
 
-// Coisas de estados
+//****************************************************************************//
+//                                State change                                //
+//****************************************************************************//
+
 int				token_state_is_final(int state);
 int				token_state_requires_backtrack(int state);
 int				token_get_next_state(int state, char character);

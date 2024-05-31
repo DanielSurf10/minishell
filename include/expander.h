@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 17:07:05 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/05/30 17:23:45 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/30 22:35:43 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,7 @@
 //                                  Includes                                  //
 //****************************************************************************//
 
-# include <stdlib.h>
-
-# include "libft.h"
+# include "lexing.h"
 # include "minishell.h"
 
 //****************************************************************************//
@@ -33,11 +31,11 @@ typedef struct s_envp_list
 	struct s_envp_list	*next;
 }	t_envp_list;
 
-typedef struct s_expand_list
+typedef struct s_str_list
 {
-	char					letter;
-	struct s_expand_list	*next;
-}	t_str_lst;
+	char				letter;
+	struct s_str_list	*next;
+}	t_str_list;
 
 //****************************************************************************//
 //                                 Functions                                  //
@@ -47,11 +45,11 @@ typedef struct s_expand_list
 //                                 envp_list                                  //
 //****************************************************************************//
 
-t_envp_list	*env_create_node(char *key, char *value);
 void		env_insert_node(t_envp_list **head, char *key, char *value);
-t_envp_list	*store_to_list(char *envp[]);
-char		**create_envp(t_envp_list *head);
 void		env_delete_value(t_envp_list **head, char *key);
+char		**create_envp(t_envp_list *head);
+t_envp_list	*store_to_list(char *envp[]);
+t_envp_list	*env_create_node(char *key, char *value);
 
 //****************************************************************************//
 //                               expand_string                                //
@@ -63,11 +61,11 @@ char		*expand_string(char *str, t_envp_list *head);
 //                                string_list                                 //
 //****************************************************************************//
 
-void		add_letter_list(t_str_lst **lst, char letter);
-int			size_list(t_str_lst *lst);
-void		add_string_to_list(t_str_lst **lst, char *str);
-void		clear_str_list(t_str_lst **head);
-char		*create_string_from_list(t_str_lst *lst);
+void		add_letter_list(t_str_list **lst, char letter);
+int			size_list(t_str_list *lst);
+void		add_string_to_list(t_str_list **lst, char *str);
+void		clear_str_list(t_str_list **head);
+char		*create_string_from_list(t_str_list *lst);
 
 //****************************************************************************//
 //                              utils_envp_list                               //
