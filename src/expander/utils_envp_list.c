@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_envp_list.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 17:34:51 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/05/30 16:22:51 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/05/30 23:17:16 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 void	clear_list(t_envp_list **head)
 {
-	if (*head)
+	if (head && *head)
 	{
 		clear_list(&(*head)->next);
 		free((*head)->key);
 		free((*head)->value);
 		free((*head));
+		*head = NULL;
 	}
-	*head = NULL;
 }
 
 int	att_existing_value(t_envp_list *head, char *key, char *value)
@@ -29,7 +29,7 @@ int	att_existing_value(t_envp_list *head, char *key, char *value)
 	t_envp_list	*temp;
 
 	temp = head;
-	while (temp != NULL)
+	while (temp != NULL && key && value)
 	{
 		if (ft_strncmp(temp->key, key, -1) == 0)
 		{
@@ -76,10 +76,11 @@ void	free_envp(char **envp)
 	int	i;
 
 	i = 0;
-	while (envp[i])
+	while (envp && envp[i])
 	{
 		free(envp[i]);
 		i++;
 	}
-	free(envp);
+	if (envp)
+		free(envp);
 }
