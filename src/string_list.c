@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 16:21:39 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/24 17:20:26 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/30 23:14:41 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	add_string_to_list(t_str_lst **lst, char *str)
 	int	i;
 
 	i = 0;
-	while (str[i])
+	while (str && str[i] && lst)
 	{
 		add_letter_list(lst, str[i]);
 		i++;
@@ -58,7 +58,7 @@ void	clear_str_list(t_str_lst **head)
 {
 	t_str_lst	*temp;
 
-	while (*head != NULL)
+	while (head && *head != NULL)
 	{
 		temp = *head;
 		*head = (*head)->next;

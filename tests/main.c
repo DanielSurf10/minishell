@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daniel <daniel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/04 17:06:49 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/05/30 23:00:22 by danbarbo         ###   ########.fr       */
+/*   Created: 2024/04/04 17:06:49 by daniel          #+#    #+#             */
+/*   Updated: 2024/05/31 00:01:33 by daniel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,11 +95,11 @@ int main(int argc, char *argv[], char *envp[])
 
 	printf(B"\n*************************************** RODANDO TESTES *************************************\n\n"RST);
 	// Adiciona os testes
-	add_test(&expand_test_list, "$USER", "leobarbo");
-	add_test(&expand_test_list, "\"$USER\"", "leobarbo");
-	add_test(&expand_test_list, "abc\"$USER\"abc", "abcleobarboabc");
-	add_test(&expand_test_list, "abc$USER abc", "abcleobarbo abc");
-	add_test(&expand_test_list, "abc $USER", "abc leobarbo");
+	add_test(&expand_test_list, "$USER", "daniel");
+	add_test(&expand_test_list, "\"$USER\"", "daniel");
+	add_test(&expand_test_list, "abc\"$USER\"abc", "abcdanielabc");
+	add_test(&expand_test_list, "abc$USER abc", "abcdaniel abc");
+	add_test(&expand_test_list, "abc $USER", "abc daniel");
 	add_test(&expand_test_list, "\'$USER\'", "$USER");
 	add_test(&expand_test_list, "abc \'$USER\'", "abc $USER");
 	add_test(&expand_test_list, "\'$USER\' abc", "$USER abc");
@@ -114,8 +114,8 @@ int main(int argc, char *argv[], char *envp[])
 	add_test(&expand_test_list, "\"a\"\'a\'", "aa");
 	add_test(&expand_test_list, "\"a\'\"", "a'");
 	add_test(&expand_test_list, "\"batata\'bata\'\"", "batata'bata'");
-	add_test(&expand_test_list, "\"'$USER'\"", "'leobarbo'");
-	add_test(&expand_test_list, "\"'\"$USER", "'leobarbo");
+	add_test(&expand_test_list, "\"'$USER'\"", "'daniel'");
+	add_test(&expand_test_list, "\"'\"$USER", "'daniel");
 	add_test(&expand_test_list, "\"\"", "");
 	add_test(&expand_test_list, "\"$A\"", "a\"");
 	add_test(&expand_test_list, "'\"$A\"'", "\"$A\"");
@@ -123,12 +123,12 @@ int main(int argc, char *argv[], char *envp[])
 	add_test(&expand_test_list, "\"\"$A\"\"", "a\"");
 	add_test(&expand_test_list, "''\"\"''", "");
 	add_test(&expand_test_list, "''\"$A\"''", "a\"");
-	add_test(&expand_test_list, "$USER$carol", "leobarbo55");
-	add_test(&expand_test_list, "$USER$var", "leobarboo hello");
+	add_test(&expand_test_list, "$USER$carol", "daniel55");
+	add_test(&expand_test_list, "$USER$var", "danielo hello");
 	add_test(&expand_test_list, "oitudobem", "oitudobem");
 	add_test(&expand_test_list, "$USERoi", "");
 	add_test(&expand_test_list, "'$USER'", "$USER");
-	add_test(&expand_test_list, "\"$USER\"", "leobarbo");
+	add_test(&expand_test_list, "\"$USER\"", "daniel");
 	add_test(&expand_test_list, "$$$", "");
 	add_test(&expand_test_list, "$\"\" USER", " USER");
 	add_test(&expand_test_list, "$\"\" USER \"\"", " USER ");
