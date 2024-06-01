@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:08:56 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/05/31 00:10:27 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/01 15:44:27 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	expand_var(char *str, int *i, t_envp_list *head, \
 	char	*expanded;
 
 	j = 0;
-	while (is_valid_var(str[*i]))
+	while (is_valid_var(str[*i]) || (j == 0 && str[*i] == '?'))
 	{
 		j++;
 		(*i)++;
@@ -59,7 +59,7 @@ static void	var_validation(int *i, char *str, \
 {
 	(*i)++;
 	if (str[*i] >= '0' && str[*i] <= '9' || str[*i] == '$'
-		|| is_valid_var(str[*i]) == 0)
+		|| (is_valid_var(str[*i]) == 0 && str[*i] != '?'))
 		invalid_var(str, i);
 	else
 		expand_var(str, i, head, new_str);

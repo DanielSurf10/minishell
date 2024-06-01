@@ -1,0 +1,15 @@
+total 108
+-rw-r--r-- 1 danbarbo candidate     0 Jun  1 14:44 a
+-rw-r--r-- 1 danbarbo candidate     0 Jun  1 14:26 echo
+drwxr-xr-x 2 danbarbo candidate  4096 Jun  1 14:26 include
+drwxr-xr-x 3 danbarbo candidate  4096 Apr 30 15:28 lib
+-rw-r--r-- 1 danbarbo candidate  2532 May 30 17:24 Makefile
+-rwxr-xr-x 1 danbarbo candidate 64408 Jun  1 14:39 minishell
+drwxr-xr-x 6 danbarbo candidate  4096 Jun  1 14:39 obj
+-rw-r--r-- 1 danbarbo candidate    10 Jun  1 14:26 oi
+-rw-r--r-- 1 danbarbo candidate     8 Jun  1 14:26 out
+-rw-r--r-- 1 danbarbo candidate    90 Apr 30 15:28 readline.supp
+-rw-r--r-- 1 danbarbo candidate    62 Apr 30 15:28 README.md
+drwxr-xr-x 6 danbarbo candidate  4096 Jun  1 14:26 src
+drwxr-xr-x 7 danbarbo candidate  4096 May 29 17:36 tests
+-rw-r--r-- 1 danbarbo candidate     0 May 29 19:47 todo

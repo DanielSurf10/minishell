@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:02:10 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/31 16:20:57 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/01 15:32:00 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ int	exec_cmd_fork(t_exec_tree *tree, t_minishell *data)
 			envp = create_envp(data->envp_list);
 
 			execve(cmd, argv, envp);
+
+			ft_putstr_fd("Deu ruim meu bom\n", STDOUT_FILENO);	// TIRAR ESSA BOSTA
 			free_envp(argv);
 			free_envp(envp);
 			ret_code = 127;

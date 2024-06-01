@@ -6,7 +6,7 @@
 #    By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/23 21:20:35 by danbarbo          #+#    #+#              #
-#    Updated: 2024/05/30 17:24:51 by danbarbo         ###   ########.fr        #
+#    Updated: 2024/06/01 14:46:58 by danbarbo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,7 @@ fclean: clean
 #	@make -C ${LIBFT_DIR} fclean
 
 val: all
-	@valgrind -q --suppressions=readline.supp \
+	@valgrind --suppressions=readline.supp \
 				--leak-check=full \
 				--show-leak-kinds=all \
 				--track-origins=yes \
