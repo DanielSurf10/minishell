@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:43:47 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/31 15:47:38 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/01 17:16:21 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int		exec_cmd_fork(t_exec_tree *tree, t_minishell *data);
 
 int		exec_builtin(t_exec_tree *tree, t_minishell *data);
 int		builtin_echo(char *args[]);
+int		builtin_pwd(void);
 int		is_built_in(t_exec_tree *tree);
 int		verify_built_in(char *command);
 
