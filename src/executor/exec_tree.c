@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:02:10 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/31 00:36:59 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/31 16:20:57 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	open_redir(char *path_to_file, int type)
 	return (fd);
 }
 
-void	exec_cmd_fork(t_exec_tree *tree, t_minishell *data)
+int	exec_cmd_fork(t_exec_tree *tree, t_minishell *data)
 {
 	int		i;
 	int		fd_redir;
@@ -36,29 +36,22 @@ void	exec_cmd_fork(t_exec_tree *tree, t_minishell *data)
 	char	**envp;
 
 	if (!tree)
-		exit(1);
+		return (1);
 	if (tree->type >= REDIRECT_INPUT && tree->type <= REDIRECT_OUTPUT_APPEND)
 	{
 		fd_redir = open_redir(tree->left->command->token.lexeme, tree->type);	// Fazer o tratamento de erro do redirecionamento ambíguo com o wildcard
 		if (fd_redir == -1)
-		{
-			free_tree(&tree);
-			exit(3);		// 3 só para testes, colocar 1 depois
-		}
+			return(3);		// 3 só para testes, colocar 1 depois
 
 		if (tree->type == REDIRECT_INPUT)	// Talvez hereredoc
 			dup2(fd_redir, STDIN_FILENO);
 		else if (tree->type == REDIRECT_OUTPUT || tree->type == REDIRECT_OUTPUT_APPEND)
 			dup2(fd_redir, STDOUT_FILENO);
 		close(fd_redir);
-		exec_cmd_fork(tree->right, data);
+		ret_code = exec_cmd_fork(tree->right, data);
 	}
 	else if (tree->type == SUBSHELL)
-	{
 		ret_code = exec_tree(tree->subshell, data);
-		free_tree(&tree);
-		exit(ret_code);
-	}
 	else
 	{
 		i = 0;
@@ -83,32 +76,32 @@ void	exec_cmd_fork(t_exec_tree *tree, t_minishell *data)
 			execve(cmd, argv, envp);
 			free_envp(argv);
 			free_envp(envp);
-			free_tree(&data->tree);
-			exit(127);
+			ret_code = 127;
 		}
 		else
-		{
-			free_tree(&tree);
-			exit(0);
-		}
+			ret_code = 0;
 	}
-	free_tree(&tree);
-	exit(1);
+	return (ret_code);
 }
 
 int	exec_cmd(t_exec_tree *tree, int fd_to_close, t_minishell *data)
 {
 	int	pid;
+	int	ret_code;
 
 	pid = fork();
-
 	if (pid == 0)
 	{
 		if (fd_to_close != -1)
 			close(fd_to_close);
-		exec_cmd_fork(tree, data);
+		if (is_built_in(tree))
+			ret_code = exec_builtin(tree, data);
+		else
+			ret_code = exec_cmd_fork(tree, data);
+		free_tree(&data->tree);
+		env_clear_list(&data->envp_list);
+		exit(ret_code);
 	}
-
 	return (pid);
 }
 
@@ -135,26 +128,6 @@ int	exec_or(t_exec_tree *tree, t_minishell *data)
 
 	return (ret_code);
 }
-
-// int	exec_cmd_pipe(t_token_list *command, int *pipe_fd)
-// {
-// 	int	pid;
-//
-// 	char	*cmd = command->token.lexeme;
-// 	char	*argv[] = {command->token.lexeme, command->next->token.lexeme, NULL};
-//
-// 	pid = fork();
-//
-// 	if (pid == 0)
-// 	{
-// 		close(pipe_fd[0]);
-// 		close(pipe_fd[1]);
-// 		execve(cmd, argv, __environ);
-// 		exit(1);
-// 	}
-//
-// 	return (pid);
-// }
 
 int	exec_pipe(t_exec_tree *tree, int fd_to_close, t_minishell *data)
 {
@@ -248,9 +221,14 @@ int	exec_tree(t_exec_tree *tree, t_minishell *data)
 	if (tree->type == COMMAND
 		|| tree->type >= REDIRECT_INPUT && tree->type <= REDIRECT_OUTPUT_APPEND)
 	{
-		pid = exec_cmd(tree, -1, data);
-		waitpid(pid, &ret_code, 0);
-		ret_code = (ret_code >> 8) & 0xFF;
+		if (is_built_in(tree))
+			ret_code = exec_builtin(tree, data);
+		else
+		{
+			pid = exec_cmd(tree, -1, data);
+			waitpid(pid, &ret_code, 0);
+			ret_code = (ret_code >> 8) & 0xFF;
+		}
 	}
 	else if (tree->type == AND && tree->left && tree->right)
 		ret_code = exec_and(tree, data);

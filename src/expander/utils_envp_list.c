@@ -6,17 +6,17 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 17:34:51 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/05/30 23:17:16 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/31 15:47:06 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 
-void	clear_list(t_envp_list **head)
+void	env_clear_list(t_envp_list **head)
 {
 	if (head && *head)
 	{
-		clear_list(&(*head)->next);
+		env_clear_list(&(*head)->next);
 		free((*head)->key);
 		free((*head)->value);
 		free((*head));

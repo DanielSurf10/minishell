@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 21:17:07 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/31 00:37:54 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/05/31 16:15:20 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,14 @@ int main(int argc, char *argv[], char *envp[])
 	signal(SIGQUIT, SIG_IGN);
 
 	data.envp_list = store_to_list(envp);
-	env_insert_node(&data.envp_list, ft_strdup("A"), ft_strdup("\""));
-	// env_insert_node(&data.envp_list, ft_strdup("PATH"), ft_strdup(""));
+	env_insert_node(&data.envp_list, "A", "\"");
+	// env_insert_node(&data.envp_list, "PATH", "");
 
 	line = readline("minishell$ ");
 	while (line)
 	{
 
-		if (!line)
-			break ;
-		else if (!line[0])
+		if (!line[0])
 			continue ;
 
 		token_list = get_token_list(line);
@@ -67,6 +65,8 @@ int main(int argc, char *argv[], char *envp[])
 		line = readline("minishell$ ");
 
 	}
+
+	env_clear_list(&data.envp_list);
 
 	printf("\nret code main = %d\n", ret_code);
 	rl_clear_history();
