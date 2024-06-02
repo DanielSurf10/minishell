@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 21:17:07 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/02 15:10:33 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/02 15:18:59 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ int main(int argc, char *argv[], char *envp[])
 
 	printf("\nret code main = %d\n", ret_code);
 	rl_clear_history();
-	close(0);
-	close(1);
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
 
-	return (0);
+	return (ret_code);
 }
