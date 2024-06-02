@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 15:00:09 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/02 15:25:49 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/02 15:29:05 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	builtin_echo(char *args[])
 
 	i = 1;
 	n_flag = 0;
-	if (ft_strncmp(args[1], "-n", -1) == 0)
+	if (args[1] && ft_strncmp(args[1], "-n", -1) == 0)
 	{
 		i++;
 		n_flag = 1;
