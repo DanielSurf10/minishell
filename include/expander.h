@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 17:07:05 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/05/31 15:47:06 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/02 14:58:14 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct s_str_list
 void		env_insert_node(t_envp_list **head, char *key, char *value);
 void		env_delete_value(t_envp_list **head, char *key);
 char		**create_envp(t_envp_list *head);
-t_envp_list	*store_to_list(char *envp[]);
+t_envp_list	*env_create_list(char *envp[]);
 t_envp_list	*env_create_node(char *key, char *value);
 
 //****************************************************************************//

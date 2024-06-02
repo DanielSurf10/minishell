@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 21:17:07 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/01 19:49:42 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/06/02 15:10:33 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,16 @@
 #include "executor.h"
 #include "minishell.h"
 
-void	signal_handler(int sig)
-{
-	if (sig == SIGINT)
-	{
-		printf("\n");
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-	}
-}
+// void	signal_handler(int sig)
+// {
+// 	if (sig == SIGINT)
+// 	{
+// 		printf("\n");
+// 		rl_replace_line("", 0);
+// 		rl_on_new_line();
+// 		rl_redisplay();
+// 	}
+// }
 
 int main(int argc, char *argv[], char *envp[])
 {
@@ -37,14 +37,14 @@ int main(int argc, char *argv[], char *envp[])
 	tree = NULL;
 	token_list = NULL;
 	ret_code = 0;
-	signal(SIGINT, signal_handler);
-	signal(SIGTSTP, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
+	// signal(SIGINT, signal_handler);
+	// signal(SIGTSTP, SIG_IGN);
+	// signal(SIGQUIT, SIG_IGN);
 
-	data.envp_list = store_to_list(envp);
-	env_insert_node(&data.envp_list, "A", "\"");
-	env_insert_node(&data.envp_list, "PATH", "");
+	data.envp_list = env_create_list(envp);
 	env_insert_node(&data.envp_list, "?", "0");
+	env_insert_node(&data.envp_list, "A", "\"");
+	// env_insert_node(&data.envp_list, "PATH", "");
 
 	while (1)
 	{

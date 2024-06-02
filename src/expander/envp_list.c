@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:56:46 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/05/30 23:11:01 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/02 15:05:07 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	env_insert_node(t_envp_list **head, char *key, char *value)
 	}
 }
 
-t_envp_list	*store_to_list(char *envp[])
+t_envp_list	*env_create_list(char *envp[])
 {
 	int			idx[3];
 	char		*key;
@@ -81,15 +81,18 @@ char	**create_envp(t_envp_list *head)
 
 	i = 0;
 	temp = head;
-	new_envp = malloc(sizeof(char *) * (envp_list_size(head) + 1));
-	while (temp != NULL)
+	new_envp = malloc(sizeof(char *) * (envp_list_size(head)));
+	while (temp)
 	{
-		full_size = ft_strlen(temp->key) + ft_strlen(temp->value) + 2;
-		new_envp[i] = malloc(sizeof(char) * full_size);
-		ft_strlcpy(new_envp[i], temp->key, full_size);
-		ft_strlcat(new_envp[i], "=", full_size);
-		ft_strlcat(new_envp[i], temp->value, full_size);
-		i++;
+		if (ft_strncmp(temp->key, "?", -1) != 0)
+		{
+			full_size = ft_strlen(temp->key) + ft_strlen(temp->value) + 2;
+			new_envp[i] = malloc(sizeof(char) * full_size);
+			ft_strlcpy(new_envp[i], temp->key, full_size);
+			ft_strlcat(new_envp[i], "=", full_size);
+			ft_strlcat(new_envp[i], temp->value, full_size);
+			i++;
+		}
 		temp = temp->next;
 	}
 	new_envp[i] = NULL;
