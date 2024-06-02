@@ -5,16 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/01 17:39:14 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/06/01 17:39:28 by leobarbo         ###   ########.fr       */
+/*   Created: 2024/06/01 19:02:56 by leobarbo          #+#    #+#             */
+/*   Updated: 2024/06/01 19:02:57 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-int	builtin_exit(t_minishell *data)
-{
-	(void)data;
-	exit(0);
-	return (0);
-}

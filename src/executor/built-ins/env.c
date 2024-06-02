@@ -6,11 +6,11 @@
 /*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 17:22:38 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/06/01 17:36:02 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/06/01 18:52:15 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "executor.h"
 
 int	builtin_env(t_minishell *data)
 {

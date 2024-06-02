@@ -6,7 +6,7 @@
 /*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 17:06:49 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/05/17 15:07:35 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/06/01 18:56:18 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,20 +55,6 @@ void	printList(t_node *head)
 	}
 }
 
-// typedef struct s_aux_envp
-// {
-	// char			*new_string;
-// 	char			*key;
-// 	char 			*value;
-// 	int				i;
-// 	int				j;
-// 	int				k;
-// }					t_aux_envp;
-
-
-
-/*Cria um lista a partir do envp
-*/
 t_node	*store_to_list(char *envp[])
 {
 	t_node		*head;
