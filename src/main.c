@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 21:17:07 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/01 15:35:22 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/01 19:49:42 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int main(int argc, char *argv[], char *envp[])
 		free(line);
 
 		ret_code = exec_tree(data.tree, &data);
-		
+
 		line = ft_itoa(ret_code);
 		env_insert_node(&data.envp_list, "?", line);
 		free(line);

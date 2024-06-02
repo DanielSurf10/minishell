@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 15:11:11 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/31 16:11:03 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/01 18:54:31 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,14 @@ int	exec_cmd_builtin(t_exec_tree *tree, t_minishell *data)
 			ret_code = builtin_echo(argv);
 		// else if (ft_strcmp(cmd, "cd") == 0)
 		// 	ret_code = builtin_cd(argv, data);
-		// else if (ft_strcmp(cmd, "pwd") == 0)
-		// 	ret_code = builtin_pwd(argv);
+		else if (ft_strncmp(cmd, "pwd", -1) == 0)
+			ret_code = builtin_pwd();
 		// else if (ft_strcmp(cmd, "export") == 0)
 		// 	ret_code = builtin_export(argv, data);
 		// else if (ft_strcmp(cmd, "unset") == 0)
 		// 	ret_code = builtin_unset(argv, data);
-		// else if (ft_strcmp(cmd, "env") == 0)
-		// 	ret_code = builtin_env(argv, data);
+		else if (ft_strncmp(cmd, "env", -1) == 0)
+			ret_code = builtin_env(data);
 		// else if (ft_strcmp(cmd, "exit") == 0)
 		// 	ret_code = builtin_exit(argv, data);
 

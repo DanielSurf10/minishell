@@ -8,6 +8,7 @@
 		"random": "c",
 		"expander.h": "c",
 		"stdio.h": "c",
-		"type_traits": "c"
+		"type_traits": "c",
+		"executor.h": "c"
 	}
 }
