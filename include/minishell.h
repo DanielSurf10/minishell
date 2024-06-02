@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 21:17:57 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/31 15:39:08 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/02 15:53:54 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <termios.h>
 # include <sys/wait.h>
 # include <readline/history.h>
 # include <readline/readline.h>
