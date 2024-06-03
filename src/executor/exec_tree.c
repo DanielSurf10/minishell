@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:02:10 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/03 17:52:52 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/03 18:20:44 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,17 @@ int	exec_cmd_fork(t_exec_tree *tree, t_minishell *data)
 	char	**argv;
 	char	**envp;
 
+	ret_code = 0;
 	if (!tree)
 		return (1);
 	if (tree->type >= REDIRECT_INPUT && tree->type <= REDIRECT_OUTPUT_APPEND)
 	{
 		fd_redir = open_redir(tree->left->command->token.lexeme, tree->type);	// Fazer o tratamento de erro do redirecionamento ambíguo com o wildcard
 		if (fd_redir == -1)
-			return(3);		// 3 só para testes, colocar 1 depois
+		{
+			perror(tree->left->command->token.lexeme);
+			return(1);
+		}
 
 		if (tree->type == REDIRECT_INPUT)	// Talvez hereredoc
 			dup2(fd_redir, STDIN_FILENO);
@@ -71,16 +75,27 @@ int	exec_cmd_fork(t_exec_tree *tree, t_minishell *data)
 			cmd = expand_command(argv[0], data->envp_list);
 			envp = create_envp(data->envp_list);
 
-			execve(cmd, argv, envp);
+			if (access(cmd, F_OK | X_OK) == 0)
+				execve(cmd, argv, envp);
 
-			ft_putstr_fd("Deu ruim meu bom\n", STDOUT_FILENO);	// TIRAR ESSA BOSTA
+			if (access(cmd, X_OK) != 0)
+			{
+				perror(cmd);
+				ret_code = 126;
+			}
+			else if (access(cmd, F_OK) != 0)
+			{
+				perror(cmd);
+				ret_code = 127;
+			}
+			else
+				ret_code = 1;
 			free(cmd);
 			free_envp(argv);
 			free_envp(envp);
-			ret_code = 127;
 		}
-		else
-			ret_code = 0;
+		// else
+		// 	ret_code = 0;
 	}
 	return (ret_code);
 }
@@ -222,9 +237,9 @@ int	exec_tree(t_exec_tree *tree, t_minishell *data)
 	int	num[2];
 	int	ret_code;
 
+	ret_code = 2;
 	if (tree == NULL)
-		return (-1);		// Mudar isso aqui para 1 ou alguma coisa sla
-	ret_code = 2;			// Mudar esse aqui tb, para algo legal
+		return (2);
 	if (tree->type == COMMAND
 		|| tree->type >= REDIRECT_INPUT && tree->type <= REDIRECT_OUTPUT_APPEND)
 	{

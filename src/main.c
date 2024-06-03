@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 21:17:07 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/02 21:55:23 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/03 18:19:26 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,9 @@ int main(int argc, char *argv[], char *envp[])
 		free(line);
 
 		ret_code = exec_tree(data.tree, &data);
+
+		if (data.tree == NULL)
+			ft_putendl_fd("syntax error", STDERR_FILENO);
 
 		line = ft_itoa(ret_code);
 		env_insert_node(&data.envp_list, "?", line);
