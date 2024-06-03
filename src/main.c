@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 21:17:07 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/02 16:00:49 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/02 21:55:23 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,16 @@ int main(int argc, char *argv[], char *envp[])
 	t_token_list	*token_list;
 	t_exec_tree		*tree;
 	t_minishell		data;
-	struct termios	term;
+	t_termios		term;
 
 	tree = NULL;
 	token_list = NULL;
 	ret_code = 0;
 	// signal(SIGINT, signal_handler);
 	// signal(SIGTSTP, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
+	// signal(SIGQUIT, SIG_IGN);
 
+	ft_memset(&data, 0, sizeof(data));
 	data.envp_list = env_create_list(envp);
 	env_insert_node(&data.envp_list, "?", "0");
 	env_insert_node(&data.envp_list, "A", "\"");

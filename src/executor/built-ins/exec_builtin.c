@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 15:11:11 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/01 18:54:31 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/06/02 22:51:08 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	exec_cmd_builtin(t_exec_tree *tree, t_minishell *data)
 			dup2(fd_redir, STDIN_FILENO);
 		else if (tree->type == REDIRECT_OUTPUT || tree->type == REDIRECT_OUTPUT_APPEND)
 			dup2(fd_redir, STDOUT_FILENO);
-		close(fd_redir);
+		fd_redir = close_fd(fd_redir);
 		ret_code = exec_cmd_builtin(tree->right, data);
 	}
 	else
@@ -84,7 +84,6 @@ int	exec_builtin(t_exec_tree *tree, t_minishell *data)
 	ret_code = exec_cmd_builtin(tree, data);
 	dup2(old_fd[0], STDIN_FILENO);
 	dup2(old_fd[1], STDOUT_FILENO);
-	close(old_fd[0]);
-	close(old_fd[1]);
+	close_pipe(old_fd);
 	return (ret_code);
 }

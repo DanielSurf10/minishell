@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:02:10 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/01 15:32:00 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/02 22:50:55 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	exec_cmd_fork(t_exec_tree *tree, t_minishell *data)
 			dup2(fd_redir, STDIN_FILENO);
 		else if (tree->type == REDIRECT_OUTPUT || tree->type == REDIRECT_OUTPUT_APPEND)
 			dup2(fd_redir, STDOUT_FILENO);
-		close(fd_redir);
+		fd_redir = close_fd(fd_redir);
 		ret_code = exec_cmd_fork(tree->right, data);
 	}
 	else if (tree->type == SUBSHELL)
@@ -86,7 +86,7 @@ int	exec_cmd_fork(t_exec_tree *tree, t_minishell *data)
 	return (ret_code);
 }
 
-int	exec_cmd(t_exec_tree *tree, int fd_to_close, t_minishell *data)
+int	exec_cmd(t_exec_tree *tree, t_minishell *data)
 {
 	int	pid;
 	int	ret_code;
@@ -94,8 +94,9 @@ int	exec_cmd(t_exec_tree *tree, int fd_to_close, t_minishell *data)
 	pid = fork();
 	if (pid == 0)
 	{
-		if (fd_to_close != -1)
-			close(fd_to_close);
+		// close_pipe(data->old_fd);
+		// close_pipe(data->pipe_fd);
+		fd_list_close_clear(&data->fd_list);
 		if (is_built_in(tree))
 			ret_code = exec_builtin(tree, data);
 		else
@@ -131,45 +132,50 @@ int	exec_or(t_exec_tree *tree, t_minishell *data)
 	return (ret_code);
 }
 
-int	exec_pipe(t_exec_tree *tree, int fd_to_close, t_minishell *data)
+int	exec_pipe(t_exec_tree *tree, t_minishell *data)
 {
-	int	ret_code = 0;
-	int	pid;
-	int	old_fd[2];
-	int	pipe_fd[2];
+	int			ret_code;
+	int			pid;
+	int			old_fd[2];
+	int			pipe_fd[2];
 
 	pid = -1;
+	ret_code = 0;
 	if (tree->type == PIPE)
 	{
 		pipe(pipe_fd);						// Resover o leak de fd desses 3 aqui
 		old_fd[0] = dup(STDIN_FILENO);
 		old_fd[1] = dup(STDOUT_FILENO);
+		fd_list_add_fd(&data->fd_list, old_fd[0]);
+		fd_list_add_fd(&data->fd_list, old_fd[1]);
+		fd_list_add_fd(&data->fd_list, pipe_fd[0]);
+		fd_list_add_fd(&data->fd_list, pipe_fd[1]);
 
 		// Comando da esquerda
 		// redir_out();
 		dup2(pipe_fd[1], STDOUT_FILENO);
-		close(pipe_fd[1]);
+		// pipe_fd[1] = close_fd(pipe_fd[1]);
 
-		exec_pipe(tree->left, pipe_fd[0], data);
+		exec_pipe(tree->left, data);
 
 		// Comando da direita
 		// redir_back_old_fd_out();
 		dup2(old_fd[1], STDOUT_FILENO);
-		close(old_fd[1]);
+		// old_fd[1] = close_fd(old_fd[1]);
 
 		// redir_in();
 		dup2(pipe_fd[0], STDIN_FILENO);
-		close(pipe_fd[0]);
+		// pipe_fd[0] = close_fd(pipe_fd[0]);
 
-		pid = exec_pipe(tree->right, -1, data);
+		pid = exec_pipe(tree->right, data);
 
 		// redir_back_old_fd_in();
 		dup2(old_fd[0], STDIN_FILENO);
-		close(old_fd[0]);
+		// old_fd[0] = close_fd(old_fd[0]);
 	}
 	else if (tree->type == COMMAND
 		|| tree->type >= REDIRECT_INPUT && tree->type <= REDIRECT_OUTPUT_APPEND)
-		pid = exec_cmd(tree, fd_to_close, data);
+		pid = exec_cmd(tree, data);
 	else if (tree->type == SUBSHELL)
 	{
 		// ret_code = exec_tree(tree->subshell);	// NÃO É ISSO
@@ -227,7 +233,7 @@ int	exec_tree(t_exec_tree *tree, t_minishell *data)
 			ret_code = exec_builtin(tree, data);
 		else
 		{
-			pid = exec_cmd(tree, -1, data);
+			pid = exec_cmd(tree, data);
 			waitpid(pid, &ret_code, 0);
 			ret_code = (ret_code >> 8) & 0xFF;
 		}
@@ -257,7 +263,8 @@ int	exec_tree(t_exec_tree *tree, t_minishell *data)
 //
 // 		if (pid_pipe == 0)
 // 		{
-			pid = exec_pipe(tree, -1, data);
+			pid = exec_pipe(tree, data);
+			fd_list_close_clear(&data->fd_list);
 
 			num[0] = wait(&num[1]);
 
