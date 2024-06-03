@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 17:07:05 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/06/02 14:58:14 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/03 17:52:35 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,12 @@ int			att_existing_value(t_envp_list *head, char *key, char *value);
 char		*search_value(t_envp_list *head, char *key);
 int			envp_list_size(t_envp_list *head);
 void		free_envp(char **envp);
+
+//****************************************************************************//
+//                               expand_command                               //
+//****************************************************************************//
+
+char		*expand_command(char *command, t_envp_list *envp_list);
 
 //****************************************************************************//
 //                                   utils                                    //

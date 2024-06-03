@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:02:10 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/02 22:50:55 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/03 17:52:52 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,16 +66,15 @@ int	exec_cmd_fork(t_exec_tree *tree, t_minishell *data)
 			{
 				// DPS arrumar isso
 				argv[i] = expand_string(token_get_node_index(tree->command, i)->token.lexeme, data->envp_list);
-				// argv[i] = ft_strdup(token_get_node_index(tree->command, i)->token.lexeme);
 				i++;
 			}
-			// cmd = expand_command(argv[0]);
-			cmd = argv[0];
+			cmd = expand_command(argv[0], data->envp_list);
 			envp = create_envp(data->envp_list);
 
 			execve(cmd, argv, envp);
 
 			ft_putstr_fd("Deu ruim meu bom\n", STDOUT_FILENO);	// TIRAR ESSA BOSTA
+			free(cmd);
 			free_envp(argv);
 			free_envp(envp);
 			ret_code = 127;
