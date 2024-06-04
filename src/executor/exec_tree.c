@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:02:10 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/04 13:09:04 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/04 13:30:41 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,10 +198,10 @@ int	exec_pipe(t_exec_tree *tree, t_minishell *data)
 		pid = fork();
 		if (pid == 0)
 		{
+			fd_list_close_clear(&data->fd_list);
 			ret_code = exec_tree(tree->subshell, data);
 			free_tree(&data->tree);
 			env_clear_list(&data->envp_list);
-			fd_list_close_clear(&data->fd_list);
 			exit(ret_code);
 		}
 	}
@@ -268,10 +268,10 @@ int	exec_tree(t_exec_tree *tree, t_minishell *data)
 		}
 		else								// Filho
 		{
+			fd_list_close_clear(&data->fd_list);
 			ret_code = exec_tree(tree->subshell, data);
 			free_tree(&data->tree);
 			env_clear_list(&data->envp_list);
-			fd_list_close_clear(&data->fd_list);
 
 			exit(ret_code);
 		}

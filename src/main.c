@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 21:17:07 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/03 18:19:26 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/04 13:39:47 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int main(int argc, char *argv[], char *envp[])
 	// signal(SIGINT, signal_handler);
 	// signal(SIGTSTP, SIG_IGN);
 	// signal(SIGQUIT, SIG_IGN);
+	// signal(SIGPIPE, SIG_IGN);
 
 	ft_memset(&data, 0, sizeof(data));
 	data.envp_list = env_create_list(envp);
