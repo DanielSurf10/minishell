@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 21:17:57 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/04 18:09:51 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/04 20:13:38 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,19 @@
 # include <readline/readline.h>
 
 # include "libft.h"
+
+//****************************************************************************//
+//                                   Colors                                   //
+//****************************************************************************//
+
+# define RST    "\033[0m"      /* Reset to default color */
+# define R      "\033[1;31m"   /* Bold Red */
+# define G      "\033[1;32m"   /* Bold Green */
+# define Y      "\033[1;33m"   /* Bold Yellow */
+# define B      "\033[1;34m"   /* Bold Blue */
+# define M      "\033[1;35m"   /* Bold Magenta */
+# define C      "\033[1;36m"   /* Bold Cyan */
+# define W      "\033[1;37m"   /* Bold White */
 
 //****************************************************************************//
 //                                  Structs                                   //

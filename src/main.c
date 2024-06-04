@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 21:17:07 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/04 18:18:18 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/04 19:14:40 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,29 @@
 // 	}
 // }
 
+char	*get_line_to_readline(t_envp_list *env_list)
+{
+	int		length;
+	char	*line;
+	char	*user;
+	char	*path;
+
+	user = search_value(env_list, "USER");
+	path = search_value(env_list, "PWD");
+	length = ft_strlen(user) + ft_strlen(path) + 7;
+	line = malloc(length);
+	ft_strlcpy(line, "COR", length);
+
+	return (line);
+}
+
+// 'CORuserCOR@pasta: RST'
+
 int main(int argc, char *argv[], char *envp[])
 {
 	int				ret_code;
 	char			*line;
+	char			*line_to_readline;
 	t_token_list	*token_list;
 	t_exec_tree		*tree;
 	t_minishell		data;
@@ -52,7 +71,9 @@ int main(int argc, char *argv[], char *envp[])
 	tcgetattr(STDIN_FILENO, &term);
 	while (data.is_heredoc == 0)
 	{
-		line = readline("minishell$ ");
+		line_to_readline = get_line_to_readline(data.envp_list);
+		line = readline(line_to_readline);
+		free(line_to_readline);
 
 		if (!line)
 			break ;
