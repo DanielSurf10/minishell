@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 15:11:11 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/02 22:51:08 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/03 23:35:50 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ int	exec_cmd_builtin(t_exec_tree *tree, t_minishell *data)
 	{
 		fd_redir = open_redir(tree->left->command->token.lexeme, tree->type);	// Fazer o tratamento de erro do redirecionamento ambíguo com o wildcard
 		if (fd_redir == -1)
-			return(3);		// 3 só para testes, colocar 1 depois
+		{
+			perror(tree->left->command->token.lexeme);
+			return(1);
+		}
 
 		if (tree->type == REDIRECT_INPUT)	// Talvez hereredoc
 			dup2(fd_redir, STDIN_FILENO);
@@ -46,12 +49,9 @@ int	exec_cmd_builtin(t_exec_tree *tree, t_minishell *data)
 
 		while (i < args_num)
 		{
-			// DPS arrumar isso
 			argv[i] = expand_string(token_get_node_index(tree->command, i)->token.lexeme, data->envp_list);
-			// argv[i] = ft_strdup(token_get_node_index(tree->command, i)->token.lexeme);
 			i++;
 		}
-		// cmd = expand_command(argv[0]);
 		cmd = argv[0];
 
 		if (ft_strncmp(cmd, "echo", -1) == 0)
