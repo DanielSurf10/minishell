@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:02:10 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/03 18:20:44 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/03 19:04:24 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	open_redir(char *path_to_file, int type)
 {
 	int	fd;
 
-	if (type == REDIRECT_INPUT)
+	if (type == REDIRECT_INPUT || type == REDIRECT_HEREDOC)
 		fd = open(path_to_file, O_RDONLY);
 	else if (type == REDIRECT_OUTPUT)
 		fd = open(path_to_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
@@ -47,7 +47,7 @@ int	exec_cmd_fork(t_exec_tree *tree, t_minishell *data)
 			return(1);
 		}
 
-		if (tree->type == REDIRECT_INPUT)	// Talvez hereredoc
+		if (tree->type == REDIRECT_INPUT || tree->type == REDIRECT_HEREDOC)	// Talvez hereredoc
 			dup2(fd_redir, STDIN_FILENO);
 		else if (tree->type == REDIRECT_OUTPUT || tree->type == REDIRECT_OUTPUT_APPEND)
 			dup2(fd_redir, STDOUT_FILENO);

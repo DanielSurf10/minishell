@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 17:07:05 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/06/03 17:52:35 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/03 22:22:46 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,15 @@ char		*expand_command(char *command, t_envp_list *envp_list);
 //****************************************************************************//
 
 int			ternary(int condition, int if_true, int if_false);
+int			is_valid_var(char letter);
+
+
+//****************************************************************************//
+// expander_here_doc
+//****************************************************************************//
+
+char		*remove_quotes(char	*delimiter);
+char		*expand_string_heredoc(char *str, t_envp_list *envp_list);
+
 
 #endif

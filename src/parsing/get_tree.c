@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 17:44:55 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/30 17:32:40 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/03 18:54:04 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,20 +103,7 @@ t_exec_tree	*make_tree_cmd_recursive(t_token_list *redir_list, t_token_list *arg
 		if (tree->type == REDIRECT_HEREDOC)
 		{
 			// ARRUMAR ISSO
-			tree->left->command = get_token_list("infile");
-
-			// Fork para fazer o heredoc
-			// fork()
-
-			// pai
-			// wait()
-
-			// filho
-			// executar heredoc
-				// criar arquivo do heredoc
-				// apagar tudo do data
-				// obs: apagar arquivo quando for apagar a árvore
-
+			tree->left->command = get_token_list(create_here_doc(redir_list->next->token.lexeme, data));
 		}
 		else
 			tree->left->command = token_get_sublist(redir_list, 1, 1);

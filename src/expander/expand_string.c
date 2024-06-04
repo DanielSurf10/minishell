@@ -6,19 +6,11 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:08:56 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/06/01 15:44:27 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/03 19:17:49 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
-
-static int	is_valid_var(char letter)
-{
-	return ((letter >= 'a' && letter <= 'z')
-		|| (letter >= 'A' && letter <= 'Z')
-		|| (letter >= '0' && letter <= '9')
-		|| letter == '_');
-}
 
 static void	invalid_var(char *str, int *i)
 {
