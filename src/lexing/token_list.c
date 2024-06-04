@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 16:27:38 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/30 17:23:09 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/03 23:31:27 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ void	token_clear_list(t_token_list **token_list)
 	}
 }
 
-t_token_list	*token_get_sublist(t_token_list *tok_lst, int start, int lst_len)
+t_token_list	*token_get_sublist(t_token_list *tok_lst, int start, \
+									int lst_len)
 {
 	int				i;
 	t_token_list	*aux;
