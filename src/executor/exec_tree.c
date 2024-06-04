@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:02:10 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/04 13:30:41 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:39:16 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,6 @@ int	exec_cmd_fork(t_exec_tree *tree, t_minishell *data)
 			free_envp(argv);
 			free_envp(envp);
 		}
-		// else
-		// 	ret_code = 0;
 	}
 	return (ret_code);
 }
@@ -117,6 +115,8 @@ int	exec_cmd(t_exec_tree *tree, t_minishell *data)
 			ret_code = exec_cmd_fork(tree, data);
 		free_tree(&data->tree);
 		env_clear_list(&data->envp_list);
+		close(STDIN_FILENO);
+		close(STDOUT_FILENO);
 		exit(ret_code);
 	}
 	return (pid);

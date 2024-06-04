@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 21:17:07 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/04 13:39:47 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:18:18 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int main(int argc, char *argv[], char *envp[])
 	// env_insert_node(&data.envp_list, "PATH", "");
 
 	tcgetattr(STDIN_FILENO, &term);
-	while (1)
+	while (data.is_heredoc == 0)
 	{
 		line = readline("minishell$ ");
 
@@ -68,14 +68,17 @@ int main(int argc, char *argv[], char *envp[])
 		add_history(line);
 		free(line);
 
-		ret_code = exec_tree(data.tree, &data);
+		if (data.is_heredoc == 0)
+		{
+			ret_code = exec_tree(data.tree, &data);
 
-		if (data.tree == NULL)
-			ft_putendl_fd("syntax error", STDERR_FILENO);
+			if (data.tree == NULL)
+				ft_putendl_fd("syntax error", STDERR_FILENO);
 
-		line = ft_itoa(ret_code);
-		env_insert_node(&data.envp_list, "?", line);
-		free(line);
+			line = ft_itoa(ret_code);
+			env_insert_node(&data.envp_list, "?", line);
+			free(line);
+		}
 
 		free_tree(&data.tree);
 
@@ -84,10 +87,14 @@ int main(int argc, char *argv[], char *envp[])
 
 	env_clear_list(&data.envp_list);
 
-	printf("\nret code main = %d\n", ret_code);
 	rl_clear_history();
-	close(STDIN_FILENO);
-	close(STDOUT_FILENO);
+
+	if (data.is_heredoc == 0)
+	{
+		printf("\nret code main = %d\n", ret_code);
+		close(STDIN_FILENO);
+		close(STDOUT_FILENO);
+	}
 
 	return (ret_code);
 }

@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:31:03 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/03 22:37:00 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:23:53 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,10 @@ char	*create_here_doc(char *delimiter, t_minishell *data)
 	pid = fork();
 	if (pid == 0)
 	{
+		data->is_heredoc = 1;
 		here_doc_fork(file_name, delimiter, data->envp_list);
 		free(file_name);
-		free_tree(&data->tree);
-		env_clear_list(&data->envp_list);
-		exit(0);
+		return (NULL);
 	}
 	wait(NULL);
 	return (file_name);

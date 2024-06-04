@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 17:44:55 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/03 18:54:04 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:29:36 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ static int	index_to_open_parenthesis(t_token_list *token_list)
 
 t_exec_tree	*make_tree_cmd_recursive(t_token_list *redir_list, t_token_list *args, t_minishell *data)
 {
+	char			*str;
 	t_exec_tree		*tree;
 
 	tree = malloc(sizeof(t_exec_tree));
@@ -102,15 +103,17 @@ t_exec_tree	*make_tree_cmd_recursive(t_token_list *redir_list, t_token_list *arg
 
 		if (tree->type == REDIRECT_HEREDOC)
 		{
-			// ARRUMAR ISSO
-			tree->left->command = get_token_list(create_here_doc(redir_list->next->token.lexeme, data));
+			str = create_here_doc(redir_list->next->token.lexeme, data);
+			tree->left->command = get_token_list(str);
+			free(str);
 		}
 		else
 			tree->left->command = token_get_sublist(redir_list, 1, 1);
 
-		tree->right = make_tree_cmd_recursive(token_get_node_index(redir_list, 2), args, data);
+		if (data->is_heredoc == 0)
+			tree->right = make_tree_cmd_recursive(token_get_node_index(redir_list, 2), args, data);
 
-		if (!tree->right)
+		if (!tree->right || data->is_heredoc == 1)
 			free_tree(&tree);
 	}
 	else

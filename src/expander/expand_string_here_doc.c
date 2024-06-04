@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 22:18:47 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/03 23:28:02 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/04 17:59:31 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	skip_invalid_variable(char *str, int *i)
 	}
 }
 
-static void	*expand_variable_heredoc(char *str, int *i, t_str_list **new_str, \
+static void	expand_variable_heredoc(char *str, int *i, t_str_list **new_str, \
 									t_envp_list *envp_list)
 {
 	int		k;
@@ -56,20 +56,14 @@ static void	*expand_variable_heredoc(char *str, int *i, t_str_list **new_str, \
 char	*expand_string_heredoc(char *str, t_envp_list *envp_list)
 {
 	int			i;
-	int			in_quotes;
 	char		*expanded;
 	t_str_list	*new_str;
 
 	i = 0;
-	in_quotes = 0;
 	new_str = NULL;
 	while (str[i] != '\0')
 	{
-		if (str[i] == '\'' && (in_quotes == 0 || in_quotes == 1))
-			in_quotes = ternary(in_quotes == 0, 1, 0);
-		else if (str[i] == '\"' && (in_quotes == 0 || in_quotes == 2))
-			in_quotes = ternary(in_quotes == 0, 2, 0);
-		else if (str[i] == '$' && in_quotes != 1)
+		if (str[i] == '$')
 			expand_variable_heredoc(str, &i, &new_str, envp_list);
 		else
 			add_letter_list(&new_str, str[i]);

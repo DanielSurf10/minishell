@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 21:17:57 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/02 21:55:02 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:09:51 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct termios		t_termios;
 
 typedef struct s_minishell
 {
+	int			is_heredoc;
 	t_envp_list	*envp_list;
 	t_exec_tree	*tree;
 	t_list		*fd_list;
