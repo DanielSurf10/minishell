@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 21:17:07 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/04 19:14:40 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/05 00:37:47 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,30 @@
 
 char	*get_line_to_readline(t_envp_list *env_list)
 {
-	int		length;
-	char	*line;
-	char	*user;
-	char	*path;
+	int			i;
+	int			length;
+	char		*line;
+	const char	*vars[3] = {search_value(env_list, "USER"), \
+							search_value(env_list, "PWD")};
+	const char	*to_print[9] = {ORANGE, vars[0], RST, "@", CYAN, vars[1], RST, \
+								": ", NULL};
 
-	user = search_value(env_list, "USER");
-	path = search_value(env_list, "PWD");
-	length = ft_strlen(user) + ft_strlen(path) + 7;
-	line = malloc(length);
-	ft_strlcpy(line, "COR", length);
-
+	i = 0;
+	length = 0;
+	while (to_print[i])
+		length += ft_strlen(to_print[i++]);
+	line = malloc(sizeof(char) * (length + 1));
+	i = 1;
+	ft_strlcpy(line, to_print[0], length + 1);
+	while (to_print[i])
+	{
+		ft_strlcat(line, to_print[i], length + 1);
+		i++;
+	}
+	free((char*)vars[0]);
+	free((char*)vars[1]);
 	return (line);
 }
-
-// 'CORuserCOR@pasta: RST'
 
 int main(int argc, char *argv[], char *envp[])
 {

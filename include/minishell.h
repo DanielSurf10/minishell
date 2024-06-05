@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 21:17:57 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/04 20:13:38 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/05 00:20:00 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,20 @@
 # define M      "\033[1;35m"   /* Bold Magenta */
 # define C      "\033[1;36m"   /* Bold Cyan */
 # define W      "\033[1;37m"   /* Bold White */
+# define ORANGE "\033[38;5;208m"
+# define BLUE   "\033[38;5;27m"
+# define GREEN  "\033[38;5;46m"
+# define RED    "\033[38;5;196m"
+# define YELLOW "\033[38;5;226m"
+# define CYAN   "\033[38;5;51m"
+# define PURPLE "\033[38;5;129m"
+# define GREY   "\033[38;5;240m"
+# define WHITE  "\033[38;5;231m"
+# define BLACK  "\033[38;5;16m"
+# define BOLD   "\033[1m"
+# define UNDER  "\033[4m"
+# define BLINK  "\033[5m"
+# define REVERSE "\033[7m"
 
 //****************************************************************************//
 //                                  Structs                                   //
