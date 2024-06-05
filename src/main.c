@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 21:17:07 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/05 00:37:47 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/05 01:01:11 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,9 +108,8 @@ int main(int argc, char *argv[], char *envp[])
 			line = ft_itoa(ret_code);
 			env_insert_node(&data.envp_list, "?", line);
 			free(line);
+			free_tree_all(&data.tree);
 		}
-
-		free_tree(&data.tree);
 
 		tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	}

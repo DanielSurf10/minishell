@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 17:44:55 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/04 18:29:36 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/05 01:00:56 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -415,6 +415,31 @@ void	free_tree(t_exec_tree **tree)		// árvore de graça
 
 	if ((*tree)->left)
 		free_tree(&(*tree)->left);
+
+	if ((*tree)->right)
+		free_tree(&(*tree)->right);
+
+	if ((*tree)->command)
+		token_clear_list(&(*tree)->command);
+
+	free(*tree);
+	*tree = NULL;
+}
+
+void	free_tree_all(t_exec_tree **tree)		// árvore de graça
+{
+	if (*tree == NULL)
+		return ;
+
+	if ((*tree)->subshell)
+		free_tree(&(*tree)->subshell);
+
+	if ((*tree)->left)
+	{
+		if ((*tree)->type == REDIRECT_HEREDOC)
+			unlink((*tree)->left->command->token.lexeme);
+		free_tree(&(*tree)->left);
+	}
 
 	if ((*tree)->right)
 		free_tree(&(*tree)->right);

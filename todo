@@ -1,0 +1,4 @@
+[ ] testar algo no relative path sem usar o ./
+	- Como o minishell
+		- Ao inves de ./minishell
+		- Tente minishell
