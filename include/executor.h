@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:43:47 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/02 22:16:47 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/05 01:23:16 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,8 @@ void	fd_list_close_clear(t_list **fd_list);
 
 int		close_fd(int fd);
 void	close_pipe(int *pipe_fd);
+
+void	init_signals(void);
+void	execution_signals(int pid);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:36:18 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/03 17:52:21 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/05 10:37:26 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*expand_command(char *command, t_envp_list *envp_list)
 
 	i = 0;
 	absolute_command = NULL;
-	if (ft_strchr(command, '/') == NULL)
+	if (ft_strlen(command) > 0 && ft_strchr(command, '/') == NULL)
 	{
 		path_env = search_value(envp_list, "PATH");
 		paths = ft_split(path_env, ':');

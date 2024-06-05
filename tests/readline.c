@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 17:43:13 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/03/23 21:09:17 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/05 09:39:01 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int main(void)
 	{
 		if (*line)
 			add_history(line);
-		printf("%s\n", line);
+		printf("line = %s\n", line);
 		free(line);
 		line = readline("Escreva algo: ");
 	}

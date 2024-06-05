@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 15:11:11 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/03 23:35:50 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/05 10:46:24 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ int	exec_cmd_builtin(t_exec_tree *tree, t_minishell *data)
 	ret_code = 0;
 	if (tree->type >= REDIRECT_INPUT && tree->type <= REDIRECT_OUTPUT_APPEND)
 	{
-		fd_redir = open_redir(tree->left->command->token.lexeme, tree->type);	// Fazer o tratamento de erro do redirecionamento ambíguo com o wildcard
+		cmd = expand_string(tree->left->command->token.lexeme, data->envp_list);
+		fd_redir = open_redir(cmd, tree->type);	// Fazer o tratamento de erro do redirecionamento ambíguo com o wildcard
+		free(cmd);
 		if (fd_redir == -1)
 		{
 			perror(tree->left->command->token.lexeme);
