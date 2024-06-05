@@ -6,7 +6,7 @@
 #    By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/23 21:20:35 by danbarbo          #+#    #+#              #
-#    Updated: 2024/06/02 15:13:13 by danbarbo         ###   ########.fr        #
+#    Updated: 2024/06/05 00:52:04 by danbarbo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,7 +59,7 @@ fclean: clean
 	@rm -f ${NAME_BONUS}
 #	@make -C ${LIBFT_DIR} fclean
 
-val: all
+val: readline.supp all
 	@valgrind -q --suppressions=readline.supp \
 				--leak-check=full \
 				--show-leak-kinds=all \
@@ -69,14 +69,22 @@ val: all
 				--trace-children-skip='*/bin/*,*/sbin/*,/usr/bin/*' \
 				./${NAME}
 
-vall: all
+vall: readline.supp all
 	@valgrind -q --suppressions=readline.supp \
 				--track-fds=yes \
 				--trace-children=yes \
 				--trace-children-skip='*/bin/*,*/sbin/*,/usr/bin/*' \
 				./${NAME}
 
+readline.supp:
+	@echo '{' > $@
+	@echo '   ignore_libreadline_memory_errors' >> $@
+	@echo '   Memcheck:Leak' >> $@
+	@echo '   ...' >> $@
+	@echo '   obj:*/libreadline.so.*' >> $@
+	@echo '}' >> $@
+
 re: fclean all
 re_bonus: fclean bonus
 
-.PHONY: all bonus clean fclean re re_bonus libft val vall
+.PHONY: all bonus clean fclean re re_bonus val vall
