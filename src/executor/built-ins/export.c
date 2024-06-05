@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -80,8 +80,8 @@ int builtin_export(char *argv, t_minishell *data)
     char *value;
     int i;
 
-    i = 0;
-    while(argv[i])
+    i = -1;
+    while(argv[++i])
     {
         if (argv[i] == '=')
         {
@@ -93,15 +93,12 @@ int builtin_export(char *argv, t_minishell *data)
                     update_envp(key, value, data->envp_list);
                 else
                     add_envp(key, value, data->envp_list);
-                free(key);
-                free(value);
             }
             else
                 return (1);
             free(key);
             free(value);
         }
-        i++;
     }
     return (0);
 }

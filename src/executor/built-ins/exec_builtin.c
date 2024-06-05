@@ -62,8 +62,8 @@ int	exec_cmd_builtin(t_exec_tree *tree, t_minishell *data)
 			ret_code = builtin_pwd();
 		else if (ft_strncmp(cmd, "export", -1) == 0)
 			ret_code = builtin_export(argv[0], data);
-		// else if (ft_strcmp(cmd, "unset") == 0)
-		// 	ret_code = builtin_unset(argv, data);
+		else if (ft_strncmp(cmd, "unset", -1) == 0)
+			ret_code = builtin_unset(argv[0], &data->envp_list);
 		else if (ft_strncmp(cmd, "env", -1) == 0)
 			ret_code = builtin_env(data);
 		// else if (ft_strcmp(cmd, "exit") == 0)
