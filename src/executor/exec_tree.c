@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:02:10 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/05 01:13:29 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/05 01:25:12 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ int	exec_cmd(t_exec_tree *tree, t_minishell *data)
 	int	ret_code;
 
 	pid = fork();
+	execution_signals(pid);
 	if (pid == 0)
 	{
 		// close_pipe(data->old_fd);
