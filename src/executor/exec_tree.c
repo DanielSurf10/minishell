@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:02:10 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/05 01:25:12 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/05 10:49:36 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@ int	exec_cmd_fork(t_exec_tree *tree, t_minishell *data)
 		return (1);
 	if (tree->type >= REDIRECT_INPUT && tree->type <= REDIRECT_OUTPUT_APPEND)
 	{
-		fd_redir = open_redir(tree->left->command->token.lexeme, tree->type);	// Fazer o tratamento de erro do redirecionamento ambíguo com o wildcard
+		cmd = expand_string(tree->left->command->token.lexeme, data->envp_list);
+		fd_redir = open_redir(cmd, tree->type);	// Fazer o tratamento de erro do redirecionamento ambíguo com o wildcard
+		free(cmd);
 		if (fd_redir == -1)
 		{
 			perror(tree->left->command->token.lexeme);
@@ -75,21 +77,24 @@ int	exec_cmd_fork(t_exec_tree *tree, t_minishell *data)
 			cmd = expand_command(argv[0], data->envp_list);
 			envp = create_envp(data->envp_list);
 
-			if (access(cmd, F_OK | X_OK) == 0)
+			if (access(cmd, F_OK | X_OK) == 0 && ft_strchr(cmd, '/') != NULL)
 				execve(cmd, argv, envp);
 
-			if (access(cmd, X_OK) != 0)
-			{
-				perror(cmd);
-				ret_code = 126;
-			}
-			else if (access(cmd, F_OK) != 0)
+			if (access(cmd, F_OK) != 0 || ft_strchr(cmd, '/') == NULL)
 			{
 				perror(cmd);
 				ret_code = 127;
 			}
+			else if (access(cmd, F_OK | X_OK) != 0)
+			{
+				perror(cmd);
+				ret_code = 126;
+			}
 			else
+			{
+				perror(cmd);
 				ret_code = 1;
+			}
 			free(cmd);
 			free_envp(argv);
 			free_envp(envp);
@@ -107,8 +112,6 @@ int	exec_cmd(t_exec_tree *tree, t_minishell *data)
 	execution_signals(pid);
 	if (pid == 0)
 	{
-		// close_pipe(data->old_fd);
-		// close_pipe(data->pipe_fd);
 		fd_list_close_clear(&data->fd_list);
 		if (is_built_in(tree))
 			ret_code = exec_builtin(tree, data);

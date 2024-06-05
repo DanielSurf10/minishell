@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:31:03 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/04 18:23:53 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/05 11:23:42 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,10 @@ char	*create_here_doc_name(char *delimiter)
 
 	num = (unsigned long) delimiter;
 	prefix = ft_itoa((int) num);
-	length = ft_strlen(path) + ft_strlen(prefix) + ft_strlen(delimiter) + 1;
+	length = ft_strlen(path) + ft_strlen(prefix) + 1;
 	file_name = malloc(length);
 	ft_strlcpy(file_name, path, length);
 	ft_strlcat(file_name, prefix, length);
-	ft_strlcat(file_name, delimiter, length);
 	free(prefix);
 	return (file_name);
 }

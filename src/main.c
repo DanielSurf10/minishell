@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 21:17:07 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/05 01:26:05 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/05 11:14:24 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,15 +76,26 @@ int main(int argc, char *argv[], char *envp[])
 	ft_memset(&data, 0, sizeof(data));
 	data.envp_list = env_create_list(envp);
 	env_insert_node(&data.envp_list, "?", "0");
-	env_insert_node(&data.envp_list, "A", "\"");
+	// env_insert_node(&data.envp_list, "A", "\"");
+	// env_insert_node(&data.envp_list, "file", "todo");
 	// env_insert_node(&data.envp_list, "PATH", "");
 
 	tcgetattr(STDIN_FILENO, &term);
 	while (data.is_heredoc == 0)
 	{
-		line_to_readline = get_line_to_readline(data.envp_list);
-		line = readline(line_to_readline);
-		free(line_to_readline);
+		// line_to_readline = get_line_to_readline(data.envp_list);
+		// line = readline(line_to_readline);
+		// free(line_to_readline);
+		if (isatty(STDIN_FILENO))
+		{
+			line_to_readline = get_line_to_readline(data.envp_list);
+			line = readline(line_to_readline);
+			free(line_to_readline);
+		}
+		else
+		{
+			line = readline(NULL);
+		}
 
 		if (!line)
 			break ;
@@ -123,7 +134,7 @@ int main(int argc, char *argv[], char *envp[])
 
 	if (data.is_heredoc == 0)
 	{
-		printf("\nret code main = %d\n", ret_code);
+		// printf("\nret code main = %d\n", ret_code);
 		close(STDIN_FILENO);
 		close(STDOUT_FILENO);
 	}
