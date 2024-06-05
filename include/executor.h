@@ -43,6 +43,7 @@ int		verify_built_in(char *command);
 int		builtin_echo(char *args[]);
 int		builtin_pwd(void);
 int		builtin_env(t_minishell *data);
+int     builtin_export(char *argv, t_minishell *data);
 
 void	fd_list_add_fd(t_list **fd_list, int fd);
 void	fd_list_close_clear(t_list **fd_list);
