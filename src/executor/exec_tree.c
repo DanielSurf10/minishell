@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:02:10 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/04 18:39:16 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/05 01:13:29 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,8 @@ int	exec_pipe(t_exec_tree *tree, t_minishell *data)
 			ret_code = exec_tree(tree->subshell, data);
 			free_tree(&data->tree);
 			env_clear_list(&data->envp_list);
+			close(STDIN_FILENO);
+			close(STDOUT_FILENO);
 			exit(ret_code);
 		}
 	}
@@ -272,7 +274,8 @@ int	exec_tree(t_exec_tree *tree, t_minishell *data)
 			ret_code = exec_tree(tree->subshell, data);
 			free_tree(&data->tree);
 			env_clear_list(&data->envp_list);
-
+			close(STDIN_FILENO);
+			close(STDOUT_FILENO);
 			exit(ret_code);
 		}
 	}
