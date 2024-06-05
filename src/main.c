@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 21:17:07 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/05 11:14:24 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/05 14:11:26 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "expander.h"
 #include "executor.h"
 #include "minishell.h"
+
+int	g_signal;
 
 // void	signal_handler(int sig)
 // {
@@ -33,8 +35,8 @@ char	*get_line_to_readline(t_envp_list *env_list)
 	char		*line;
 	const char	*vars[3] = {search_value(env_list, "USER"), \
 							search_value(env_list, "PWD")};
-	const char	*to_print[9] = {ORANGE, vars[0], RST, "@", CYAN, vars[1], RST, \
-								": ", NULL};
+	const char	*to_print[] = {ORANGE, vars[0], RST, "@", CYAN, vars[1], RST, \
+								": ", "\001", NULL};
 
 	i = 0;
 	length = 0;
@@ -66,6 +68,7 @@ int main(int argc, char *argv[], char *envp[])
 	tree = NULL;
 	token_list = NULL;
 	ret_code = 0;
+	g_signal = 0;
 
 	// signal(SIGINT, signal_handler);
 	// signal(SIGTSTP, SIG_IGN);

@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 21:17:57 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/05 00:20:00 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/05 14:12:24 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,28 +33,28 @@
 //                                   Colors                                   //
 //****************************************************************************//
 
-# define RST    "\033[0m"      /* Reset to default color */
-# define R      "\033[1;31m"   /* Bold Red */
-# define G      "\033[1;32m"   /* Bold Green */
-# define Y      "\033[1;33m"   /* Bold Yellow */
-# define B      "\033[1;34m"   /* Bold Blue */
-# define M      "\033[1;35m"   /* Bold Magenta */
-# define C      "\033[1;36m"   /* Bold Cyan */
-# define W      "\033[1;37m"   /* Bold White */
-# define ORANGE "\033[38;5;208m"
-# define BLUE   "\033[38;5;27m"
-# define GREEN  "\033[38;5;46m"
-# define RED    "\033[38;5;196m"
-# define YELLOW "\033[38;5;226m"
-# define CYAN   "\033[38;5;51m"
-# define PURPLE "\033[38;5;129m"
-# define GREY   "\033[38;5;240m"
-# define WHITE  "\033[38;5;231m"
-# define BLACK  "\033[38;5;16m"
-# define BOLD   "\033[1m"
-# define UNDER  "\033[4m"
-# define BLINK  "\033[5m"
-# define REVERSE "\033[7m"
+# define RST    "\001\033[0m\002"      /* Reset to default color */
+# define R      "\001\033[1;31m\002"   /* Bold Red */
+# define G      "\001\033[1;32m\002"   /* Bold Green */
+# define Y      "\001\033[1;33m\002"   /* Bold Yellow */
+# define B      "\001\033[1;34m\002"   /* Bold Blue */
+# define M      "\001\033[1;35m\002"   /* Bold Magenta */
+# define C      "\001\033[1;36m\002"   /* Bold Cyan */
+# define W      "\001\033[1;37m\002"   /* Bold White */
+# define ORANGE "\001\033[38;5;208m\002"
+# define BLUE   "\001\033[38;5;27m\002"
+# define GREEN  "\001\033[38;5;46m\002"
+# define RED    "\001\033[38;5;196m\002"
+# define YELLOW "\001\033[38;5;226m\002"
+# define CYAN   "\001\033[38;5;51m\002"
+# define PURPLE "\001\033[38;5;129m\002"
+# define GREY   "\001\033[38;5;240m\002"
+# define WHITE  "\001\033[38;5;231m\002"
+# define BLACK  "\001\033[38;5;16m\002"
+# define BOLD   "\001\033[1m\002"
+# define UNDER  "\001\033[4m\002"
+# define BLINK  "\001\033[5m\002"
+# define REVERSE "\001\033[7m\002"
 
 //****************************************************************************//
 //                                  Structs                                   //
