@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 15:11:11 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/05 10:46:24 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/06 17:58:10 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,13 @@ int	exec_cmd_builtin(t_exec_tree *tree, t_minishell *data)
 		else if (ft_strncmp(cmd, "pwd", -1) == 0)
 			ret_code = builtin_pwd();
 		else if (ft_strncmp(cmd, "export", -1) == 0)
-			ret_code = builtin_export(argv[0], data);
+			ret_code = builtin_export(argv, data);
 		else if (ft_strncmp(cmd, "unset", -1) == 0)
 			ret_code = builtin_unset(argv[0], &data->envp_list);
 		else if (ft_strncmp(cmd, "env", -1) == 0)
 			ret_code = builtin_env(data);
 		// else if (ft_strcmp(cmd, "exit") == 0)
 		// 	ret_code = builtin_exit(argv, data);
-
 		free_envp(argv);
 	}
 	return (ret_code);

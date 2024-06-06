@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 21:17:07 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/05 22:48:13 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/06 19:38:57 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	print_m(char *str)
 	ft_putstr_fd(str, STDOUT_FILENO);
 }
 
-void	print_menu()
+void	print_menu(void)
 {
 	print_m(ORANGE"═══════════════════════════");
 	print_m(ORANGE"════════════════════════════════════════\n");
@@ -65,8 +65,8 @@ char	*get_line_to_readline(t_envp_list *env_list)
 		ft_strlcat(line, to_print[i], length + 1);
 		i++;
 	}
-	free((char*)vars[0]);
-	free((char*)vars[1]);
+	free((char *)vars[0]);
+	free((char *)vars[1]);
 	return (line);
 }
 
@@ -94,8 +94,9 @@ int main(int argc, char *argv[], char *envp[])
 
 	data.envp_list = env_create_list(envp);
 	env_insert_node(&data.envp_list, "?", "0");
-	// env_insert_node(&data.envp_list, "A", "\"");
-	// env_insert_node(&data.envp_list, "file", "todo");
+	env_insert_node(&data.envp_list, "A", "\"");
+	env_insert_node(&data.envp_list, "file", "todo");
+	env_insert_node(&data.envp_list, "BOMDIA", "batata");
 	// env_insert_node(&data.envp_list, "PATH", "");
 
 	tcgetattr(STDIN_FILENO, &term);
