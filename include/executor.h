@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:43:47 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/06 16:22:48 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/06 19:55:58 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int		builtin_echo(char *args[]);
 int		builtin_pwd(void);
 int		builtin_env(t_minishell *data);
 int		builtin_export(char **argv, t_minishell *data);
-int		builtin_unset(char *key, t_envp_list **envp_list);
+int		builtin_unset(char **argv, t_envp_list **envp_list);
 
 void	fd_list_add_fd(t_list **fd_list, int fd);
 void	fd_list_close_clear(t_list **fd_list);
@@ -55,5 +55,6 @@ void	close_pipe(int *pipe_fd);
 void	init_signals(void);
 void	execution_signals(int pid);
 void	heredoc_signals(void);
+int 	key_is_valid(char *key);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:48:52 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/06 19:38:20 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/06 20:16:48 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,22 +42,6 @@ static int key_exist(char *key, t_envp_list *envp_list)
 		tmp = tmp->next;
 	}
 	return (0);
-}
-
-static int key_is_valid(char *key)
-{
-	int i;
-
-	i = 1;
-	if (ft_isdigit(key[0]))
-		return (0);
-	while (key[i])
-	{
-		if (!(ft_isalnum(key[i]) || key[i] == '_'))
-			return (0);
-		i++;
-	}
-	return (1);
 }
 
 static void	update_envp(char *key, char *value, t_envp_list *envp_list)

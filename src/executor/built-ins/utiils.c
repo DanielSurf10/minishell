@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 15:57:14 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/31 16:06:28 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/06 20:21:18 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,18 @@ int	is_built_in(t_exec_tree *tree)
 	else
 		command_is_built_in = is_built_in(tree->right);
 	return (command_is_built_in);
+}
+
+int key_is_valid(char *key)
+{
+	int i;
+
+	i = 0;
+	if (ft_isdigit(key[0]))
+		return (0);
+	while (key[i] && (ft_isalnum(key[i]) || key[i] == '_'))
+		i++;
+	if (key[i] == '\0')
+		return (1);
+	return (0);
 }
