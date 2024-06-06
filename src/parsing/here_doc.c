@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:31:03 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/05 11:23:42 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/05 22:17:47 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,14 @@ void	print_error_message(char *delimiter)
 {
 	int			length;
 	char		*message_to_print;
-	const char	*message = "Expecting delimiter (required '";
+	const char	*message[2] = {"Expecting delimiter (required '", "')"};
 
-	length = ft_strlen(message) + ft_strlen(delimiter) + 3;
+	length = ft_strlen(message[0]) + ft_strlen(delimiter) \
+						+ ft_strlen(message[1]) + 1;
 	message_to_print = malloc(length);
-	ft_strlcpy(message_to_print, message, length);
+	ft_strlcpy(message_to_print, message[0], length);
 	ft_strlcat(message_to_print, delimiter, length);
-	ft_strlcat(message_to_print, "')", length);
+	ft_strlcat(message_to_print, message[1], length);
 	ft_putendl_fd(message_to_print, STDERR_FILENO);
 	free(message_to_print);
 }
@@ -58,7 +59,7 @@ void	here_doc_fork(char *file_name, char *delimiter, t_envp_list *envp_list)
 		line = readline("> ");
 		if (!line || ft_strncmp(line, delimiter_without_quotes, -1) == 0)
 		{
-			if (!line)
+			if (!line && g_signal != SIGINT)
 				print_error_message(delimiter);
 			break ;
 		}
@@ -93,15 +94,22 @@ char	*create_here_doc(char *delimiter, t_minishell *data)
 	char	*file_name;
 
 	file_name = create_here_doc_name(delimiter);
-	pid = fork();
-	if (pid == 0)
+	// pid = fork();
+	// if (pid == 0)
+	// {
+		// data->is_heredoc = 1;
+	heredoc_signals();
+	here_doc_fork(file_name, delimiter, data->envp_list);
+	if (g_signal == SIGINT)
 	{
-		data->is_heredoc = 1;
-		here_doc_fork(file_name, delimiter, data->envp_list);
+		unlink(file_name);
 		free(file_name);
-		return (NULL);
+		file_name = NULL;
 	}
-	wait(NULL);
+	execution_signals(1);
+	// 	return (NULL);
+	// }
+	// wait(NULL);
 	return (file_name);
 }
 

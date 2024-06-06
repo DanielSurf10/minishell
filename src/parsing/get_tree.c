@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 17:44:55 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/05 01:00:56 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/05 17:39:18 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,10 +110,10 @@ t_exec_tree	*make_tree_cmd_recursive(t_token_list *redir_list, t_token_list *arg
 		else
 			tree->left->command = token_get_sublist(redir_list, 1, 1);
 
-		if (data->is_heredoc == 0)
+		if (tree->left->command)
 			tree->right = make_tree_cmd_recursive(token_get_node_index(redir_list, 2), args, data);
 
-		if (!tree->right || data->is_heredoc == 1)
+		if (!tree->right || !tree->left->command)
 			free_tree(&tree);
 	}
 	else

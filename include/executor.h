@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:43:47 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/05 01:23:16 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/05 18:49:04 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,6 @@ void	close_pipe(int *pipe_fd);
 
 void	init_signals(void);
 void	execution_signals(int pid);
+void	heredoc_signals(void);
 
 #endif

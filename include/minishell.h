@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 21:17:57 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/05 14:12:24 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/05 22:52:32 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 # include <readline/readline.h>
 
 # include "libft.h"
+
+extern volatile int	g_signal;
 
 //****************************************************************************//
 //                                   Colors                                   //
@@ -66,7 +68,7 @@ typedef struct termios		t_termios;
 
 typedef struct s_minishell
 {
-	int			is_heredoc;
+	// int			is_heredoc;
 	t_envp_list	*envp_list;
 	t_exec_tree	*tree;
 	t_list		*fd_list;
