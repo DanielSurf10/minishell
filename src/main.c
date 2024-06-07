@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 21:17:07 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/07 01:02:33 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/07 18:26:45 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*get_line_to_readline(t_envp_list *env_list)
 	int			i;
 	int			length;
 	char		*line;
-	const char	*vars[3] = {search_value(env_list, "USER"), \
+	const char	*vars[2] = {search_value(env_list, "USER"), \
 							search_value(env_list, "PWD")};
 	const char	*to_print[] = {ORANGE, vars[0], RST, "\001🥲 \002", CYAN, vars[1], RST, \
 								": ", NULL};
@@ -84,43 +84,33 @@ int main(int argc, char *argv[], char *envp[])
 	tree = NULL;
 	token_list = NULL;
 	ret_code = 0;
-	// g_signal = 0;
-
-	// init_signals();
 	print_menu();
 	backup_fd_in = dup(STDIN_FILENO);
 	ft_memset(&data, 0, sizeof(data));
 	fd_list_add_fd(&data.fd_list, backup_fd_in);
-
 	data.envp_list = env_create_list(envp);
 	env_insert_node(&data.envp_list, "?", "0");
-	env_insert_node(&data.envp_list, "A", "\"");
-	env_insert_node(&data.envp_list, "file", "todo");
-	env_insert_node(&data.envp_list, "BOMDIA", "batata");
-	// env_insert_node(&data.envp_list, "PATH", "");
-
 	tcgetattr(STDIN_FILENO, &term);
-	while (1)
+	while (g_signal != -1)
 	{
 		g_signal = 0;
 		init_signals();
 		dup2(backup_fd_in, STDIN_FILENO);
 		tcsetattr(STDIN_FILENO, TCSANOW, &term);
-
 		line_to_readline = get_line_to_readline(data.envp_list);
 		line = readline(line_to_readline);
 		free(line_to_readline);
-
 		execution_signals(1);
-
 		if (!line)
+		{
+			ft_putstr_fd("exit\n", STDOUT_FILENO);
 			break ;
+		}
 		else if (!line[0])
 		{
 			free(line);
 			continue ;
 		}
-
 		token_list = get_token_list(line);
 		data.tree = get_tree(token_list, &data);
 		token_clear_list(&token_list);
@@ -140,18 +130,10 @@ int main(int argc, char *argv[], char *envp[])
 		free(line);
 		free_tree_all(&data.tree);
 	}
-
 	env_clear_list(&data.envp_list);
 	fd_list_close_clear(&data.fd_list);
-
 	rl_clear_history();
-
-	// if (data.is_heredoc == 0)
-	// {
-		// printf("\nret code main = %d\n", ret_code);
 	close(STDIN_FILENO);
 	close(STDOUT_FILENO);
-	// }
-
 	return (ret_code);
 }

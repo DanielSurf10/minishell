@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 16:27:38 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/03 23:31:27 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/07 14:28:55 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ t_token_list	*token_get_sublist(t_token_list *tok_lst, int start, \
 	while (aux && i < lst_len)
 	{
 		token_add_to_list(&new_token_list, \
-		ft_strdup(aux->token.lexeme), aux->token.type);
+			ft_strdup(aux->token.lexeme), aux->token.type);
 		aux = aux->next;
 		i++;
 	}

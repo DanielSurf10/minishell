@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utiils.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 15:57:14 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/06 20:21:18 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/07 18:13:51 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ int	is_built_in(t_exec_tree *tree)
 	return (command_is_built_in);
 }
 
-int key_is_valid(char *key)
+int	key_is_valid(char *key)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (ft_isdigit(key[0]))
