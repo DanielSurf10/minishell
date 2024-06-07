@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 17:44:55 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/05 17:39:18 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/06 23:44:22 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -380,7 +380,9 @@ t_exec_tree	*make_tree(t_token_list *token_list, t_minishell *data)
 
 	// Já que está invertido, aqui também fica invertido - ARRUMAR ISSO, inverter na atribuição
 	tree->left = make_tree(sub_list_right, data);		// right vai pro left
-	tree->right = make_tree(sub_list_left, data);		// Left vai pro right
+
+	if (tree->left)
+		tree->right = make_tree(sub_list_left, data);		// Left vai pro right
 
 	token_clear_list(&sub_list_left);
 	token_clear_list(&sub_list_right);
