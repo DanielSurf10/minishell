@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:02:10 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/05 22:49:59 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/07 00:47:22 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,8 +248,8 @@ int	exec_tree(t_exec_tree *tree, t_minishell *data)
 	ret_code = 2;
 	if (tree == NULL)
 		return (2);
-	if (g_signal == SIGINT)
-		return (130);
+	// if (g_signal == SIGINT)
+	// 	return (130);
 	if (tree->type == COMMAND
 		|| tree->type >= REDIRECT_INPUT && tree->type <= REDIRECT_OUTPUT_APPEND)
 	{
@@ -259,7 +259,8 @@ int	exec_tree(t_exec_tree *tree, t_minishell *data)
 		{
 			pid = exec_cmd(tree, data);
 			waitpid(pid, &ret_code, 0);
-			ret_code = (ret_code >> 8) & 0xFF;
+			ret_code = get_return_value(ret_code);
+			// ret_code = (ret_code >> 8) & 0xFF;
 		}
 	}
 	else if (tree->type == AND && tree->left && tree->right)
@@ -272,7 +273,8 @@ int	exec_tree(t_exec_tree *tree, t_minishell *data)
 		if (pid != 0)						// Pai
 		{
 			waitpid(pid, &ret_code, 0);
-			ret_code = (ret_code >> 8) & 0xFF;
+			ret_code = get_return_value(ret_code);
+			// ret_code = (ret_code >> 8) & 0xFF;
 		}
 		else								// Filho
 		{
@@ -294,20 +296,32 @@ int	exec_tree(t_exec_tree *tree, t_minishell *data)
 			pid = exec_pipe(tree, data);
 			fd_list_close_clear(&data->fd_list);
 
-			num[0] = wait(&num[1]);
+// 			num[0] = wait(&num[1]);
+//
+// 			while (num[0] != -1)
+// 			{
+// 				if (num[0] == pid)
+// 					ret_code = (num[1] >> 8) & 0xFF;
+// 				num[0] = wait(&num[1]);
+// 			}
 
-			while (num[0] != -1)
+			while (1)
 			{
-				if (num[0] == pid)
-					ret_code = (num[1] >> 8) & 0xFF;
 				num[0] = wait(&num[1]);
+
+				if (num[0] == -1)
+					break ;
+
+				if (num[0] == pid)
+					ret_code = get_return_value(num[1]);
 			}
+
 		// 	exit(ret_code);
 		// }
 		// waitpid(pid_pipe, &ret_code, 0);
 		// ret_code = (ret_code >> 8) & 0xFF;
 	}
-	if (g_signal == SIGINT)
-		ret_code = 130;
+	// if (g_signal == SIGINT)
+	// 	ret_code = 130;
 	return (ret_code);
 }

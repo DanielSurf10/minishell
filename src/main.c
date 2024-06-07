@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 21:17:07 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/06 19:38:57 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/07 01:02:33 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int main(int argc, char *argv[], char *envp[])
 	tree = NULL;
 	token_list = NULL;
 	ret_code = 0;
-	g_signal = 0;
+	// g_signal = 0;
 
 	// init_signals();
 	print_menu();

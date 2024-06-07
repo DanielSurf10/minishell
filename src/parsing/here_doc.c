@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:31:03 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/05 22:17:47 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/07 01:03:17 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	here_doc_fork(char *file_name, char *delimiter, t_envp_list *envp_list)
 		line = readline("> ");
 		if (!line || ft_strncmp(line, delimiter_without_quotes, -1) == 0)
 		{
-			if (!line && g_signal != SIGINT)
+			if (!line && g_signal == 0)
 				print_error_message(delimiter);
 			break ;
 		}

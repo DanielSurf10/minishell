@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 01:22:14 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/06 00:07:06 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/07 01:14:27 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,34 +16,23 @@ void	sig_handler_redo_readline(int signal);
 
 void	sig_handler_heredoc(int signal)
 {
-	if (signal == SIGINT)
-	{
-		ft_putendl_fd("", STDOUT_FILENO);
-		// sig_handler_redo_readline(signal);
-		close(STDIN_FILENO);
-		g_signal = SIGINT;
-	}
+	ft_putendl_fd("", STDOUT_FILENO);
+	close(STDIN_FILENO);
+	g_signal = SIGINT;
 }
 
 void	sig_handler_sigint(int signal)
 {
-	if (signal == SIGINT)
-	{
-		ft_putendl_fd("", STDIN_FILENO);
-		g_signal = SIGINT;
-	}
+	ft_putendl_fd("", STDOUT_FILENO);
+	g_signal = SIGINT;
 }
 
 void	sig_handler_redo_readline(int signal)
 {
-	if (signal == SIGINT)
-	{
-		ft_putendl_fd("", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-		// g_signal = SIGINT;
-	}
+	ft_putendl_fd("", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
 }
 
 void	init_signals(void)

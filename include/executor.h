@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:43:47 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/06 19:55:58 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/07 00:49:45 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,7 @@ void	init_signals(void);
 void	execution_signals(int pid);
 void	heredoc_signals(void);
 int 	key_is_valid(char *key);
+
+int		get_return_value(int status);
 
 #endif
