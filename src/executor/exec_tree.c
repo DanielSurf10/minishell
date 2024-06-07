@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:02:10 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/07 00:47:22 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/07 14:34:37 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,8 +248,8 @@ int	exec_tree(t_exec_tree *tree, t_minishell *data)
 	ret_code = 2;
 	if (tree == NULL)
 		return (2);
-	// if (g_signal == SIGINT)
-	// 	return (130);
+	if (g_signal == SIGINT)
+		return (130);
 	if (tree->type == COMMAND
 		|| tree->type >= REDIRECT_INPUT && tree->type <= REDIRECT_OUTPUT_APPEND)
 	{
@@ -321,7 +321,7 @@ int	exec_tree(t_exec_tree *tree, t_minishell *data)
 		// waitpid(pid_pipe, &ret_code, 0);
 		// ret_code = (ret_code >> 8) & 0xFF;
 	}
-	// if (g_signal == SIGINT)
-	// 	ret_code = 130;
+	if (g_signal == SIGINT)
+		ret_code = 130;
 	return (ret_code);
 }
