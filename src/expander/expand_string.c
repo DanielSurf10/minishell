@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:08:56 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/06/03 19:17:49 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/09 16:20:55 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ static void	expand_var(char *str, int *i, t_envp_list *head, \
 	{
 		j++;
 		(*i)++;
+		if (str[(*i) - 1] == '?')
+			break ;
 	}
 	key = ft_substr(str, (*i) - j, j);
 	expanded = search_value(head, key);
