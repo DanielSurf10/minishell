@@ -12,7 +12,7 @@
 
 #include "executor.h"
 
-static void	print_error_message(char *key_value)
+static void	unset_print_error_message(char *key_value)
 {
 	int			length;
 	char		*message_to_print;
@@ -42,7 +42,7 @@ int	builtin_unset(char **argv, t_envp_list **envp_list)
 			env_delete_value(envp_list, argv[i]);
 		else
 		{
-			print_error_message(argv[i]);
+			unset_print_error_message(argv[i]);
 			ret_code = 1;
 		}
 		i++;

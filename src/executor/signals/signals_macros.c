@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals_macros.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 00:04:13 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/07 01:11:02 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/07 14:37:37 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	get_return_value(int status)
 	if (term_by_signal(status))
 	{
 		if (term_signal(status) == SIGQUIT)
-			ft_putendl_fd(RED"QUIT (core dumped)"RST, STDERR_FILENO);
+			ft_putendl_fd(RED"QUIT"RST " (core dumped)", STDERR_FILENO);
 		return (term_signal(status) + 128);
 	}
 	return (exit_status(status));

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+         #
+#    By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/23 21:20:35 by danbarbo          #+#    #+#              #
-#    Updated: 2024/06/05 00:52:04 by danbarbo         ###   ########.fr        #
+#    Updated: 2024/06/07 14:33:15 by leobarbo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,12 +52,12 @@ ${LIBFT}:
 
 clean:
 	@rm -rf obj
-#	@make -C ${LIBFT_DIR} clean
+	@make -C ${LIBFT_DIR} clean
 
 fclean: clean
 	@rm -f ${NAME}
 	@rm -f ${NAME_BONUS}
-#	@make -C ${LIBFT_DIR} fclean
+	@make -C ${LIBFT_DIR} fclean
 
 val: readline.supp all
 	@valgrind -q --suppressions=readline.supp \
