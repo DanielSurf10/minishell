@@ -12,22 +12,22 @@
 
 #include "executor.h"
 
-static void	print_error_message(char *key_value)
-{
-	int			length;
-	char		*message_to_print;
-	const char	*message[2] = {RED"ERROR: "RST"unset: '", \
-								"': not a valid identifier"};
+// static void	print_error_message(char *key_value)
+// {
+// 	int			length;
+// 	char		*message_to_print;
+// 	const char	*message[2] = {RED"ERROR: "RST"unset: '", \
+// 								"': not a valid identifier"};
 
-	length = ft_strlen(message[0]) + ft_strlen(key_value) \
-						+ ft_strlen(message[1]) + 1;
-	message_to_print = malloc(length);
-	ft_strlcpy(message_to_print, message[0], length);
-	ft_strlcat(message_to_print, key_value, length);
-	ft_strlcat(message_to_print, message[1], length);
-	ft_putendl_fd(message_to_print, STDERR_FILENO);
-	free(message_to_print);
-}
+// 	length = ft_strlen(message[0]) + ft_strlen(key_value) \
+// 						+ ft_strlen(message[1]) + 1;
+// 	message_to_print = malloc(length);
+// 	ft_strlcpy(message_to_print, message[0], length);
+// 	ft_strlcat(message_to_print, key_value, length);
+// 	ft_strlcat(message_to_print, message[1], length);
+// 	ft_putendl_fd(message_to_print, STDERR_FILENO);
+// 	free(message_to_print);
+// }
 
 int	builtin_unset(char **argv, t_envp_list **envp_list)
 {

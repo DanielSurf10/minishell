@@ -46,6 +46,7 @@ int		builtin_env(t_minishell *data);
 int		builtin_export(char **argv, t_minishell *data);
 int		builtin_unset(char **argv, t_envp_list **envp_list);
 int		builtin_exit(char **argv, t_minishell *data);
+int     builtin_cd(char *args[], t_minishell *data);
 int		key_exist(char *key, t_envp_list *envp_list);
 void	print_error_message(char *key_value);
 void	print_envp(char **envp);
