@@ -63,7 +63,7 @@ int	set_arg(char *arg, int idx, t_envp_list *envp_list)
 	}
 	else
 	{
-		print_error_message(arg);
+		builtin_print_error_message(arg);
 		ret_code = 1;
 	}
 	free(key);

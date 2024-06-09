@@ -27,7 +27,7 @@ int	key_exist(char *key, t_envp_list *envp_list)
 	return (0);
 }
 
-void	print_error_message(char *key_value)
+void	builtin_print_error_message(char *key_value)
 {
 	int			length;
 	char		*message_to_print;

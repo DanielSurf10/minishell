@@ -48,7 +48,7 @@ int		builtin_unset(char **argv, t_envp_list **envp_list);
 int		builtin_exit(char **argv, t_minishell *data);
 int     builtin_cd(char *args[], t_minishell *data);
 int		key_exist(char *key, t_envp_list *envp_list);
-void	print_error_message(char *key_value);
+void	builtin_print_error_message(char *key_value);
 void	print_envp(char **envp);
 void	print_sorted_envp(t_minishell *data);
 

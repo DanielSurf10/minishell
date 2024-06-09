@@ -12,28 +12,28 @@
 
 #include "executor.h"
 
-// static void	print_error_message(char *message)
-// {
-// 	int			i;
-// 	int			length;
-// 	char		*line;
-// 	const char	*to_print[] = {RED"ERROR: "RST"exit: ", message, NULL};
+static void	exit_print_error_message(char *message)
+{
+	int			i;
+	int			length;
+	char		*line;
+	const char	*to_print[] = {RED"ERROR: "RST"exit: ", message, NULL};
 
-// 	i = 0;
-// 	length = 0;
-// 	while (to_print[i])
-// 		length += ft_strlen(to_print[i++]);
-// 	line = malloc(sizeof(char) * (length + 1));
-// 	i = 1;
-// 	ft_strlcpy(line, to_print[0], length + 1);
-// 	while (to_print[i])
-// 	{
-// 		ft_strlcat(line, to_print[i], length + 1);
-// 		i++;
-// 	}
-// 	ft_putendl_fd(line, STDERR_FILENO);
-// 	free(line);
-// }
+	i = 0;
+	length = 0;
+	while (to_print[i])
+		length += ft_strlen(to_print[i++]);
+	line = malloc(sizeof(char) * (length + 1));
+	i = 1;
+	ft_strlcpy(line, to_print[0], length + 1);
+	while (to_print[i])
+	{
+		ft_strlcat(line, to_print[i], length + 1);
+		i++;
+	}
+	ft_putendl_fd(line, STDERR_FILENO);
+	free(line);
+}
 
 int	exit_arg_valid(char *arg)
 {
@@ -44,7 +44,7 @@ int	exit_arg_valid(char *arg)
 	{
 		if (!ft_isdigit(arg[i]))
 		{
-			print_error_message("numeric argument required");
+			exit_print_error_message("numeric argument required");
 			return (0);
 		}
 		i++;
@@ -63,7 +63,7 @@ int	builtin_exit(char **argv, t_minishell *data)
 		args_num++;
 	if (args_num > 2)
 	{
-		print_error_message("too many arguments");
+		exit_print_error_message("too many arguments");
 		return (1);
 	}
 	if (args_num == 1)

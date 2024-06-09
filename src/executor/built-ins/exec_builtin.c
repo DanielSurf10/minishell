@@ -58,8 +58,8 @@ int	exec_cmd_builtin(t_exec_tree *tree, t_minishell *data)
 
 		if (ft_strncmp(cmd, "echo", -1) == 0)
 			ret_code = builtin_echo(argv);
-		// else if (ft_strcmp(cmd, "cd") == 0)
-		// 	ret_code = builtin_cd(argv, data);
+		else if (ft_strncmp(cmd, "cd", -1) == 0)
+			ret_code = builtin_cd(argv, data);
 		else if (ft_strncmp(cmd, "pwd", -1) == 0)
 			ret_code = builtin_pwd();
 		else if (ft_strncmp(cmd, "export", -1) == 0)
