@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:48:52 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/07 18:42:00 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/06/09 15:41:37 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	set_arg(char *arg, int idx, t_envp_list *envp_list)
 	}
 	else
 	{
-		builtin_print_error_message(arg);
+		export_print_error_message(arg);
 		ret_code = 1;
 	}
 	free(key);

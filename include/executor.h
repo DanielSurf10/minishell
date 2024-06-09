@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:43:47 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/07 18:35:43 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/06/09 15:41:37 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int		builtin_unset(char **argv, t_envp_list **envp_list);
 int		builtin_exit(char **argv, t_minishell *data);
 int     builtin_cd(char *args[], t_minishell *data);
 int		key_exist(char *key, t_envp_list *envp_list);
-void	builtin_print_error_message(char *key_value);
+void	export_print_error_message(char *key_value);
 void	print_envp(char **envp);
 void	print_sorted_envp(t_minishell *data);
 
