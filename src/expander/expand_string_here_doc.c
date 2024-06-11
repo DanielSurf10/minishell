@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_string_here_doc.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 22:18:47 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/09 16:21:33 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/11 18:40:53 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	expand_variable_heredoc(char *str, int *i, t_str_list **new_str, \
 	char	*expanded;
 
 	(*i)++;
-	if (str[*i] >= '0' && str[*i] <= '9' || str[*i] == '$'
+	if ((str[*i] >= '0' && str[*i] <= '9') || str[*i] == '$'
 		|| (is_valid_var(str[*i]) == 0 && str[*i] != '?'))
 		skip_invalid_variable(str, i);
 	else

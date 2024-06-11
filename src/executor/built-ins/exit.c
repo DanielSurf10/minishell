@@ -6,7 +6,7 @@
 /*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 19:02:56 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/06/07 18:09:21 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/06/11 18:38:37 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int	builtin_exit(char **argv, t_minishell *data)
 	int		args_num;
 	char	*ret_code_str;
 
+	ret_code = 0;
 	args_num = 0;
 	while (argv[args_num])
 		args_num++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_string.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:08:56 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/06/09 16:20:55 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/11 18:53:00 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	var_validation(int *i, char *str, \
 	t_envp_list *head, t_str_list **new_str)
 {
 	(*i)++;
-	if (str[*i] >= '0' && str[*i] <= '9' || str[*i] == '$'
+	if ((str[*i] >= '0' && str[*i] <= '9' ) || str[*i] == '$'
 		|| (is_valid_var(str[*i]) == 0 && str[*i] != '?'))
 		invalid_var(str, i);
 	else
@@ -63,7 +63,6 @@ char	*expand_string(char *str, t_envp_list *head)
 {
 	int				i;
 	int				in_quotes;
-	char			*key;
 	char			*expanded;
 	t_str_list		*new_str;
 

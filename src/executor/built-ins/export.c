@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:48:52 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/09 15:41:37 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/11 18:38:50 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,6 @@ int	builtin_export(char **argv, t_minishell *data)
 {
 	int		i;
 	int		ret_code;
-	char	*key;
-	char	*value;
 
 	i = 1;
 	ret_code = 0;

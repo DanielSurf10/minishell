@@ -6,7 +6,7 @@
 /*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 15:11:11 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/11 12:16:15 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/06/11 18:37:55 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ static	void	aux_exec_cmd_builtin(t_exec_tree *tree, \
 int	exec_cmd_builtin(t_exec_tree *tree, t_minishell *data)
 {
 	t_builtin	builtin;
-	int			idx;
 
 	builtin.ret_code = 0;
 	if (tree->type >= REDIRECT_INPUT && tree->type <= REDIRECT_OUTPUT_APPEND)
