@@ -1,0 +1,4 @@
+cat outfile1
+TYPE: COMMAND:
+	 1 - WORD = cat
+	 2 - WORD = outfile1

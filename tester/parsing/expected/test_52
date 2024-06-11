@@ -1,0 +1,27 @@
+dsfasdf || echo hello | cat -e && echo bye || echo kitty
+TYPE: OR
+LEFT:
+	TYPE: AND
+	LEFT:
+		TYPE: OR
+		LEFT:
+			TYPE: COMMAND:
+				 1 - WORD = dsfasdf
+		RIGHT:
+			TYPE: PIPE
+			LEFT:
+				TYPE: COMMAND:
+					 1 - WORD = echo
+					 2 - WORD = hello
+			RIGHT:
+				TYPE: COMMAND:
+					 1 - WORD = cat
+					 2 - WORD = -e
+	RIGHT:
+		TYPE: COMMAND:
+			 1 - WORD = echo
+			 2 - WORD = bye
+RIGHT:
+	TYPE: COMMAND:
+		 1 - WORD = echo
+		 2 - WORD = kitty

@@ -1,0 +1,11 @@
+export carol=55 && echo $carolbia$ hi
+TYPE: AND
+LEFT:
+	TYPE: COMMAND:
+		 1 - WORD = export
+		 2 - WORD = carol=55
+RIGHT:
+	TYPE: COMMAND:
+		 1 - WORD = echo
+		 2 - WORD = $carolbia$
+		 3 - WORD = hi

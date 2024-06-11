@@ -1,0 +1,4 @@
+unset ""
+TYPE: COMMAND:
+	 1 - WORD = unset
+	 2 - WORD = ""

@@ -1,0 +1,21 @@
+export var=variable && export $var=$USER && export | grep variable=
+TYPE: AND
+LEFT:
+	TYPE: AND
+	LEFT:
+		TYPE: COMMAND:
+			 1 - WORD = export
+			 2 - WORD = var=variable
+	RIGHT:
+		TYPE: COMMAND:
+			 1 - WORD = export
+			 2 - WORD = $var=$USER
+RIGHT:
+	TYPE: PIPE
+	LEFT:
+		TYPE: COMMAND:
+			 1 - WORD = export
+	RIGHT:
+		TYPE: COMMAND:
+			 1 - WORD = grep
+			 2 - WORD = variable=

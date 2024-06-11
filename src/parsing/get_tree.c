@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_tree.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 17:44:55 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/06 23:44:22 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/11 18:03:53 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-static int	index_to_close_parenthesis(t_token_list *token_list)
+int	index_to_close_parenthesis(t_token_list *token_list)
 {
 	int				index;
 	int				close_parenthis_to_count;
@@ -36,7 +36,7 @@ static int	index_to_close_parenthesis(t_token_list *token_list)
 	return (index);
 }
 
-static int	index_to_open_parenthesis(t_token_list *token_list)
+int	index_to_open_parenthesis(t_token_list *token_list)
 {
 	int				index;
 	int				open_parenthis_to_count;
@@ -71,7 +71,7 @@ t_exec_tree	*make_tree_cmd_recursive(t_token_list *redir_list, t_token_list *arg
 	{
 		if (args && args->token.type == OPEN_PARENTHESIS)
 		{
-			if (index_to_close_parenthesis(args->next) != token_list_size(args) - 1)		// Verificação de erro do subshell - ()
+			if (index_to_close_parenthesis(args->next) != token_list_size(args) - 1)
 			{
 				free(tree);
 				tree = NULL;
@@ -79,7 +79,7 @@ t_exec_tree	*make_tree_cmd_recursive(t_token_list *redir_list, t_token_list *arg
 			else
 			{
 				tree->type = SUBSHELL;
-				tree->command = token_get_sublist(args, 1, token_list_size(args) - 2);		// Gambiarra a vista e '- 2' para tirar os tokens dos parenteses
+				tree->command = token_get_sublist(args, 1, token_list_size(args) - 2);
 				tree->subshell = get_tree(tree->command, data);
 				token_clear_list(&tree->command);
 
@@ -168,108 +168,6 @@ t_exec_tree	*make_tree_cmd(t_token_list *token_list, t_minishell *data)
 		if (aux)
 			aux = aux->next;
 	}
-
-// 	tree = malloc(sizeof(t_exec_tree));
-// 	ft_bzero(tree, sizeof(t_exec_tree));
-// 	aux_tree = tree;
-// 	aux = redir_list;
-// 	while (aux)
-// 	{
-// 		aux_tree->left = malloc(sizeof(t_exec_tree));
-// 		ft_bzero(aux_tree->left, sizeof(t_exec_tree));
-//
-// 		aux_tree->right = malloc(sizeof(t_exec_tree));
-// 		ft_bzero(aux_tree->right, sizeof(t_exec_tree));
-//
-// 		aux_tree->left->type = COMMAND;
-// 		aux_tree->left->command = token_get_sublist(aux, 1, 1);
-//
-// 		if (aux)
-// 			aux = aux->next;
-// 	}
-
-
-// 	aux = redir_list;
-//
-// 	tree = malloc(sizeof(t_exec_tree));
-// 	ft_bzero(tree, sizeof(t_exec_tree));
-// 	tree->type = token_get_node_index(redir_list, redir_counter)->token.type;
-//
-// 	aux_tree = tree;
-//
-// 	aux_tree->left = malloc(sizeof(t_exec_tree));
-// 	ft_bzero(aux_tree->left, sizeof(t_exec_tree));
-// 	aux_tree->left->type = COMMAND;
-// 	aux_tree->left->command = token_get_sublist(redir_list, redir_counter + 1, 1);
-//
-// 	redir_counter += 2;
-//
-// 	aux_tree->right = malloc(sizeof(t_exec_tree));
-// 	ft_bzero(aux_tree->right, sizeof(t_exec_tree));
-// 	aux_tree->right->type = token_get_node_index(redir_list, redir_counter)->token.type;
-//
-// 	aux_tree = aux_tree->right;
-//
-// 	aux_tree->left = malloc(sizeof(t_exec_tree));
-// 	ft_bzero(aux_tree->left, sizeof(t_exec_tree));
-// 	aux_tree->left->type = token_get_node_index(redir_list, redir_counter)->token.type;
-// 	aux_tree->left->command = token_get_sublist(redir_list, redir_counter + 1, 1);
-//
-// 	redir_counter += 2;
-//
-// 	// aux_tree->right = malloc(sizeof(t_exec_tree));
-// 	// ft_bzero(aux_tree->right, sizeof(t_exec_tree));
-// 	// aux_tree->right->type = token_get_node_index(redir_list, redir_counter)->token.type;
-//
-// 	// aux_tree = aux_tree->right;
-//
-// 	aux_tree->right = malloc(sizeof(t_exec_tree));
-// 	ft_bzero(aux_tree->right, sizeof(t_exec_tree));
-// 	aux_tree->right->type = COMMAND;
-// 	aux_tree->right->command = token_get_sublist(args, 0, token_list_size(args));
-//
-// 	// aux_tree = aux_tree->right;
-// 	// redir_counter += 2;
-
-
-// 	redir_list_size = token_list_size(redir_list);
-//
-// 	aux = redir_list;
-//
-// 	tree = malloc(sizeof(t_exec_tree));
-// 	ft_bzero(tree, sizeof(t_exec_tree));
-//
-// 	if (redir_list_size == 0)
-// 	{
-// 		tree->type = COMMAND;
-// 		tree->command = token_get_sublist(args, 0, token_list_size(args));
-// 		return (tree);
-// 	}
-//
-// 	aux_tree = tree;
-//
-// 	while (redir_counter < redir_list_size)
-// 	{
-// 		aux_tree->type = token_get_node_index(redir_list, redir_counter)->token.type;
-//
-// 		aux_tree->left = malloc(sizeof(t_exec_tree));
-// 		ft_bzero(aux_tree->left, sizeof(t_exec_tree));
-// 		aux_tree->left->type = COMMAND;
-// 		aux_tree->left->command = token_get_sublist(redir_list, redir_counter + 1, 1);
-//
-// 		aux_tree->right = malloc(sizeof(t_exec_tree));
-// 		ft_bzero(aux_tree->right, sizeof(t_exec_tree));
-//
-// 		aux_tree = aux_tree->right;
-// 		redir_counter += 2;
-// 	}
-//
-// 	aux_tree->type = COMMAND;
-// 	aux_tree->command = token_get_sublist(args, 0, token_list_size(args));
-//
-// 	// print_tree_aaa(tree);
-
-
 	if (idx_parenthesis == -1)
 	{
 		token_clear_list(&args);
@@ -325,8 +223,6 @@ t_exec_tree	*make_tree(t_token_list *token_list, t_minishell *data)
 			and_or_indice = i;
 		else if (pipe_indice == -1 && (aux->token.type == PIPE))
 			pipe_indice = i;
-		// else if (pipe_indice == -1 && (aux->token.type >= 2 && aux->token.type <= 5))
-		// 	redir_indice = i;
 		i++;
 		if (aux)
 			aux = aux->next;
@@ -358,28 +254,9 @@ t_exec_tree	*make_tree(t_token_list *token_list, t_minishell *data)
 	aux = token_get_node_index(token_list, i);
 	if (aux)
 		tree->type = aux->token.type;
-
-	// printf("%d\n", i);
-
-	// if (aux->token.type == AND || aux->token.type == OR)
-	// {
-	// 	tree->type = aux->token.type;
-	// }
-
-	// sub_list_left = get_until_list(token_list, i);	// Criar uma sub lista até o i
-	// sub_list_right = get_rest_list(token_list, i);	// Criar uma lista com o resto
-
 	sub_list_left = token_get_sublist(token_list, 0, i);
 	sub_list_right = token_get_sublist(token_list, i + 1, token_list_size(token_list));
-
-// 	printf("right:\n");
-// 	print_tokens(sub_list_left);
-//
-// 	printf("\nright:\n");
-// 	print_tokens(sub_list_right);
-
-	// Já que está invertido, aqui também fica invertido - ARRUMAR ISSO, inverter na atribuição
-	tree->left = make_tree(sub_list_right, data);		// right vai pro left
+	tree->left = make_tree(sub_list_right, data);
 
 	if (tree->left)
 		tree->right = make_tree(sub_list_left, data);		// Left vai pro right
@@ -401,13 +278,12 @@ t_exec_tree	*get_tree(t_token_list *token_list, t_minishell *data)
 	inverted_list = invert_list(token_get_sublist(token_list, 0, token_list_size(token_list)));
 
 	tree = make_tree(inverted_list, data);
-
 	token_clear_list(&inverted_list);
 
 	return (tree);
 }
 
-void	free_tree(t_exec_tree **tree)		// árvore de graça
+void	free_tree(t_exec_tree **tree)
 {
 	if (*tree == NULL)
 		return ;
@@ -428,23 +304,23 @@ void	free_tree(t_exec_tree **tree)		// árvore de graça
 	*tree = NULL;
 }
 
-void	free_tree_all(t_exec_tree **tree)		// árvore de graça
+void	free_tree_all(t_exec_tree **tree)
 {
 	if (*tree == NULL)
 		return ;
 
 	if ((*tree)->subshell)
-		free_tree(&(*tree)->subshell);
+		free_tree_all(&(*tree)->subshell);
 
 	if ((*tree)->left)
 	{
 		if ((*tree)->type == REDIRECT_HEREDOC)
 			unlink((*tree)->left->command->token.lexeme);
-		free_tree(&(*tree)->left);
+		free_tree_all(&(*tree)->left);
 	}
 
 	if ((*tree)->right)
-		free_tree(&(*tree)->right);
+		free_tree_all(&(*tree)->right);
 
 	if ((*tree)->command)
 		token_clear_list(&(*tree)->command);

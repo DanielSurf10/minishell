@@ -1,0 +1,15 @@
+export carol=55 && export var=variable && $USER$var
+TYPE: AND
+LEFT:
+	TYPE: AND
+	LEFT:
+		TYPE: COMMAND:
+			 1 - WORD = export
+			 2 - WORD = carol=55
+	RIGHT:
+		TYPE: COMMAND:
+			 1 - WORD = export
+			 2 - WORD = var=variable
+RIGHT:
+	TYPE: COMMAND:
+		 1 - WORD = $USER$var

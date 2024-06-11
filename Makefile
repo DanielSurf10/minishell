@@ -6,14 +6,14 @@
 #    By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/23 21:20:35 by danbarbo          #+#    #+#              #
-#    Updated: 2024/06/07 14:33:15 by leobarbo         ###   ########.fr        #
+#    Updated: 2024/06/11 18:13:40 by leobarbo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		:= minishell
 NAME_BONUS	:= minishell_bonus
 # CFLAGS		:= -Wextra -Wall -Werror -g3
-CFLAGS		:= -g3
+# CFLAGS		:= -g3
 
 LIBFT_DIR	:= lib/libft
 LIBFT		:= ${LIBFT_DIR}/libft.a
@@ -37,6 +37,10 @@ ${NAME}: ${LIBFT} ${OBJS}
 ${NAME_BONUS}: ${LIBFT} ${OBJS_BONUS}
 	@${CC} ${CFLAGS} ${HEADERS} ${OBJS_BONUS} ${LIBS} -o ${NAME_BONUS}
 
+test: all
+	@${CC} ${CFLAGS} ${HEADERS} ${filter-out obj/main.o, ${OBJS}} tests/test_get_tree.c ${LIBS} -o test
+	@printf "Compiling: test_get_tree.c\n"
+
 obj/%.o: src/%.c
 	@mkdir -p ${dir $@}
 	@${CC} ${CFLAGS} -c ${HEADERS} $< -o $@
@@ -52,12 +56,12 @@ ${LIBFT}:
 
 clean:
 	@rm -rf obj
-	@make -C ${LIBFT_DIR} clean
+#	@make -C ${LIBFT_DIR} clean
 
 fclean: clean
 	@rm -f ${NAME}
 	@rm -f ${NAME_BONUS}
-	@make -C ${LIBFT_DIR} fclean
+#	@make -C ${LIBFT_DIR} fclean
 
 val: readline.supp all
 	@valgrind -q --suppressions=readline.supp \

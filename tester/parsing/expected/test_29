@@ -1,0 +1,19 @@
+/bin/ls | /bin/grep o > out | /bin/ps
+TYPE: PIPE
+LEFT:
+	TYPE: PIPE
+	LEFT:
+		TYPE: COMMAND:
+			 1 - WORD = /bin/ls
+	RIGHT:
+		TYPE: REDIRECT_OUTPUT
+		LEFT:
+			TYPE: COMMAND:
+				 1 - WORD = out
+		RIGHT:
+			TYPE: COMMAND:
+				 1 - WORD = /bin/grep
+				 2 - WORD = o
+RIGHT:
+	TYPE: COMMAND:
+		 1 - WORD = /bin/ps

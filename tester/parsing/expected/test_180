@@ -1,0 +1,3 @@
+'$USER'
+TYPE: COMMAND:
+	 1 - WORD = '$USER'

@@ -1,0 +1,9 @@
+echo hello > "fdasdfsa"
+TYPE: REDIRECT_OUTPUT
+LEFT:
+	TYPE: COMMAND:
+		 1 - WORD = "fdasdfsa"
+RIGHT:
+	TYPE: COMMAND:
+		 1 - WORD = echo
+		 2 - WORD = hello
