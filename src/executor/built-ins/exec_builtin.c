@@ -6,12 +6,11 @@
 /*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 15:11:11 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/11 11:54:38 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/06/11 12:16:15 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
-
 
 static	void	builtin_call(char *cmd, char **argv, t_minishell *data)
 {
@@ -29,82 +28,63 @@ static	void	builtin_call(char *cmd, char **argv, t_minishell *data)
 		builtin_env(data);
 	else if (ft_strncmp(cmd, "exit", -1) == 0)
 		builtin_exit(argv, data);
-
 }
-typedef struct s_builtin
-{
-	int		idx;
-	int		fd_redir;
-	int		args_num;
-	char	*cmd;
-	char	**argv;
-	char	**envp;
-}	t_builtin;
 
-static	void	init_exec_cmd_builtin(t_exec_tree *tree, t_minishell *data, int *fd_redir)
+static	void	init_exec_cmd_builtin(t_exec_tree *tree, \
+	t_minishell *data, int *fd_redir)
 {
 	char	*cmd;
 
 	cmd = expand_string(tree->left->command->token.lexeme, data->envp_list);
 	*fd_redir = open_redir(cmd, tree->type);
 	free(cmd);
-	if (fd_redir == -1)
-		{
-			perror(tree->left->command->token.lexeme);
-			return(1);
-		}
-		if (tree->type == REDIRECT_INPUT)
-			dup2(fd_redir, STDIN_FILENO);
-		else if (tree->type == REDIRECT_OUTPUT || tree->type == REDIRECT_OUTPUT_APPEND)
-			dup2(fd_redir, STDOUT_FILENO);
-		fd_redir = close_fd(fd_redir);
-		ret_code = exec_cmd_builtin(tree->right, data);
+}
+
+static	void	aux_exec_cmd_builtin(t_exec_tree *tree, \
+	t_minishell *data, t_builtin *builtin)
+{
+	int	idx;
+
+	idx = 0;
+	builtin->args_num = token_list_size(tree->command);
+	builtin->argv = malloc((builtin->args_num + 1) * sizeof(char *));
+	builtin->argv[builtin->args_num] = NULL;
+	while (idx < builtin->args_num)
+	{
+		builtin->argv[idx] = expand_string(token_get_node_index(tree->command, \
+			idx)->token.lexeme, data->envp_list);
+		idx++;
+	}
+	builtin->cmd = builtin->argv[0];
+	builtin_call(builtin->cmd, builtin->argv, data);
+	free_envp(builtin->argv);
 }
 
 int	exec_cmd_builtin(t_exec_tree *tree, t_minishell *data)
 {
-	int		i;
-	int		fd_redir;
-	int		args_num;
-	int		ret_code;
-	char	*cmd;
-	char	**argv;
-	char	**envp;
+	t_builtin	builtin;
+	int			idx;
 
-	ret_code = 0;
+	builtin.ret_code = 0;
 	if (tree->type >= REDIRECT_INPUT && tree->type <= REDIRECT_OUTPUT_APPEND)
 	{
-		// cmd = expand_string(tree->left->command->token.lexeme, data->envp_list);
-		// fd_redir = open_redir(cmd, tree->type);
-		// free(cmd);
-		// if (fd_redir == -1)
-		// {
-		// 	perror(tree->left->command->token.lexeme);
-		// 	return(1);
-		// }
-		// if (tree->type == REDIRECT_INPUT)
-		// 	dup2(fd_redir, STDIN_FILENO);
-		// else if (tree->type == REDIRECT_OUTPUT || tree->type == REDIRECT_OUTPUT_APPEND)
-		// 	dup2(fd_redir, STDOUT_FILENO);
-		// fd_redir = close_fd(fd_redir);
-		// ret_code = exec_cmd_builtin(tree->right, data);
+		init_exec_cmd_builtin(tree, data, &builtin.fd_redir);
+		if (builtin.fd_redir == -1)
+		{
+			perror(tree->left->command->token.lexeme);
+			return (1);
+		}
+		if (tree->type == REDIRECT_INPUT)
+			dup2(builtin.fd_redir, STDIN_FILENO);
+		else if (tree->type == REDIRECT_OUTPUT || \
+			tree->type == REDIRECT_OUTPUT_APPEND)
+			dup2(builtin.fd_redir, STDOUT_FILENO);
+		builtin.fd_redir = close_fd(builtin.fd_redir);
+		builtin.ret_code = exec_cmd_builtin(tree->right, data);
 	}
 	else
-	{
-		i = 0;
-		args_num = token_list_size(tree->command);
-		argv = malloc((args_num + 1) * sizeof(char *));
-		argv[args_num] = NULL;
-		while (i < args_num)
-		{
-			argv[i] = expand_string(token_get_node_index(tree->command, i)->token.lexeme, data->envp_list);
-			i++;
-		}
-		cmd = argv[0];
-		builtin_call(cmd, argv, data);
-		free_envp(argv);
-	}
-	return (ret_code);
+		aux_exec_cmd_builtin(tree, data, &builtin);
+	return (builtin.ret_code);
 }
 
 int	exec_builtin(t_exec_tree *tree, t_minishell *data)
