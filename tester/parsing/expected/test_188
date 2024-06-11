@@ -1,0 +1,14 @@
+echo hey | < infile1 cat
+TYPE: PIPE
+LEFT:
+	TYPE: COMMAND:
+		 1 - WORD = echo
+		 2 - WORD = hey
+RIGHT:
+	TYPE: REDIRECT_INPUT
+	LEFT:
+		TYPE: COMMAND:
+			 1 - WORD = infile1
+	RIGHT:
+		TYPE: COMMAND:
+			 1 - WORD = cat

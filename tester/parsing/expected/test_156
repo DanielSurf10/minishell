@@ -1,0 +1,15 @@
+export var20=bia && export | grep var20
+TYPE: AND
+LEFT:
+	TYPE: COMMAND:
+		 1 - WORD = export
+		 2 - WORD = var20=bia
+RIGHT:
+	TYPE: PIPE
+	LEFT:
+		TYPE: COMMAND:
+			 1 - WORD = export
+	RIGHT:
+		TYPE: COMMAND:
+			 1 - WORD = grep
+			 2 - WORD = var20

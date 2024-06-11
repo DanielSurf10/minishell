@@ -1,0 +1,13 @@
+/bin/ls | < infile
+TYPE: PIPE
+LEFT:
+	TYPE: COMMAND:
+		 1 - WORD = /bin/ls
+RIGHT:
+	TYPE: REDIRECT_INPUT
+	LEFT:
+		TYPE: COMMAND:
+			 1 - WORD = infile
+	RIGHT:
+		TYPE: COMMAND:
+			 1 - (NULL)

@@ -6,7 +6,7 @@
 /*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:02:10 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/07 14:34:37 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/06/11 18:11:51 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	open_redir(char *path_to_file, int type)
 		fd = open(path_to_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (type == REDIRECT_OUTPUT_APPEND)
 		fd = open(path_to_file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	else
+		fd = -1;
 	return (fd);
 }
 
@@ -192,7 +194,7 @@ int	exec_pipe(t_exec_tree *tree, t_minishell *data)
 		// old_fd[0] = close_fd(old_fd[0]);
 	}
 	else if (tree->type == COMMAND
-		|| tree->type >= REDIRECT_INPUT && tree->type <= REDIRECT_OUTPUT_APPEND)
+		|| (tree->type >= REDIRECT_INPUT && tree->type <= REDIRECT_OUTPUT_APPEND))
 		pid = exec_cmd(tree, data);
 	else if (tree->type == SUBSHELL)
 	{
@@ -241,7 +243,6 @@ int	exec_pipe(t_exec_tree *tree, t_minishell *data)
 int	exec_tree(t_exec_tree *tree, t_minishell *data)
 {
 	int	pid;
-	int	pid_pipe;
 	int	num[2];
 	int	ret_code;
 
@@ -251,7 +252,7 @@ int	exec_tree(t_exec_tree *tree, t_minishell *data)
 	if (g_signal == SIGINT)
 		return (130);
 	if (tree->type == COMMAND
-		|| tree->type >= REDIRECT_INPUT && tree->type <= REDIRECT_OUTPUT_APPEND)
+		|| (tree->type >= REDIRECT_INPUT && tree->type <= REDIRECT_OUTPUT_APPEND))
 	{
 		if (is_built_in(tree))
 			ret_code = exec_builtin(tree, data);

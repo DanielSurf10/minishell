@@ -1,0 +1,8 @@
+cat < "fdasdfsa"
+TYPE: REDIRECT_INPUT
+LEFT:
+	TYPE: COMMAND:
+		 1 - WORD = "fdasdfsa"
+RIGHT:
+	TYPE: COMMAND:
+		 1 - WORD = cat

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 21:17:57 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/07 01:02:24 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:20:15 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,20 @@
 
 # include "libft.h"
 
-extern volatile int	g_signal;
+extern volatile int			g_signal;
 
 //****************************************************************************//
 //                                   Colors                                   //
 //****************************************************************************//
 
-# define RST    "\001\033[0m\002"      /* Reset to default color */
-# define R      "\001\033[1;31m\002"   /* Bold Red */
-# define G      "\001\033[1;32m\002"   /* Bold Green */
-# define Y      "\001\033[1;33m\002"   /* Bold Yellow */
-# define B      "\001\033[1;34m\002"   /* Bold Blue */
-# define M      "\001\033[1;35m\002"   /* Bold Magenta */
-# define C      "\001\033[1;36m\002"   /* Bold Cyan */
-# define W      "\001\033[1;37m\002"   /* Bold White */
+# define RST    "\001\033[0m\002"
+# define R      "\001\033[1;31m\002"
+# define G      "\001\033[1;32m\002"
+# define Y      "\001\033[1;33m\002"
+# define B      "\001\033[1;34m\002"
+# define M      "\001\033[1;35m\002"
+# define C      "\001\033[1;36m\002"
+# define W      "\001\033[1;37m\002"
 # define ORANGE "\001\033[38;5;208m\002"
 # define BLUE   "\001\033[38;5;27m\002"
 # define GREEN  "\001\033[38;5;46m\002"
@@ -68,7 +68,6 @@ typedef struct termios		t_termios;
 
 typedef struct s_minishell
 {
-	// int			is_heredoc;
 	t_envp_list	*envp_list;
 	t_exec_tree	*tree;
 	t_list		*fd_list;

@@ -1,0 +1,16 @@
+echo 1 && echo 2 && echo 3
+TYPE: AND
+LEFT:
+	TYPE: AND
+	LEFT:
+		TYPE: COMMAND:
+			 1 - WORD = echo
+			 2 - WORD = 1
+	RIGHT:
+		TYPE: COMMAND:
+			 1 - WORD = echo
+			 2 - WORD = 2
+RIGHT:
+	TYPE: COMMAND:
+		 1 - WORD = echo
+		 2 - WORD = 3

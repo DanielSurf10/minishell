@@ -10,6 +10,7 @@
 		"stdio.h": "c",
 		"type_traits": "c",
 		"executor.h": "c",
-		"parsing.h": "c"
+		"parsing.h": "c",
+		"termios.h": "c"
 	}
 }

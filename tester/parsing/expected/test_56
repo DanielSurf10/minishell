@@ -1,0 +1,15 @@
+ech && echo oi || echo hey
+TYPE: OR
+LEFT:
+	TYPE: AND
+	LEFT:
+		TYPE: COMMAND:
+			 1 - WORD = ech
+	RIGHT:
+		TYPE: COMMAND:
+			 1 - WORD = echo
+			 2 - WORD = oi
+RIGHT:
+	TYPE: COMMAND:
+		 1 - WORD = echo
+		 2 - WORD = hey

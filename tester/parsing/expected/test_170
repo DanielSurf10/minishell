@@ -1,0 +1,10 @@
+export var=variable && export $var=123
+TYPE: AND
+LEFT:
+	TYPE: COMMAND:
+		 1 - WORD = export
+		 2 - WORD = var=variable
+RIGHT:
+	TYPE: COMMAND:
+		 1 - WORD = export
+		 2 - WORD = $var=123

@@ -1,0 +1,17 @@
+(export var=carol) && export | grep var=
+TYPE: AND
+LEFT:
+	TYPE: SUBSHELL
+	SUBSHELL:
+		TYPE: COMMAND:
+			 1 - WORD = export
+			 2 - WORD = var=carol
+RIGHT:
+	TYPE: PIPE
+	LEFT:
+		TYPE: COMMAND:
+			 1 - WORD = export
+	RIGHT:
+		TYPE: COMMAND:
+			 1 - WORD = grep
+			 2 - WORD = var=

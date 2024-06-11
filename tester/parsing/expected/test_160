@@ -1,0 +1,21 @@
+export var= && export var=20 && export | grep var=
+TYPE: AND
+LEFT:
+	TYPE: AND
+	LEFT:
+		TYPE: COMMAND:
+			 1 - WORD = export
+			 2 - WORD = var=
+	RIGHT:
+		TYPE: COMMAND:
+			 1 - WORD = export
+			 2 - WORD = var=20
+RIGHT:
+	TYPE: PIPE
+	LEFT:
+		TYPE: COMMAND:
+			 1 - WORD = export
+	RIGHT:
+		TYPE: COMMAND:
+			 1 - WORD = grep
+			 2 - WORD = var=

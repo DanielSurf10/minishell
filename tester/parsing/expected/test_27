@@ -1,0 +1,13 @@
+> out | /bin/ls
+TYPE: PIPE
+LEFT:
+	TYPE: REDIRECT_OUTPUT
+	LEFT:
+		TYPE: COMMAND:
+			 1 - WORD = out
+	RIGHT:
+		TYPE: COMMAND:
+			 1 - (NULL)
+RIGHT:
+	TYPE: COMMAND:
+		 1 - WORD = /bin/ls

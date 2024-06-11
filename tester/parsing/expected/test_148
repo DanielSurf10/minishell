@@ -1,0 +1,12 @@
+export carol=55 var="o hello" var50="abc      def" && echo $var50
+TYPE: AND
+LEFT:
+	TYPE: COMMAND:
+		 1 - WORD = export
+		 2 - WORD = carol=55
+		 3 - WORD = var="o hello"
+		 4 - WORD = var50="abc      def"
+RIGHT:
+	TYPE: COMMAND:
+		 1 - WORD = echo
+		 2 - WORD = $var50

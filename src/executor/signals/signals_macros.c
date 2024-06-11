@@ -6,7 +6,7 @@
 /*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 00:04:13 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/07 14:37:37 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:24:08 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	term_by_signal(int status)
 {
-	return (((signed char) ((status & 0x7f) + 1) >> 1) > 0);
+	return (((signed char)((status & 0x7f) + 1) >> 1) > 0);
 }
 
 int	term_normaly(int status)

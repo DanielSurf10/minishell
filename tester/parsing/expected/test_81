@@ -1,0 +1,8 @@
+cat < usr/local/bin
+TYPE: REDIRECT_INPUT
+LEFT:
+	TYPE: COMMAND:
+		 1 - WORD = usr/local/bin
+RIGHT:
+	TYPE: COMMAND:
+		 1 - WORD = cat

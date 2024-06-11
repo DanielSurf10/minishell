@@ -1,0 +1,17 @@
+ls -l | cat -e && echo deu bom
+TYPE: AND
+LEFT:
+	TYPE: PIPE
+	LEFT:
+		TYPE: COMMAND:
+			 1 - WORD = ls
+			 2 - WORD = -l
+	RIGHT:
+		TYPE: COMMAND:
+			 1 - WORD = cat
+			 2 - WORD = -e
+RIGHT:
+	TYPE: COMMAND:
+		 1 - WORD = echo
+		 2 - WORD = deu
+		 3 - WORD = bom

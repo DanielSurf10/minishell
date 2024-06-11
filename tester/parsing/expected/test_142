@@ -1,0 +1,9 @@
+export carol=55 && $'carol'$'bia'$ 
+TYPE: AND
+LEFT:
+	TYPE: COMMAND:
+		 1 - WORD = export
+		 2 - WORD = carol=55
+RIGHT:
+	TYPE: COMMAND:
+		 1 - WORD = $'carol'$'bia'$

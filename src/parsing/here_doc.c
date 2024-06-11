@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:31:03 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/07 01:03:17 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:34:42 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,6 @@ char	*create_here_doc(char *delimiter, t_minishell *data)
 	char	*file_name;
 
 	file_name = create_here_doc_name(delimiter);
-	// pid = fork();
-	// if (pid == 0)
-	// {
-		// data->is_heredoc = 1;
 	heredoc_signals();
 	here_doc_fork(file_name, delimiter, data->envp_list);
 	if (g_signal == SIGINT)
@@ -107,9 +103,6 @@ char	*create_here_doc(char *delimiter, t_minishell *data)
 		file_name = NULL;
 	}
 	execution_signals(1);
-	// 	return (NULL);
-	// }
-	// wait(NULL);
 	return (file_name);
 }
 

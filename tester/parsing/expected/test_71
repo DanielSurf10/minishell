@@ -1,0 +1,9 @@
+echo bye > " "
+TYPE: REDIRECT_OUTPUT
+LEFT:
+	TYPE: COMMAND:
+		 1 - WORD = " "
+RIGHT:
+	TYPE: COMMAND:
+		 1 - WORD = echo
+		 2 - WORD = bye

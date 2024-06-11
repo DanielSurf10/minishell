@@ -6,7 +6,7 @@
 /*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 21:17:07 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/07 18:26:45 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/06/11 18:10:01 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	*get_line_to_readline(t_envp_list *env_list)
 	return (line);
 }
 
-int main(int argc, char *argv[], char *envp[])
+int main(int argc __attribute__((unused)), char *argv[] __attribute__((unused)), char *envp[])
 {
 	int				ret_code;
 	int				backup_fd_in;
@@ -116,7 +116,6 @@ int main(int argc, char *argv[], char *envp[])
 		token_clear_list(&token_list);
 		add_history(line);
 		free(line);
-
 		if (g_signal == SIGINT)
 			ret_code = 130;
 		else

@@ -1,0 +1,9 @@
+echo "(hello)" > infile1
+TYPE: REDIRECT_OUTPUT
+LEFT:
+	TYPE: COMMAND:
+		 1 - WORD = infile1
+RIGHT:
+	TYPE: COMMAND:
+		 1 - WORD = echo
+		 2 - WORD = "(hello)"
