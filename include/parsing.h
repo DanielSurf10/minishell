@@ -6,7 +6,7 @@
 /*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 17:32:16 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/11 19:55:58 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/06/11 20:38:41 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,10 @@ char		*create_here_doc(char *delimiter, t_minishell *data);
 
 int			index_to_close_parenthesis(t_token_list *token_list);
 int			index_to_open_parenthesis(t_token_list *token_list);
-t_exec_tree	*make_tree_cmd_recursive(t_token_list *redir_list, t_token_list *args, t_minishell *data);
+t_exec_tree	*make_tree_cmd_recursive(t_token_list *redir_list, \
+				t_token_list *args, t_minishell *data);
 t_exec_tree	*make_tree_cmd(t_token_list *token_list, t_minishell *data);
 t_exec_tree	*make_tree(t_token_list *token_list, t_minishell *data);
 t_exec_tree	*get_tree(t_token_list *token_list, t_minishell *data);
-
 
 #endif
