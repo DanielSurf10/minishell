@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 18:29:48 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/06/07 18:41:16 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/06/09 15:41:37 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	key_exist(char *key, t_envp_list *envp_list)
 	return (0);
 }
 
-void	builtin_print_error_message(char *key_value)
+void	export_print_error_message(char *key_value)
 {
 	int			length;
 	char		*message_to_print;
