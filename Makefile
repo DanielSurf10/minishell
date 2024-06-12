@@ -6,7 +6,7 @@
 #    By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/23 21:20:35 by danbarbo          #+#    #+#              #
-#    Updated: 2024/06/11 18:51:30 by leobarbo         ###   ########.fr        #
+#    Updated: 2024/06/11 20:44:55 by leobarbo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,12 +56,12 @@ ${LIBFT}:
 
 clean:
 	@rm -rf obj
-#	@make -C ${LIBFT_DIR} clean
+	@make -C ${LIBFT_DIR} clean
 
 fclean: clean
 	@rm -f ${NAME}
 	@rm -f ${NAME_BONUS}
-#	@make -C ${LIBFT_DIR} fclean
+	@make -C ${LIBFT_DIR} fclean
 
 val: readline.supp all
 	@valgrind -q --suppressions=readline.supp \
