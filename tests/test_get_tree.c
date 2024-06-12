@@ -6,7 +6,7 @@
 /*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:11:12 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/11 16:16:04 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/06/11 18:44:48 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ void	print_tree(t_exec_tree *tree, int tab_count)
 
 volatile int	g_signal;
 
-int main(int argc, char **argv, char **envp)
+int main(int argc __attribute__((unused)), char **argv __attribute__((unused)), char **envp)
 {
 	t_token_list	*token_list;
 	t_exec_tree		*tree;

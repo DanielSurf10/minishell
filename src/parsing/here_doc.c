@@ -6,7 +6,7 @@
 /*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 18:31:03 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/11 15:34:42 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/06/11 18:44:01 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	here_doc_fork(char *file_name, char *delimiter, t_envp_list *envp_list)
 	int		fd;
 	int		need_to_expand;
 	char	*line;
-	char	*expanded_line;
 	char	*delimiter_without_quotes;
 
 	need_to_expand = !(ft_strchr(delimiter, '\'') || ft_strchr(delimiter, '"'));
@@ -90,7 +89,6 @@ char	*create_here_doc_name(char *delimiter)
 
 char	*create_here_doc(char *delimiter, t_minishell *data)
 {
-	int		pid;
 	char	*file_name;
 
 	file_name = create_here_doc_name(delimiter);
@@ -105,15 +103,3 @@ char	*create_here_doc(char *delimiter, t_minishell *data)
 	execution_signals(1);
 	return (file_name);
 }
-
-// Fork para fazer o heredoc
-// fork()
-
-// pai
-// wait()
-
-// filho
-// executar heredoc
-	// criar arquivo do heredoc
-	// apagar tudo do data
-	// obs: apagar arquivo quando for apagar a árvore

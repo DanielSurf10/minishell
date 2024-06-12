@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:36:18 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/05 10:37:26 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/11 18:39:55 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ static char	*get_absolute_path(char *command, char **paths)
 char	*expand_command(char *command, t_envp_list *envp_list)
 {
 	int		i;
-	int		full_path_len;
 	char	*path_env;
 	char	*absolute_command;
 	char	**paths;
