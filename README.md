@@ -65,9 +65,9 @@ Um exemplo de comando que passa por todas essas etapas:
 find /home/user -name "*.txt" | grep "important" > results.txt
 ```
 
-**Comando**: find, grep
-**Operador**: |, >
-**Argumentos**: /home/user, -name "*.txt", "important", results.txt
+- **Comando**: find, grep
+- **Operador**: |, >
+- **Argumentos**: /home/user, -name "*.txt", "important", results.txt
 
 Este comando pesquisa todos os arquivos .txt no diretório /home/user, filtra os resultados para encontrar aqueles que contêm a palavra "important", e redireciona a saída para o arquivo results.txt.
 
