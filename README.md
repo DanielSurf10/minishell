@@ -59,4 +59,4 @@ O projeto foi dividido em quatro partes principais:
 3. Capturar e reportar erros de execução.
 
 ## Conclusão
-Este projeto Minishell, dividido em quatro partes distintas (lexing, parsing, expand e exec), permite uma abordagem modular e estruturada para a implementação de um shell Unix simplificado. Cada etapa tem uma responsabilidade clara, garantindo um fluxo de processamento organizado desde a entrada do comando até a sua execução final.
+Este projeto Minishell, dividido em quatro partes distintas (lexing, parsing, expand e exeutor), permite uma abordagem modular e estruturada para a implementação de um [shell Unix](https://pt.wikipedia.org/wiki/Shell_do_Unix) simplificado. Cada etapa tem uma responsabilidade clara, garantindo um fluxo de processamento organizado desde a entrada do comando até a sua execução final.
