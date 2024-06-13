@@ -58,5 +58,18 @@ O projeto foi dividido em quatro partes principais:
 2. Criar processos filho, redirecionar entrada/saída e esperar a conclusão dos processos.
 3. Capturar e reportar erros de execução.
 
+## Exemplo 
+Um exemplo de comando que passa por todas essas etapas:
+
+```sh
+find /home/user -name "*.txt" | grep "important" > results.txt
+```
+
+**Comando**: find, grep
+**Operador**: |, >
+**Argumentos**: /home/user, -name "*.txt", "important", results.txt
+
+Este comando pesquisa todos os arquivos .txt no diretório /home/user, filtra os resultados para encontrar aqueles que contêm a palavra "important", e redireciona a saída para o arquivo results.txt.
+
 ## Conclusão
 Este projeto Minishell, dividido em quatro partes distintas (lexing, parsing, expand e exeutor), permite uma abordagem modular e estruturada para a implementação de um [shell Unix](https://pt.wikipedia.org/wiki/Shell_do_Unix) simplificado. Cada etapa tem uma responsabilidade clara, garantindo um fluxo de processamento organizado desde a entrada do comando até a sua execução final.
