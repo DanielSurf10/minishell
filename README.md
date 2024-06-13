@@ -46,7 +46,7 @@ O projeto foi dividido em quatro partes principais:
 1. Substituir variáveis de ambiente (e.g., `$HOME`) por seus valores.
 2. Executar comandos dentro de crases (`cmd`) e substituir a saída no lugar.
 
-### 4. Exec
+### 4. Executor
 **Objetivo**: Executar os comandos representados pela árvore de análise sintática.
 
 **Detalhes**:
