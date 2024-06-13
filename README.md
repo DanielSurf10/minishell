@@ -9,7 +9,7 @@ O projeto foi dividido em quatro partes principais:
 - [**1. Lexing**](#1-lexing)
 - [**2. Parsing**](#2-parsing)
 - [**3. Expand**](#3-expand)
-- [**4. Exec**](#4-exec)
+- [**4. Executor**](#4-executor)
 
 ### 1. Lexing
 **Objetivo**: Converter a entrada de texto em uma sequência de tokens.
