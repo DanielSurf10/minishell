@@ -40,7 +40,7 @@ O projeto foi dividido em quatro partes principais:
 
 **Detalhes**:
 - **Entrada**: A árvore de análise sintática ou a lista de tokens.
-- **Saída**: A árvore de análise sintática ou a lista de tokens com as expansões aplicadas.
+- **Saída**: Lista de tokens com as expansões aplicadas.
 
 **Processo**:
 1. Substituir variáveis de ambiente (e.g., `$HOME`) por seus valores.
@@ -58,7 +58,7 @@ O projeto foi dividido em quatro partes principais:
 2. Criar processos filho, redirecionar entrada/saída e esperar a conclusão dos processos.
 3. Capturar e reportar erros de execução.
 
-## Exemplo 
+## Exemplo
 Um exemplo de comando que passa por todas essas etapas:
 
 ```sh

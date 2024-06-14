@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:43:47 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/11 15:36:33 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/06/14 14:58:55 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,16 @@ typedef struct s_builtin
 	char	**envp;
 }	t_builtin;
 
+typedef struct s_cmd_for_fork
+{
+	int		fd_redir;
+	int		args_num;
+	int		ret_code;
+	char	*cmd;
+	char	**argv;
+	char	**envp;
+}	t_cmd_for_fork;
+
 //****************************************************************************//
 //                                 Functions                                  //
 //****************************************************************************//
@@ -52,6 +62,7 @@ int		exec_tree(t_exec_tree *tree, t_minishell *data);
 int		open_redir(char *path_to_file, int type);
 int		exec_cmd(t_exec_tree *tree, t_minishell *data);
 int		exec_cmd_fork(t_exec_tree *tree, t_minishell *data);
+int		exec_pipe(t_exec_tree *tree, t_minishell *data);
 
 //****************************************************************************//
 //                                Built-ins                                   //

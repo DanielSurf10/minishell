@@ -6,13 +6,13 @@
 /*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 15:11:11 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/11 18:37:55 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/06/14 16:22:29 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-static	void	builtin_call(char *cmd, char **argv, t_minishell *data)
+static void	builtin_call(char *cmd, char **argv, t_minishell *data)
 {
 	if (ft_strncmp(cmd, "echo", -1) == 0)
 		builtin_echo(argv);
@@ -30,7 +30,7 @@ static	void	builtin_call(char *cmd, char **argv, t_minishell *data)
 		builtin_exit(argv, data);
 }
 
-static	void	init_exec_cmd_builtin(t_exec_tree *tree, \
+static void	init_exec_cmd_builtin(t_exec_tree *tree, \
 	t_minishell *data, int *fd_redir)
 {
 	char	*cmd;
@@ -40,7 +40,7 @@ static	void	init_exec_cmd_builtin(t_exec_tree *tree, \
 	free(cmd);
 }
 
-static	void	aux_exec_cmd_builtin(t_exec_tree *tree, \
+static void	aux_exec_cmd_builtin(t_exec_tree *tree, \
 	t_minishell *data, t_builtin *builtin)
 {
 	int	idx;

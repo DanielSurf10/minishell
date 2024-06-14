@@ -6,7 +6,7 @@
 /*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 21:17:07 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/11 18:10:01 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/06/14 16:23:51 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,122 +17,87 @@
 
 volatile int	g_signal;
 
-static void	print_m(char *str)
+static void	init_main(t_main *main, char *envp[])
 {
-	ft_putstr_fd(str, STDOUT_FILENO);
-}
-
-void	print_menu(void)
-{
-	print_m(ORANGE"═══════════════════════════");
-	print_m(ORANGE"════════════════════════════════════════\n");
-	print_m(BLUE"░░░╗   ░░░╗░░╗░░░╗   ░░╗░░╗");
-	print_m(BLUE"░░░░░░░╗░░╗  ░░╗░░░░░░░╗░░╗     ░░╗     \n");
-	print_m(BLUE"░░░░╗ ░░░░║░░║░░░░╗  ░░║░░║");
-	print_m(BLUE"░░╔════╝░░║  ░░║░░╔════╝░░║     ░░║     \n");
-	print_m(BLUE"░░╔░░░░╔░░║░░║░░╔░░╗ ░░║░░║");
-	print_m(BLUE"░░░░░░░╗░░░░░░░║░░░░░╗  ░░║     ░░║     \n");
-	print_m(BLUE"░░║╚░░╔╝░░║░░║░░║╚░░╗░░║░░║");
-	print_m(BLUE"╚════░░║░░╔══░░║░░╔══╝  ░░║     ░░║     \n");
-	print_m(BLUE"░░║ ╚═╝ ░░║░░║░░║ ╚░░░░║░░║");
-	print_m(BLUE"░░░░░░░║░░║  ░░║░░░░░░░╗░░░░░░░╗░░░░░░░╗\n");
-	print_m(BLUE"╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝");
-	print_m(BLUE"╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝\n");
-	print_m(ORANGE"═══════════════════════════");
-	print_m(ORANGE"════════════════════════════════════════\n");
-	print_m(RST);
-}
-
-char	*get_line_to_readline(t_envp_list *env_list)
-{
-	int			i;
-	int			length;
-	char		*line;
-	const char	*vars[2] = {search_value(env_list, "USER"), \
-							search_value(env_list, "PWD")};
-	const char	*to_print[] = {ORANGE, vars[0], RST, "\001🥲 \002", CYAN, vars[1], RST, \
-								": ", NULL};
-
-	i = 0;
-	length = 0;
-	while (to_print[i])
-		length += ft_strlen(to_print[i++]);
-	line = malloc(sizeof(char) * (length + 1));
-	i = 1;
-	ft_strlcpy(line, to_print[0], length + 1);
-	while (to_print[i])
-	{
-		ft_strlcat(line, to_print[i], length + 1);
-		i++;
-	}
-	free((char *)vars[0]);
-	free((char *)vars[1]);
-	return (line);
-}
-
-int main(int argc __attribute__((unused)), char *argv[] __attribute__((unused)), char *envp[])
-{
-	int				ret_code;
-	int				backup_fd_in;
-	char			*line;
-	char			*line_to_readline;
-	t_token_list	*token_list;
-	t_exec_tree		*tree;
-	t_minishell		data;
-	t_termios		term;
-
-	tree = NULL;
-	token_list = NULL;
-	ret_code = 0;
 	print_menu();
-	backup_fd_in = dup(STDIN_FILENO);
-	ft_memset(&data, 0, sizeof(data));
-	fd_list_add_fd(&data.fd_list, backup_fd_in);
-	data.envp_list = env_create_list(envp);
-	env_insert_node(&data.envp_list, "?", "0");
-	tcgetattr(STDIN_FILENO, &term);
+	ft_memset(main, 0, sizeof(*main));
+	main->tree = NULL;
+	main->token_list = NULL;
+	main->ret_code = 0;
+	main->line = NULL;
+	main->line_to_readline = NULL;
+	main->backup_fd_in = dup(STDIN_FILENO);
+	ft_memset(&main->data, 0, sizeof(main->data));
+	fd_list_add_fd(&main->data.fd_list, main->backup_fd_in);
+	main->data.envp_list = env_create_list(envp);
+	env_insert_node(&main->data.envp_list, "?", "0");
+	tcgetattr(STDIN_FILENO, &main->term);
+}
+
+static void	aux_main(t_main *main)
+{
+	main->token_list = get_token_list(main->line);
+	main->data.tree = get_tree(main->token_list, &main->data);
+	token_clear_list(&main->token_list);
+	add_history(main->line);
+	free(main->line);
+	if (g_signal == SIGINT)
+		main->ret_code = 130;
+	else
+	{
+		main->ret_code = exec_tree(main->data.tree, &main->data);
+		if (main->data.tree == NULL)
+			ft_putendl_fd("syntax error", STDERR_FILENO);
+	}
+	main->line = ft_itoa(main->ret_code);
+	env_insert_node(&main->data.envp_list, "?", main->line);
+	free(main->line);
+	free_tree_all(&main->data.tree);
+}
+
+static void	close_main(t_main main)
+{
+	env_clear_list(&main.data.envp_list);
+	fd_list_close_clear(&main.data.fd_list);
+	rl_clear_history();
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
+	close(STDERR_FILENO);
+}
+
+static void	valid_main(t_main *main)
+{
+	init_signals();
+	dup2(main->backup_fd_in, STDIN_FILENO);
+	tcsetattr(STDIN_FILENO, TCSANOW, &main->term);
+	main->line_to_readline = get_line_to_readline(main->data.envp_list);
+	main->line = readline(main->line_to_readline);
+	free(main->line_to_readline);
+	execution_signals(1);
+}
+
+int	main(int argc __attribute__((unused)), \
+		char *argv[] __attribute__((unused)), char *envp[])
+{
+	t_main			main;
+
+	init_main(&main, envp);
 	while (g_signal != -1)
 	{
 		g_signal = 0;
-		init_signals();
-		dup2(backup_fd_in, STDIN_FILENO);
-		tcsetattr(STDIN_FILENO, TCSANOW, &term);
-		line_to_readline = get_line_to_readline(data.envp_list);
-		line = readline(line_to_readline);
-		free(line_to_readline);
-		execution_signals(1);
-		if (!line)
+		valid_main(&main);
+		if (!main.line)
 		{
 			ft_putstr_fd("exit\n", STDOUT_FILENO);
 			break ;
 		}
-		else if (!line[0])
+		else if (!main.line[0])
 		{
-			free(line);
+			free(main.line);
 			continue ;
 		}
-		token_list = get_token_list(line);
-		data.tree = get_tree(token_list, &data);
-		token_clear_list(&token_list);
-		add_history(line);
-		free(line);
-		if (g_signal == SIGINT)
-			ret_code = 130;
-		else
-		{
-			ret_code = exec_tree(data.tree, &data);
-			if (data.tree == NULL)
-				ft_putendl_fd("syntax error", STDERR_FILENO);
-		}
-		line = ft_itoa(ret_code);
-		env_insert_node(&data.envp_list, "?", line);
-		free(line);
-		free_tree_all(&data.tree);
+		aux_main(&main);
 	}
-	env_clear_list(&data.envp_list);
-	fd_list_close_clear(&data.fd_list);
-	rl_clear_history();
-	close(STDIN_FILENO);
-	close(STDOUT_FILENO);
-	return (ret_code);
+	close_main(main);
+	return (main.ret_code);
 }

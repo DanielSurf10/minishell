@@ -6,7 +6,7 @@
 /*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 17:03:34 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/06/01 19:52:07 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/06/14 15:54:05 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	builtin_pwd(void)
 
 	if (getcwd(cwd, PATH_MAX))
 	{
-		ft_putendl_fd(cwd, 1);
+		ft_putendl_fd(cwd, STDOUT_FILENO);
 		return (0);
 	}
 	else
