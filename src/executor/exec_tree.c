@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 17:02:10 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/14 16:58:50 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/06/17 12:15:46 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ static int	execute_subshell(t_exec_tree *tree, t_minishell *data)
 	int	pid;
 	int	ret_code;
 
-	pid = fork();
 	ret_code = 0;
+	pid = fork();
 	if (pid != 0)
 	{
 		waitpid(pid, &ret_code, 0);

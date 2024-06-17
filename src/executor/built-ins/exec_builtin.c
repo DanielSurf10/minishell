@@ -3,31 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 15:11:11 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/14 16:22:29 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/06/17 12:08:45 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-static void	builtin_call(char *cmd, char **argv, t_minishell *data)
+static int	builtin_call(char *cmd, char **argv, t_minishell *data)
 {
+	int	ret_code;
+
+	ret_code = 0;
 	if (ft_strncmp(cmd, "echo", -1) == 0)
-		builtin_echo(argv);
+		ret_code = builtin_echo(argv);
 	else if (ft_strncmp(cmd, "cd", -1) == 0)
-		builtin_cd(argv, data);
+		ret_code = builtin_cd(argv, data);
 	else if (ft_strncmp(cmd, "pwd", -1) == 0)
-		builtin_pwd();
+		ret_code = builtin_pwd();
 	else if (ft_strncmp(cmd, "export", -1) == 0)
-		builtin_export(argv, data);
+		ret_code = builtin_export(argv, data);
 	else if (ft_strncmp(cmd, "unset", -1) == 0)
-		builtin_unset(argv, &data->envp_list);
+		ret_code = builtin_unset(argv, &data->envp_list);
 	else if (ft_strncmp(cmd, "env", -1) == 0)
-		builtin_env(data);
+		ret_code = builtin_env(data);
 	else if (ft_strncmp(cmd, "exit", -1) == 0)
-		builtin_exit(argv, data);
+		ret_code = builtin_exit(argv, data);
+	return (ret_code);
 }
 
 static void	init_exec_cmd_builtin(t_exec_tree *tree, \
@@ -40,10 +44,11 @@ static void	init_exec_cmd_builtin(t_exec_tree *tree, \
 	free(cmd);
 }
 
-static void	aux_exec_cmd_builtin(t_exec_tree *tree, \
+static int	aux_exec_cmd_builtin(t_exec_tree *tree, \
 	t_minishell *data, t_builtin *builtin)
 {
 	int	idx;
+	int	ret_code;
 
 	idx = 0;
 	builtin->args_num = token_list_size(tree->command);
@@ -56,8 +61,9 @@ static void	aux_exec_cmd_builtin(t_exec_tree *tree, \
 		idx++;
 	}
 	builtin->cmd = builtin->argv[0];
-	builtin_call(builtin->cmd, builtin->argv, data);
+	ret_code = builtin_call(builtin->cmd, builtin->argv, data);
 	free_envp(builtin->argv);
+	return (ret_code);
 }
 
 int	exec_cmd_builtin(t_exec_tree *tree, t_minishell *data)
@@ -82,7 +88,7 @@ int	exec_cmd_builtin(t_exec_tree *tree, t_minishell *data)
 		builtin.ret_code = exec_cmd_builtin(tree->right, data);
 	}
 	else
-		aux_exec_cmd_builtin(tree, data, &builtin);
+		builtin.ret_code = aux_exec_cmd_builtin(tree, data, &builtin);
 	return (builtin.ret_code);
 }
 

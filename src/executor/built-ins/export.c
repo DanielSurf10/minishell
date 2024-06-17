@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:48:52 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/11 18:38:50 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/06/17 12:48:38 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	set_arg(char *arg, int idx, t_envp_list *envp_list)
 	ret_code = 0;
 	key = ft_substr(arg, 0, idx);
 	value = ft_substr(arg, idx + 1, ft_strlen(arg) - idx);
-	if (key && value && key_is_valid(key))
+	if (key && key[0] && value && key_is_valid(key))
 	{
 		if (key_exist(key, envp_list))
 			update_envp(key, value, envp_list);
@@ -82,6 +82,8 @@ int	select_arg(char *arg, t_envp_list *envp_list)
 		i++;
 	if (arg[i] == '=')
 		ret_code = set_arg(arg, i, envp_list);
+	else if (arg[i] == '\0' && !key_is_valid(arg))
+		ret_code = 1;
 	return (ret_code);
 }
 

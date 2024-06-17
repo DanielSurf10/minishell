@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 17:41:23 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/06/11 18:15:07 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/06/17 12:53:47 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ static int	set_env(char *key, char *value, t_minishell *data)
 
 static int	builtin_cd_util(char *args[], t_minishell *data, char **path)
 {
+	*path = NULL;
 	if (args[1] && args[2])
 	{
 		ft_putendl_fd(RED"ERROR: "RST"cd: Too many arguments", STDERR_FILENO);

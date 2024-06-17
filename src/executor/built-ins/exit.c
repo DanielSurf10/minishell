@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 19:02:56 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/06/11 18:38:37 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/06/17 13:03:54 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,10 @@ int	exit_arg_valid(char *arg)
 	int	i;
 
 	i = 0;
+	while (isspace(arg[i]))
+		i++;
+	if (arg[i] == '-' || arg[i] == '+')
+		i++;
 	while (arg[i])
 	{
 		if (!ft_isdigit(arg[i]))
@@ -74,8 +78,9 @@ int	builtin_exit(char **argv, t_minishell *data)
 		free(ret_code_str);
 	}
 	else if (!exit_arg_valid(argv[1]))
-		return (1);
+		ret_code = 2;
 	ft_putstr_fd("exit\n", STDOUT_FILENO);
 	g_signal = -1;
-	return (ternary(args_num == 1, ret_code, ft_atoi(argv[1])));
+	return (ternary(args_num == 1, ret_code, \
+		ternary(ret_code == 2, 2, ft_atoi(argv[1]))));
 }
