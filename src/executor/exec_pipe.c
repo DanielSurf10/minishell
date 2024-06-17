@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 14:50:59 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/06/14 16:24:10 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/06/17 11:36:05 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,9 @@ static int	exec_pipe_subshell(t_exec_tree *tree, t_minishell *data)
 
 int	exec_pipe(t_exec_tree *tree, t_minishell *data)
 {
-	int			ret_code;
 	int			pid;
 
 	pid = -1;
-	ret_code = 0;
 	if (g_signal != 0)
 		return (1);
 	if (tree->type == PIPE)

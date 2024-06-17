@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 14:56:37 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/06/14 14:57:32 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/06/17 11:46:35 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,13 @@ int	open_redir(char *path_to_file, int type)
 	else
 		fd = -1;
 	return (fd);
+}
+
+int	is_directory(char *path)
+{
+	struct stat	statbuf;
+
+	if (stat(path, &statbuf) == -1)
+		return (0);
+	return ((((statbuf.st_mode) & 0170000) == (0040000)));
 }

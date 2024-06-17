@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd_fork.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 14:55:23 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/06/14 16:46:01 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/06/17 11:39:59 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,13 @@ int	display_error(char *cmd)
 {
 	int		ret_code;
 
+	perror(cmd);
 	if (access(cmd, F_OK) != 0 || ft_strchr(cmd, '/') == NULL)
-	{
-		perror(cmd);
 		ret_code = 127;
-	}
-	else if (access(cmd, F_OK | X_OK) != 0)
-	{
-		perror(cmd);
+	else if (access(cmd, F_OK | X_OK) != 0 || is_directory(cmd))
 		ret_code = 126;
-	}
 	else
-	{
-		perror(cmd);
 		ret_code = 1;
-	}
 	return (ret_code);
 }
 
@@ -117,7 +109,7 @@ int	exec_cmd_fork(t_exec_tree *tree, t_minishell *data)
 		return (1);
 	if (tree->type >= REDIRECT_INPUT
 		&& tree->type <= REDIRECT_OUTPUT_APPEND)
-		execute_redirects(tree, data);
+		ret_code = execute_redirects(tree, data);
 	else if (tree->type == SUBSHELL)
 		ret_code = exec_tree(tree->subshell, data);
 	else

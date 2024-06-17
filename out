@@ -1,5 +1,0 @@
-    PID TTY          TIME CMD
- 855661 pts/1    00:00:00 zsh
- 859667 pts/1    00:00:00 make
- 859672 pts/1    00:00:00 memcheck-amd64-
- 859756 pts/1    00:00:00 ps

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/23 21:20:35 by danbarbo          #+#    #+#              #
-#    Updated: 2024/06/11 20:44:55 by leobarbo         ###   ########.fr        #
+#    Updated: 2024/06/17 11:41:49 by danbarbo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ OBJS_BONUS	:= ${SRCS_BONUS:src_bonus/%.c=obj/%.o}
 all: ${NAME}
 bonus: all
 
-${NAME}: ${LIBFT} ${OBJS}
+${NAME}: ${LIBFT} ${OBJS} 
 	@${CC} ${CFLAGS} ${HEADERS} ${OBJS} ${LIBS} -o ${NAME}
 
 ${NAME_BONUS}: ${LIBFT} ${OBJS_BONUS}
