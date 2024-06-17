@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 21:17:07 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/17 12:28:22 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/17 19:33:43 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ volatile int	g_signal;
 
 static void	init_main(t_main *main, char *envp[])
 {
-	// print_menu();
+	print_menu();
 	ft_memset(main, 0, sizeof(*main));
 	main->tree = NULL;
 	main->token_list = NULL;
@@ -91,7 +91,7 @@ int	main(int argc __attribute__((unused)), \
 			ft_putstr_fd("exit\n", STDOUT_FILENO);
 			break ;
 		}
-		else if (!main.line[0])
+		else if (!main.line[0] || str_is_space(main.line))
 		{
 			free(main.line);
 			continue ;

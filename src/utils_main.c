@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 14:24:24 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/06/14 15:02:55 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/06/17 18:01:11 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	print_menu(void)
 	print_m(BLUE"╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝");
 	print_m(BLUE"╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝\n");
 	print_m(ORANGE"═══════════════════════════");
-	print_m(ORANGE"══════════════════════════by_barbos═════\n");
+	print_m(ORANGE"═════════════════════════ by barbos ════\n");
 	print_m(RST);
 }
 
@@ -66,4 +66,16 @@ char	*get_line_to_readline(t_envp_list *env_list)
 	free((char *)vars[0]);
 	free((char *)vars[1]);
 	return (line);
+}
+
+int	str_is_space(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && isspace(str[i]))
+		i++;
+	if (!str[i])
+		return (1);
+	return (0);
 }

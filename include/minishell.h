@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 21:17:57 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/17 11:41:22 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/17 18:01:26 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,6 @@ typedef struct s_main
 
 void	print_menu(void);
 char	*get_line_to_readline(t_envp_list *env_list);
+int		str_is_space(char *str);
 
 #endif
