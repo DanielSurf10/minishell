@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 18:29:48 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/06/09 15:41:37 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/14 15:52:50 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	print_envp(char **envp)
 	{
 		if (ft_strncmp(envp[i], "?", -1) == 0)
 			continue ;
-		ft_putendl_fd(envp[i], STDIN_FILENO);
+		ft_putendl_fd(envp[i], STDOUT_FILENO);
 		i++;
 	}
 }

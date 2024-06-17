@@ -6,7 +6,7 @@
 /*   By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 21:17:57 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/11 15:20:15 by leobarbo         ###   ########.fr       */
+/*   Updated: 2024/06/14 14:37:39 by leobarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ extern volatile int			g_signal;
 typedef struct s_envp_list	t_envp_list;
 typedef struct s_exec_tree	t_exec_tree;
 typedef struct termios		t_termios;
+typedef struct s_token_list	t_token_list;
 
 typedef struct s_minishell
 {
@@ -72,5 +73,28 @@ typedef struct s_minishell
 	t_exec_tree	*tree;
 	t_list		*fd_list;
 }	t_minishell;
+
+typedef struct s_main
+{
+	int				ret_code;
+	int				backup_fd_in;
+	char			*line;
+	char			*line_to_readline;
+	t_token_list	*token_list;
+	t_exec_tree		*tree;
+	t_minishell		data;
+	t_termios		term;
+}	t_main;
+
+//****************************************************************************//
+//                                 Functions                                  //
+//****************************************************************************//
+
+//****************************************************************************//
+//                                 Utils_Main                                 //
+//****************************************************************************//
+
+void	print_menu(void);
+char	*get_line_to_readline(t_envp_list *env_list);
 
 #endif
