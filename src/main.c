@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 21:17:07 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/17 19:33:43 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/18 13:22:09 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ volatile int	g_signal;
 
 static void	init_main(t_main *main, char *envp[])
 {
-	print_menu();
+	// print_menu();
 	ft_memset(main, 0, sizeof(*main));
 	main->tree = NULL;
 	main->token_list = NULL;
