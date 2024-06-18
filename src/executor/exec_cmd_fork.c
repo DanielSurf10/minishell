@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 14:55:23 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/06/17 18:30:26 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/18 10:53:07 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,25 +59,6 @@ int	display_error(char *cmd)
 		ret_code = 1;
 	}
 	return (ret_code);
-}
-
-char	**create_argv(t_exec_tree *tree, t_minishell *data)
-{
-	int		i;
-	int		args_num;
-	char	**argv;
-
-	i = 0;
-	args_num = token_list_size(tree->command);
-	argv = malloc((args_num + 1) * sizeof(char *));
-	argv[args_num] = NULL;
-	while (i < args_num)
-	{
-		argv[i] = expand_string(token_get_node_index(\
-			tree->command, i)->token.lexeme, data->envp_list);
-		i++;
-	}
-	return (argv);
 }
 
 int	execute_command(t_exec_tree *tree, t_minishell *data)

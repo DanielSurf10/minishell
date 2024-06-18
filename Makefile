@@ -6,7 +6,7 @@
 #    By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/23 21:20:35 by danbarbo          #+#    #+#              #
-#    Updated: 2024/06/17 19:41:30 by danbarbo         ###   ########.fr        #
+#    Updated: 2024/06/18 11:02:59 by danbarbo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,90 +22,92 @@ LIBS		:= ${LIBFT} -lreadline
 HEADERS		:= -I include \
 				-I ${LIBFT_DIR}/include
 
-SRCS		:= src/lexing/state_change_1.c \
-				src/lexing/utils_list.c \
-				src/lexing/token_list.c \
-				src/lexing/state_change_2.c \
-				src/lexing/get_token_list.c \
-				src/lexing/utils.c \
-				src/lexing/state.c \
-				src/main.c \
-				src/executor/fd_list.c \
-				src/executor/exec_cmd.c \
-				src/executor/exec_tree.c \
-				src/executor/exec_cmd_fork.c \
-				src/executor/built-ins/utiils.c \
-				src/executor/built-ins/pwd.c \
-				src/executor/built-ins/cd.c \
-				src/executor/built-ins/exec_builtin.c \
-				src/executor/built-ins/unset.c \
-				src/executor/built-ins/utils_export.c \
-				src/executor/built-ins/exit.c \
-				src/executor/built-ins/export.c \
-				src/executor/built-ins/echo.c \
-				src/executor/built-ins/env.c \
-				src/executor/exec_pipe.c \
-				src/executor/signals/signals_macros.c \
-				src/executor/signals/signal_handler.c \
-				src/executor/signals/signals.c \
-				src/executor/utils.c \
-				src/executor/exec_and_or.c \
+SRCS		:= src/expander/expand_string_here_doc.c \
+				src/expander/utils.c \
 				src/expander/envp_list.c \
 				src/expander/expand_command.c \
 				src/expander/string_list.c \
 				src/expander/expand_string.c \
-				src/expander/utils.c \
 				src/expander/utils_envp_list.c \
-				src/expander/expand_string_here_doc.c \
+				src/lexing/state.c \
+				src/lexing/token_list.c \
+				src/lexing/state_change_1.c \
+				src/lexing/utils.c \
+				src/lexing/utils_list.c \
+				src/lexing/state_change_2.c \
+				src/lexing/get_token_list.c \
 				src/utils_main.c \
-				src/parsing/make_tree.c \
-				src/parsing/make_tree_cmd_recursive.c \
+				src/executor/exec_pipe.c \
+				src/executor/exec_and_or.c \
+				src/executor/built-ins/exit.c \
+				src/executor/built-ins/exec_builtin.c \
+				src/executor/built-ins/export.c \
+				src/executor/built-ins/cd.c \
+				src/executor/built-ins/pwd.c \
+				src/executor/built-ins/echo.c \
+				src/executor/built-ins/utiils.c \
+				src/executor/built-ins/env.c \
+				src/executor/built-ins/unset.c \
+				src/executor/built-ins/utils_export.c \
+				src/executor/utils.c \
+				src/executor/exec_cmd.c \
+				src/executor/fd_list.c \
+				src/executor/signals/signals.c \
+				src/executor/signals/signal_handler.c \
+				src/executor/signals/signals_macros.c \
+				src/executor/exec_cmd_fork.c \
+				src/executor/exec_tree.c \
+				src/executor/create_argv.c \
 				src/parsing/get_tree.c \
+				src/parsing/make_tree_cmd.c \
 				src/parsing/here_doc.c \
-				src/parsing/make_tree_cmd.c
+				src/parsing/make_tree_cmd_recursive.c \
+				src/parsing/make_tree.c \
+				src/main.c
 OBJS		:= ${SRCS:src/%.c=obj/%.o}
 
-SRCS_BONUS	:= src/lexing/state_change_1.c \
-				src/lexing/utils_list.c \
-				src/lexing/token_list.c \
-				src/lexing/state_change_2.c \
-				src/lexing/get_token_list.c \
-				src/lexing/utils.c \
-				src/lexing/state.c \
-				src/main.c \
-				src/executor/fd_list.c \
-				src/executor/exec_cmd.c \
-				src/executor/exec_tree.c \
-				src/executor/exec_cmd_fork.c \
-				src/executor/built-ins/utiils.c \
-				src/executor/built-ins/pwd.c \
-				src/executor/built-ins/cd.c \
-				src/executor/built-ins/exec_builtin.c \
-				src/executor/built-ins/unset.c \
-				src/executor/built-ins/utils_export.c \
-				src/executor/built-ins/exit.c \
-				src/executor/built-ins/export.c \
-				src/executor/built-ins/echo.c \
-				src/executor/built-ins/env.c \
-				src/executor/exec_pipe.c \
-				src/executor/signals/signals_macros.c \
-				src/executor/signals/signal_handler.c \
-				src/executor/signals/signals.c \
-				src/executor/utils.c \
-				src/executor/exec_and_or.c \
+SRCS_BONUS	:= src/expander/expand_string_here_doc.c \
+				src/expander/utils.c \
 				src/expander/envp_list.c \
 				src/expander/expand_command.c \
 				src/expander/string_list.c \
 				src/expander/expand_string.c \
-				src/expander/utils.c \
 				src/expander/utils_envp_list.c \
-				src/expander/expand_string_here_doc.c \
+				src/lexing/state.c \
+				src/lexing/token_list.c \
+				src/lexing/state_change_1.c \
+				src/lexing/utils.c \
+				src/lexing/utils_list.c \
+				src/lexing/state_change_2.c \
+				src/lexing/get_token_list.c \
 				src/utils_main.c \
-				src/parsing/make_tree.c \
-				src/parsing/make_tree_cmd_recursive.c \
+				src/executor/exec_pipe.c \
+				src/executor/exec_and_or.c \
+				src/executor/built-ins/exit.c \
+				src/executor/built-ins/exec_builtin.c \
+				src/executor/built-ins/export.c \
+				src/executor/built-ins/cd.c \
+				src/executor/built-ins/pwd.c \
+				src/executor/built-ins/echo.c \
+				src/executor/built-ins/utiils.c \
+				src/executor/built-ins/env.c \
+				src/executor/built-ins/unset.c \
+				src/executor/built-ins/utils_export.c \
+				src/executor/utils.c \
+				src/executor/exec_cmd.c \
+				src/executor/fd_list.c \
+				src/executor/signals/signals.c \
+				src/executor/signals/signal_handler.c \
+				src/executor/signals/signals_macros.c \
+				src/executor/exec_cmd_fork.c \
+				src/executor/exec_tree.c \
+				src/executor/create_argv.c \
 				src/parsing/get_tree.c \
+				src/parsing/make_tree_cmd.c \
 				src/parsing/here_doc.c \
-				src/parsing/make_tree_cmd.c
+				src/parsing/make_tree_cmd_recursive.c \
+				src/parsing/make_tree.c \
+				src/main.c
 OBJS_BONUS	:= ${SRCS_BONUS:src_bonus/%.c=obj/%.o}
 
 all: ${NAME}

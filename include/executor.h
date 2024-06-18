@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:43:47 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/17 11:42:45 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/18 11:00:34 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int		is_directory(char *path);
 int		exec_cmd(t_exec_tree *tree, t_minishell *data);
 int		exec_cmd_fork(t_exec_tree *tree, t_minishell *data);
 int		exec_pipe(t_exec_tree *tree, t_minishell *data);
+char	**create_argv(t_exec_tree *tree, t_minishell *data);
 
 //****************************************************************************//
 //                                Built-ins                                   //
