@@ -1,5 +1,0 @@
-ls -l -a
-TYPE: COMMAND:
-	 1 - WORD = ls
-	 2 - WORD = -l
-	 3 - WORD = -a

@@ -1,7 +1,0 @@
-echo $'''' USER "" h
-TYPE: COMMAND:
-	 1 - WORD = echo
-	 2 - WORD = $''''
-	 3 - WORD = USER
-	 4 - WORD = ""
-	 5 - WORD = h

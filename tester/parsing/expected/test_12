@@ -1,8 +1,0 @@
-ls | cat
-TYPE: PIPE
-LEFT:
-	TYPE: COMMAND:
-		 1 - WORD = ls
-RIGHT:
-	TYPE: COMMAND:
-		 1 - WORD = cat

@@ -1,8 +1,0 @@
-cat > $vor
-TYPE: REDIRECT_OUTPUT
-LEFT:
-	TYPE: COMMAND:
-		 1 - WORD = $vor
-RIGHT:
-	TYPE: COMMAND:
-		 1 - WORD = cat

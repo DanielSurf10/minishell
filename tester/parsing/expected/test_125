@@ -1,8 +1,0 @@
-echo $  """" USER "" j
-TYPE: COMMAND:
-	 1 - WORD = echo
-	 2 - WORD = $
-	 3 - WORD = """"
-	 4 - WORD = USER
-	 5 - WORD = ""
-	 6 - WORD = j

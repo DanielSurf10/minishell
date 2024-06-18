@@ -6,14 +6,13 @@
 #    By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/23 21:20:35 by danbarbo          #+#    #+#              #
-#    Updated: 2024/06/18 11:02:59 by danbarbo         ###   ########.fr        #
+#    Updated: 2024/06/18 17:03:05 by danbarbo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		:= minishell
 NAME_BONUS	:= minishell_bonus
 CFLAGS		:= -Wextra -Wall -Werror -g3
-# CFLAGS		:= -g3
 
 LIBFT_DIR	:= lib/libft
 LIBFT		:= ${LIBFT_DIR}/libft.a
@@ -111,7 +110,7 @@ SRCS_BONUS	:= src/expander/expand_string_here_doc.c \
 OBJS_BONUS	:= ${SRCS_BONUS:src_bonus/%.c=obj/%.o}
 
 all: ${NAME}
-bonus: all
+bonus: ${NAME_BONUS}
 
 ${NAME}: ${LIBFT} ${OBJS}
 	@${CC} ${CFLAGS} ${HEADERS} ${OBJS} ${LIBS} -o ${NAME}

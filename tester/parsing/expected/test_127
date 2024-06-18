@@ -1,5 +1,0 @@
-echo "        $USER   " k
-TYPE: COMMAND:
-	 1 - WORD = echo
-	 2 - WORD = "        $USER   "
-	 3 - WORD = k

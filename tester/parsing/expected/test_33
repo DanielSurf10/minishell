@@ -1,5 +1,0 @@
-(ls)
-TYPE: SUBSHELL
-SUBSHELL:
-	TYPE: COMMAND:
-		 1 - WORD = ls

@@ -1,4 +1,0 @@
-cat tudo
-TYPE: COMMAND:
-	 1 - WORD = cat
-	 2 - WORD = tudo
