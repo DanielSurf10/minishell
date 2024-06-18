@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 14:55:23 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/06/18 13:21:58 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/18 15:27:38 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,33 +64,41 @@ int	display_error(char *cmd)
 	return (ret_code);
 }
 
-int	execute_command(t_exec_tree *tree, t_minishell *data)
+int	exec_execve(t_exec_tree *tree, t_minishell *data)
 {
-	int		args_num;
 	int		ret_code;
 	char	*cmd;
 	char	**argv;
 	char	**envp;
 
+	argv = create_argv(tree, data);
+	if (argv[0])
+	{
+		cmd = expand_command(argv[0], data->envp_list);
+		envp = create_envp(data->envp_list);
+		if (access(cmd, F_OK | X_OK) == 0
+			&& ft_strchr(cmd, '/') != NULL)
+			execve(cmd, argv, envp);
+		ret_code = display_error(cmd);
+		free(cmd);
+		free_envp(envp);
+	}
+	else
+		ret_code = 0;
+	free_envp(argv);
+	return (ret_code);
+}
+
+int	execute_command(t_exec_tree *tree, t_minishell *data)
+{
+	int		args_num;
+	int		ret_code;
+
 	ret_code = 0;
 	args_num = token_list_size(tree->command);
 	if (args_num != 0)
 	{
-		argv = create_argv(tree, data);
-		if (argv[0])
-		{
-			cmd = expand_command(argv[0], data->envp_list);
-			envp = create_envp(data->envp_list);
-			if (access(cmd, F_OK | X_OK) == 0
-				&& ft_strchr(cmd, '/') != NULL)
-				execve(cmd, argv, envp);
-			ret_code = display_error(cmd);
-			free(cmd);
-			free_envp(envp);
-		}
-		else
-			ret_code = 0;
-		free_envp(argv);
+		ret_code = exec_execve(tree, data);
 		close(STDIN_FILENO);
 		close(STDOUT_FILENO);
 		close(STDERR_FILENO);
