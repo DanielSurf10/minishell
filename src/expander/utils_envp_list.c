@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 17:34:51 by leobarbo          #+#    #+#             */
-/*   Updated: 2024/05/31 15:47:06 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/18 16:48:13 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	att_existing_value(t_envp_list *head, char *key, char *value)
 	t_envp_list	*temp;
 
 	temp = head;
-	while (temp != NULL && key && value)
+	while (temp != NULL && key)
 	{
 		if (ft_strncmp(temp->key, key, -1) == 0)
 		{

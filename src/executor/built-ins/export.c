@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:48:52 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/06/17 12:48:38 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/06/18 16:42:06 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	set_arg(char *arg, int idx, t_envp_list *envp_list)
 	return (ret_code);
 }
 
-int	select_arg(char *arg, t_envp_list *envp_list)
+int	select_arg(char *arg, t_minishell *data)
 {
 	int	i;
 	int	ret_code;
@@ -81,9 +81,14 @@ int	select_arg(char *arg, t_envp_list *envp_list)
 	while (arg[i] && arg[i] != '=')
 		i++;
 	if (arg[i] == '=')
-		ret_code = set_arg(arg, i, envp_list);
+		ret_code = set_arg(arg, i, data->envp_list);
+	else if (key_is_valid(arg))
+		env_insert_node(&data->envp_list, arg, NULL);
 	else if (arg[i] == '\0' && !key_is_valid(arg))
+	{
+		export_print_error_message(arg);
 		ret_code = 1;
+	}
 	return (ret_code);
 }
 
@@ -100,7 +105,7 @@ int	builtin_export(char **argv, t_minishell *data)
 	{
 		while (argv[i])
 		{
-			ret_code = select_arg(argv[i], data->envp_list);
+			ret_code = select_arg(argv[i], data);
 			i++;
 		}
 	}
