@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 15:37:10 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/04/13 23:32:23 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/09/15 15:25:00 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,6 @@ void	print_tokens(t_token_list *token_list)
 			printf("\t%2d - %-22s = %s\n", i, "REDIRECT_OUTPUT", aux->token.lexeme);
 		else if (aux->token.type == REDIRECT_OUTPUT_APPEND)
 			printf("\t%2d - %-22s = %s\n", i, "REDIRECT_OUTPUT_APPEND", aux->token.lexeme);
-		else if (aux->token.type == OR)
-			printf("\t%2d - %-22s = %s\n", i, "OR", aux->token.lexeme);
-		else if (aux->token.type == AND)
-			printf("\t%2d - %-22s = %s\n", i, "AND", aux->token.lexeme);
-		else if (aux->token.type == OPEN_PARENTHESIS)
-			printf("\t%2d - %-22s = %s\n", i, "OPEN_PARENTHESIS", aux->token.lexeme);
-		else if (aux->token.type == CLOSE_PARENTHESIS)
-			printf("\t%2d - %-22s = %s\n", i, "CLOSE_PARENTHESIS", aux->token.lexeme);
 		else
 			printf("\t%2d - TOKEN NÃO RECONHECIDO = %s\n", i, aux->token.lexeme);
 		i++;
@@ -55,6 +47,7 @@ int	main(int argc, char *argv[])
 	t_token_list	*token_list;
 
 	line = readline("minishell$: ");
+	// line = "ls -l";
 	token_list = get_token_list(line);
 
 	if (token_list == NULL)

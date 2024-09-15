@@ -6,7 +6,7 @@
 /*   By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 15:36:39 by danbarbo          #+#    #+#             */
-/*   Updated: 2024/05/30 22:28:46 by danbarbo         ###   ########.fr       */
+/*   Updated: 2024/09/15 15:23:27 by danbarbo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,7 @@ enum e_token
 	REDIRECT_HEREDOC,
 	REDIRECT_OUTPUT,
 	REDIRECT_OUTPUT_APPEND,
-	OR,
-	AND,
-	OPEN_PARENTHESIS,
-	CLOSE_PARENTHESIS,
-	EXPRESSION,
-	COMMAND,
-	SUBSHELL
+	COMMAND
 };
 
 //****************************************************************************//
@@ -78,10 +72,8 @@ t_token_list	*get_token_list(char *str);
 void			token_add_to_list(t_token_list **tok_lst, char *lex, int type);
 void			token_clear_list(t_token_list **token_list);
 int				token_list_size(t_token_list *token_list);
-void			token_back_one_node(t_token_list *tok_lst, t_token_list \
-					**node_to_back);
-t_token_list	*token_get_sublist(t_token_list *tok_lst, int start, \
-					int lst_len);
+void			token_back_one_node(t_token_list *tok_lst, t_token_list **node_to_back);
+t_token_list	*token_get_sublist(t_token_list *tok_lst, int start, int lst_len);
 t_token_list	*invert_list(t_token_list *head);
 t_token_list	*token_get_node_index(t_token_list *token_list, int index);
 void			token_join_lists(t_token_list **dest, t_token_list *source);
@@ -96,13 +88,11 @@ int				token_get_next_state(int state, char character);
 int				token_get_token_type(int state);
 
 int				token_get_state_1(char character);
+int				token_get_state_30(char character);
 int				token_get_state_40(char character);
 int				token_get_state_50(char character);
-int				token_get_state_60(char character);
-int				token_get_state_70(char character);
-int				token_get_state_80(char character);
-int				token_get_state_81(char character);
-int				token_get_state_82(char character);
+int				token_get_state_51(char character);
+int				token_get_state_52(char character);
 
 //****************************************************************************//
 //                                   Utils                                    //

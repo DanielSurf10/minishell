@@ -3,17 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: leobarbo <leobarbo@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/23 21:20:35 by danbarbo          #+#    #+#              #
-#    Updated: 2024/06/07 14:33:15 by leobarbo         ###   ########.fr        #
+#    Updated: 2024/09/15 14:14:27 by danbarbo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		:= minishell
-NAME_BONUS	:= minishell_bonus
-# CFLAGS		:= -Wextra -Wall -Werror -g3
-CFLAGS		:= -g3
+# FLAGS		:= -Wextra -Wall -Werror -g3
+FLAGS		:= -g3
 
 LIBFT_DIR	:= lib/libft
 LIBFT		:= ${LIBFT_DIR}/libft.a
@@ -22,29 +21,17 @@ LIBS		:= ${LIBFT} -lreadline
 HEADERS		:= -I include \
 				-I ${LIBFT_DIR}/include
 
-SRCS		:= ${shell find src -iname "*.c"}		# Não esquecer de mudar isso aqui
+SRCS		:= ${shell find src -iname "*.c" ! -name "main.c"}
 OBJS		:= ${SRCS:src/%.c=obj/%.o}
 
-SRCS_BONUS	:= ${shell find src -iname "*.c"}		# Não esquecer de mudar isso aqui
-OBJS_BONUS	:= ${SRCS_BONUS:src_bonus/%.c=obj/%.o}
-
 all: ${NAME}
-bonus: all
 
 ${NAME}: ${LIBFT} ${OBJS}
-	@${CC} ${CFLAGS} ${HEADERS} ${OBJS} ${LIBS} -o ${NAME}
+	@${CC} ${FLAGS} ${HEADERS} ${OBJS} src/main.c ${LIBS} -o ${NAME}
 
-${NAME_BONUS}: ${LIBFT} ${OBJS_BONUS}
-	@${CC} ${CFLAGS} ${HEADERS} ${OBJS_BONUS} ${LIBS} -o ${NAME_BONUS}
-
-obj/%.o: src/%.c
+obj/%.o: src/%.c ${shell find include -iname "*.h"}
 	@mkdir -p ${dir $@}
-	@${CC} ${CFLAGS} -c ${HEADERS} $< -o $@
-	@printf "Compiling: ${notdir $<}\n"
-
-obj/%.o: src_bonus/%.c
-	@mkdir -p ${dir $@}
-	@${CC} ${CFLAGS} -c ${HEADERS} $< -o $@
+	@${CC} ${FLAGS} -c ${HEADERS} $< -o $@
 	@printf "Compiling: ${notdir $<}\n"
 
 ${LIBFT}:
@@ -56,7 +43,6 @@ clean:
 
 fclean: clean
 	@rm -f ${NAME}
-	@rm -f ${NAME_BONUS}
 	@make -C ${LIBFT_DIR} fclean
 
 val: readline.supp all
@@ -84,7 +70,10 @@ readline.supp:
 	@echo '   obj:*/libreadline.so.*' >> $@
 	@echo '}' >> $@
 
-re: fclean all
-re_bonus: fclean bonus
+token: ${OBJS}
+	@${CC} ${FLAGS} ${HEADERS} ${OBJS} tests/lexing/main.c ${LIBS} -o token_test
+	@./token_test
 
-.PHONY: all bonus clean fclean re re_bonus val vall
+re: fclean all
+
+.PHONY: all clean fclean re val vall
