@@ -6,7 +6,7 @@
 #    By: danbarbo <danbarbo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/23 21:20:35 by danbarbo          #+#    #+#              #
-#    Updated: 2024/09/15 14:14:27 by danbarbo         ###   ########.fr        #
+#    Updated: 2024/09/15 21:36:41 by danbarbo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,8 +71,12 @@ readline.supp:
 	@echo '}' >> $@
 
 token: ${OBJS}
-	@${CC} ${FLAGS} ${HEADERS} ${OBJS} tests/lexing/main.c ${LIBS} -o token_test
-	@./token_test
+	@${CC} ${FLAGS} ${HEADERS} ${OBJS} tests/lexing/main.c ${LIBS} -o token
+	@./token
+
+test_token:
+	@${CC} ${FLAGS} ${HEADERS} ${OBJS} tests/lexing/utils.c tests/lexing/main_tests.c ${LIBS} -o token_test
+	@valgrind -q ./token_test
 
 re: fclean all
 
